@@ -1,7 +1,5 @@
 import {styled} from '@mui/material/styles';
-import {useTranslation} from 'react-i18next';
 import FusePageSimple from '@fuse/core/FusePageSimple';
-import DemoContent from '@fuse/core/DemoContent';
 
 const Root = styled(FusePageSimple)(({theme}) => ({
     // '& .FusePageSimple-header': {
@@ -17,8 +15,6 @@ const Root = styled(FusePageSimple)(({theme}) => ({
 }));
 
 function DashboardPage(props) {
-    const {t} = useTranslation('examplePage');
-
     return (
         <Root
             // header={
