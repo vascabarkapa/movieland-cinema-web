@@ -49,7 +49,7 @@ function ToolbarLayout2(props) {
 
             {/*<FullScreenToggle />*/}
 
-            <NavigationSearch />
+            {/*<NavigationSearch />*/}
 
             {/*<Hidden lgUp>*/}
             {/*  <ChatPanelToggleButton />*/}
