@@ -53,19 +53,19 @@ function ToolbarLayout3(props) {
               <NavigationSearch />
             </Hidden>
 
-            <Hidden lgUp>
-              <ChatPanelToggleButton />
-            </Hidden>
+            {/*<Hidden lgUp>*/}
+            {/*  <ChatPanelToggleButton />*/}
+            {/*</Hidden>*/}
 
-            <LanguageSwitcher />
+            {/*<LanguageSwitcher />*/}
 
-            <AdjustFontSize />
+            {/*<AdjustFontSize />*/}
 
-            <FullScreenToggle />
+            {/*<FullScreenToggle />*/}
 
-            <QuickPanelToggleButton />
+            {/*<QuickPanelToggleButton />*/}
 
-            <NotificationPanelToggleButton />
+            {/*<NotificationPanelToggleButton />*/}
 
             <UserMenu />
           </div>
