@@ -134,16 +134,16 @@ function SignInPage() {
             <Box
                 className="relative hidden md:flex flex-auto items-center justify-center h-full p-64 lg:px-112 overflow-hidden"
                 sx={{
-                    backgroundImage: 'url(/assets/images/demo-content/signin_wallpaper.png)',
-                    backgroundPosition: 'center'
+                    backgroundImage: 'url(/assets/images/cinema_hall.jpg)',
+                    backgroundPosition: 'left'
                 }}
             >
                 <div className="z-10 relative w-full max-w-2xl">
-                    <div className="text-7xl text-right font-bold leading-none text-black">
+                    <div className="text-7xl text-left font-bold leading-none text-white">
                         <div>Welcome to</div>
                         <div>our cinema</div>
                     </div>
-                    <div className="mt-24 text-lg text-right tracking-tight leading-6 text-black">
+                    <div className="mt-24 text-lg text-left tracking-tight leading-6 text-white">
                         Following the modern times and adapting the film<br/>industry to today's digital devices,
                         Movieland
                         Cinema<br/>offers you unforgettable film experiences.

@@ -225,49 +225,47 @@ function Error404Page() {
                 {/*    </Box>*/}
                 {/*</motion.div>*/}
 
-                <div className="block">
-                    <motion.div
-                        initial={{opacity: 0, y: 40}}
-                        animate={{opacity: 1, y: 0, transition: {delay: 0.2}}}
+                <motion.div
+                    initial={{opacity: 0, y: 40}}
+                    animate={{opacity: 1, y: 0, transition: {delay: 0.2}}}
+                >
+                    <Typography
+                        variant="h1"
+                        className="text-4xl md:text-7xl font-extrabold tracking-tight leading-tight md:leading-none text-center"
                     >
-                        <Typography
-                            variant="h1"
-                            className="mt-48 sm:mt-96 text-4xl md:text-7xl font-extrabold tracking-tight leading-tight md:leading-none text-center"
-                        >
-                            Ooops... 404!
-                        </Typography>
-                    </motion.div>
+                        Ooops... 404!
+                    </Typography>
+                </motion.div>
 
-                    <motion.div
-                        initial={{opacity: 0, y: 40}}
-                        animate={{opacity: 1, y: 0, transition: {delay: 0.2}}}
+                <motion.div
+                    initial={{opacity: 0, y: 40}}
+                    animate={{opacity: 1, y: 0, transition: {delay: 0.2}}}
+                >
+                    <Typography
+                        variant="h5"
+                        color="text.secondary"
+                        className="mt-8 text-lg md:text-xl font-medium tracking-tight text-center"
                     >
-                        <Typography
-                            variant="h5"
-                            color="text.secondary"
-                            className="mt-8 text-lg md:text-xl font-medium tracking-tight text-center"
-                        >
-                            The page you requested could not be found.
-                        </Typography>
-                    </motion.div>
+                        The page you requested could not be found.
+                    </Typography>
+                </motion.div>
 
-                    <motion.div
-                        initial={{opacity: 0, y: 40}}
-                        animate={{opacity: 1, y: 0, transition: {delay: 0.2}}}
+                <motion.div
+                    initial={{opacity: 0, y: 40}}
+                    animate={{opacity: 1, y: 0, transition: {delay: 0.2}}}
+                >
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        className="w-50 mt-16"
+                        aria-label="Back to dashboard"
+                        type="button"
+                        size="large"
+                        onClick={() => navigateToDashboard()}
                     >
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            className="w-50 mt-16"
-                            aria-label="Back to dashboard"
-                            type="button"
-                            size="large"
-                            onClick={() => navigateToDashboard()}
-                        >
-                            Back to Dashboard
-                        </Button>
-                    </motion.div>
-                </div>
+                        Back to Dashboard
+                    </Button>
+                </motion.div>
             </div>
         </div>
     );
