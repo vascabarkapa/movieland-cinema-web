@@ -1,9 +1,5 @@
-import {alpha, styled} from '@mui/material/styles';
-import FusePageSimple from '@fuse/core/FusePageSimple';
-import {Card, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from "@mui/material";
-import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
-import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import MoviesHeader from "./MoviesHeader";
 
 // const Root = styled(FusePageSimple)(({theme}) => ({
 //     // '& .FusePageSimple-header': {
@@ -39,9 +35,9 @@ import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 // }
 
 function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
+    return {name, calories, fat, carbs, protein};
 }
-let numSelected = 10;
+
 const rows = [
     createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
     createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
@@ -55,30 +51,9 @@ const rows = [
 function MoviesPage() {
     return (
         <div className="p-36">
-            <div className="flex w-full container">
-                <div className="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 mb-24 px-5">
-                    <div className="flex flex-col flex-auto">
-                        <Typography className="text-3xl font-semibold tracking-tight leading-8">
-                            Movies
-                        </Typography>
-                        <Typography className="font-medium tracking-tight" color="text.secondary">
-                            Management of films in the cinema
-                        </Typography>
-                    </div>
-                    <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
-                        <Button
-                            className="whitespace-nowrap"
-                            variant="contained"
-                            color="info"
-                            startIcon={<FuseSvgIcon size={20}>material-solid:add_comment</FuseSvgIcon>}
-                        >
-                            Add new movie
-                        </Button>
-                    </div>
-                </div>
-            </div>
+            <MoviesHeader/>
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <Table sx={{minWidth: 650}} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>Dessert (100g serving)</TableCell>
@@ -92,7 +67,7 @@ function MoviesPage() {
                         {rows.map((row) => (
                             <TableRow
                                 key={row.name}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
                                 <TableCell component="th" scope="row">
                                     {row.name}
