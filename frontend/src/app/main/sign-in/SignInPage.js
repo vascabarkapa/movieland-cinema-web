@@ -139,9 +139,6 @@ function SignInPage() {
                 }}
             >
                 <div className="z-10 relative w-full max-w-2xl">
-                    <div className="flex justify-end mb-24 leading-none">
-                        <img className="logo-icon w-288 h-40" src="assets/images/logo/movieland_extendlogo_1.svg" alt="logo" />
-                    </div>
                     <div className="text-7xl text-right font-bold leading-none text-black">
                         <div>Welcome to</div>
                         <div>our cinema</div>
