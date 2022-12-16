@@ -5,7 +5,7 @@ function FuseSplashScreen() {
   return (
     <div id="fuse-splash-screen">
       <div className="logo">
-        <img width="128" src="assets/images/logo/movieland_logo2.svg" alt="logo" />
+        <img width="128" src="assets/images/logo/movieland_main.svg" alt="logo" />
       </div>
       <Box
         id="spinner"
