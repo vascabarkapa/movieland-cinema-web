@@ -18,7 +18,7 @@ function MoviesHeader() {
                     <Button
                         className="whitespace-nowrap"
                         variant="contained"
-                        color="info"
+                        color="secondary"
                         startIcon={<FuseSvgIcon size={20}>material-solid:add_comment</FuseSvgIcon>}
                     >
                         Add new movie
