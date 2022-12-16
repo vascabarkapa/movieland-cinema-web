@@ -117,8 +117,8 @@ function SignInPage() {
 
                         <Button
                             variant="contained"
-                            color="secondary"
-                            className=" w-full mt-16"
+                            color="info"
+                            className="w-full mt-16"
                             aria-label="Sign in"
                             disabled={_.isEmpty(dirtyFields) || !isValid}
                             type="submit"
