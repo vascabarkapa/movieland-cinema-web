@@ -18,7 +18,7 @@ const Root = styled('div')(({ theme }) => ({
 function Logo() {
   return (
     <Root className="flex items-center">
-      <img className="logo-icon w-50 h-32" src="assets/images/logo/movieland_extendlogo_1.svg" alt="logo" />
+      <img className="logo-icon w-50 h-32" src="assets/images/logo/movieland_logo2.svg" alt="logo" />
     </Root>
   );
 }
