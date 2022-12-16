@@ -1,6 +1,6 @@
 const navigationConfig = [
   {
-    id: 'dashboard-component',
+    id: 'dashboard',
     title: 'Dashboard',
     type: 'item',
     icon: 'heroicons-outline:chart-bar',
