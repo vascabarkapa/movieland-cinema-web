@@ -21,6 +21,13 @@ const navigationConfig = [
         url: '/settings/movies',
       },
       {
+        id: 'settings.repertory',
+        title: 'Repertory',
+        type: 'item',
+        icon: 'heroicons-outline:desktop-computer',
+        url: '/settings/repertory',
+      },
+      {
         id: 'settings.tickets',
         title: 'Tickets',
         type: 'item',
