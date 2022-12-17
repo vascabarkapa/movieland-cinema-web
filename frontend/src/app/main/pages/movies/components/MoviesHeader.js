@@ -5,12 +5,12 @@ import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 function MoviesHeader() {
     return (
         <div className="flex w-full container">
-            <div className="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 mb-24 px-5">
+            <div className="flex flex-col sm:flex-row flex-auto items-center sm:items-center min-w-0 mb-24 px-5">
                 <div className="flex flex-col flex-auto">
-                    <Typography className="text-3xl font-semibold tracking-tight leading-8">
+                    <Typography className="text-3xl text-center sm:text-left font-semibold tracking-tight leading-8">
                         Movies
                     </Typography>
-                    <Typography className="font-medium tracking-tight" color="text.secondary">
+                    <Typography className="font-medium tracking-tight text-center sm:text-left" color="text.secondary">
                         Management of films in the cinema
                     </Typography>
                 </div>
