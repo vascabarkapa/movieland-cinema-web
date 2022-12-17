@@ -5,6 +5,7 @@ import _ from "@lodash";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import ConfirmationDeleteModal from "../../../shared/components/ConfirmationDeleteModal";
 import * as React from "react";
+import Tooltip from "@mui/material/Tooltip";
 
 // const Root = styled(FusePageSimple)(({theme}) => ({
 //     // '& .FusePageSimple-header': {
@@ -89,40 +90,46 @@ function MoviesPage() {
                                 <TableCell>{row.carbs}</TableCell>
                                 <TableCell>{row.protein}</TableCell>
                                 <TableCell style={{display: "flex", justifyContent: "right"}}>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        type="button"
-                                        size="small"
-                                        className="mr-5 hover:bg-purple"
-                                    >
-                                        <FuseSvgIcon>
-                                            heroicons-solid:eye
-                                        </FuseSvgIcon>
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        type="button"
-                                        size="small"
-                                        className="mr-5 hover:bg-blue"
-                                    >
-                                        <FuseSvgIcon>
-                                            heroicons-solid:pencil-alt
-                                        </FuseSvgIcon>
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        type="button"
-                                        size="small"
-                                        className="hover:bg-red"
-                                        onClick={handleClickOpen}
-                                    >
-                                        <FuseSvgIcon>
-                                            heroicons-solid:trash
-                                        </FuseSvgIcon>
-                                    </Button>
+                                    <Tooltip title="View" placement="top">
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            type="button"
+                                            size="small"
+                                            className="mr-5 hover:bg-purple"
+                                        >
+                                            <FuseSvgIcon>
+                                                heroicons-solid:eye
+                                            </FuseSvgIcon>
+                                        </Button>
+                                    </Tooltip>
+                                    <Tooltip title="Edit" placement="top">
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            type="button"
+                                            size="small"
+                                            className="mr-5 hover:bg-blue"
+                                        >
+                                            <FuseSvgIcon>
+                                                heroicons-solid:pencil-alt
+                                            </FuseSvgIcon>
+                                        </Button>
+                                    </Tooltip>
+                                    <Tooltip title="Delete" placement="top">
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            type="button"
+                                            size="small"
+                                            className="hover:bg-red"
+                                            onClick={handleClickOpen}
+                                        >
+                                            <FuseSvgIcon>
+                                                heroicons-solid:trash
+                                            </FuseSvgIcon>
+                                        </Button>
+                                    </Tooltip>
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -130,7 +137,7 @@ function MoviesPage() {
                 </Table>
             </TableContainer>
             {open && <ConfirmationDeleteModal open={open} setOpen={setOpen}
-                                              message={"Are you sure you want to delete the movie"}/>}
+                                              message={"Are you sure you want to delete the movie?"}/>}
         </div>
     );
 }
