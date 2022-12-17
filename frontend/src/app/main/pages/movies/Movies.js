@@ -1,5 +1,5 @@
 import {Paper, Rating, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import MoviesHeader from "./MoviesHeader";
+import MoviesHeader from "./components/MoviesHeader";
 import Button from "@mui/material/Button";
 import _ from "@lodash";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
