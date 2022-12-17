@@ -23,7 +23,7 @@ function AuthProvider({ children }) {
       jwtService
         .signInWithToken()
         .then((user) => {
-          success(user, 'Signed in with JWT');
+          success(user, 'Signed in Movieland Cinema');
         })
         .catch((error) => {
           pass(error.message);
