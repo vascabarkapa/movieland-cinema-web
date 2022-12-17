@@ -14,14 +14,24 @@ import {useNavigate} from "react-router-dom";
  * Users Form Validation Schema
  */
 const schema = yup.object().shape({
-    username: yup.string().required('You must enter username'),
-    email: yup.string().required('You must enter email'),
-    password: yup.string().required('You must enter password'),
-    confirmPassword: yup.string().required('You must confirm password'),
-    firstName: yup.string().required('You must enter first name'),
-    lastName: yup.string().required('You must enter last name'),
-    citizenNumber: yup.string().required('You must enter citizen number'),
-    phoneNumber: yup.string().required('You must enter phone number'),
+    username: yup.string()
+        .required('Required field'),
+    email: yup.string()
+        .required('Required field')
+        .email('Wrong email format'),
+    password: yup.string()
+        .required('Required field')
+        .min(8, 'Should be 8 chars minimum'),
+    confirmPassword: yup.string()
+        .oneOf([yup.ref('password'), null], 'Passwords must match'),
+    firstName: yup.string()
+        .required('Required field'),
+    lastName: yup.string()
+        .required('Required field'),
+    citizenNumber: yup.string()
+        .required('Required field'),
+    phoneNumber: yup.string()
+        .required('Required field'),
 });
 
 const UsersForm = () => {
@@ -135,8 +145,8 @@ const UsersForm = () => {
                                         label="Confirm Password"
                                         type="password"
                                         variant="outlined"
-                                        error={!!errors.password}
-                                        helperText={errors?.password?.message}
+                                        error={!!errors.confirmPassword}
+                                        helperText={errors?.confirmPassword?.message}
                                         required
                                         fullWidth
                                         size="small"
