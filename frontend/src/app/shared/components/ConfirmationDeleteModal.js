@@ -5,10 +5,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import {showMessage} from "app/store/fuse/messageSlice";
+import { useDispatch } from 'react-redux';
 
 const ConfirmationDeleteModal = ({open, setOpen, message}) => {
+    const dispatch = useDispatch();
+
     const handleClose = () => {
         setOpen(false);
+        dispatch(showMessage({message: "Successfully deleted!"}));
     };
 
     return (
