@@ -136,7 +136,7 @@ function TicketsPage() {
                 </Table>
             </TableContainer>
             {open && <ConfirmationDeleteModal open={open} setOpen={setOpen}
-                                              message={"Are you sure you want to delete the movie?"}/>}
+                                              message={"Are you sure you want to delete the reservation?"}/>}
         </div>
     );
 }
