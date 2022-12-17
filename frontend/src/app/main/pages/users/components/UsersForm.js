@@ -24,19 +24,11 @@ const schema = yup.object().shape({
     phoneNumber: yup.string().required('You must enter phone number'),
 });
 
-/**
- * Users Default Values
- */
-const defaultValues = {
-    username: '',
-};
-
 const UsersForm = () => {
     const navigate = useNavigate();
 
     const {control, formState, handleSubmit, setError, setValue} = useForm({
         mode: 'onChange',
-        defaultValues,
         resolver: yupResolver(schema),
     });
 
