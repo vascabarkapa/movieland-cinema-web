@@ -1,5 +1,8 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import MoviesHeader from "./MoviesHeader";
+import Button from "@mui/material/Button";
+import _ from "@lodash";
+import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 
 // const Root = styled(FusePageSimple)(({theme}) => ({
 //     // '& .FusePageSimple-header': {
@@ -39,13 +42,12 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('The Big Short', 'asdsadsdsadsad', 'asdsadsdsadsad', 'asdsadsdsadsad', 'asdsadsdsadsad'),
     createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
     createData('Eclair', 262, 16.0, 24, 6.0),
     createData('Cupcake', 305, 3.7, 67, 4.3),
     createData('Gingerbread', 356, 16.0, 49, 3.9),
     createData('Frozsen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice crseam sandwich', 237, 9.0, 37, 4.3),
 ];
 
 function MoviesPage() {
@@ -53,14 +55,15 @@ function MoviesPage() {
         <div className="p-36">
             <MoviesHeader/>
             <TableContainer component={Paper}>
-                <Table sx={{minWidth: 650}} aria-label="simple table">
+                <Table sx={{minWidth: 650}}>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Dessert (100g serving)</TableCell>
-                            <TableCell align="right">Calories</TableCell>
-                            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                            <TableCell><b>Name</b></TableCell>
+                            <TableCell><b>Genre</b></TableCell>
+                            <TableCell><b>Direction</b></TableCell>
+                            <TableCell><b>Duration</b></TableCell>
+                            <TableCell><b>Rating&nbsp;(IMDb)</b></TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -68,14 +71,50 @@ function MoviesPage() {
                             <TableRow
                                 key={row.name}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                className="hover:bg-gray-100"
                             >
                                 <TableCell component="th" scope="row">
                                     {row.name}
                                 </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">{row.fat}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
-                                <TableCell align="right">{row.protein}</TableCell>
+                                <TableCell>{row.calories}</TableCell>
+                                <TableCell>{row.fat}</TableCell>
+                                <TableCell>{row.carbs}</TableCell>
+                                <TableCell>{row.protein}</TableCell>
+                                <TableCell style={{display: "flex", justifyContent: "right"}}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        type="button"
+                                        size="small"
+                                        className="mr-5 hover:bg-purple"
+                                    >
+                                        <FuseSvgIcon>
+                                            heroicons-solid:eye
+                                        </FuseSvgIcon>
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        type="button"
+                                        size="small"
+                                        className="mr-5 hover:bg-blue"
+                                    >
+                                        <FuseSvgIcon>
+                                            heroicons-solid:pencil-alt
+                                        </FuseSvgIcon>
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        type="button"
+                                        size="small"
+                                        className="hover:bg-red"
+                                    >
+                                        <FuseSvgIcon>
+                                            heroicons-solid:trash
+                                        </FuseSvgIcon>
+                                    </Button>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
