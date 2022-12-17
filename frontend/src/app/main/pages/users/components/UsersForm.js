@@ -48,7 +48,32 @@ const UsersForm = () => {
         navigate("/settings/users");
     }
 
-    function onSubmit() {
+    function onSubmit({
+                          username,
+                          email,
+                          password,
+                          firstName,
+                          lastName,
+                          citizenNumber,
+                          phoneNumber,
+                          gender,
+                          street,
+                          city,
+                          country
+                      }) {
+        console.log(
+            username,
+            email,
+            password,
+            firstName,
+            lastName,
+            citizenNumber,
+            phoneNumber,
+            gender,
+            street,
+            city,
+            country
+        )
         console.log('COMING SOON')
     }
 
