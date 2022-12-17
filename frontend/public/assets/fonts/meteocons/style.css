@@ -32,3 +32,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Material UI Select Fix */
+#gender {
+  display: flex;
+  align-items: center;
+}
