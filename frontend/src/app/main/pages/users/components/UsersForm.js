@@ -23,6 +23,7 @@ const schema = yup.object().shape({
         .required('Required field')
         .min(8, 'Should be 8 chars minimum'),
     confirmPassword: yup.string()
+        .required('Required field')
         .oneOf([yup.ref('password'), null], 'Passwords must match'),
     firstName: yup.string()
         .required('Required field'),
@@ -268,6 +269,7 @@ const UsersForm = () => {
                                     <FormControl size="small" className="mb-24">
                                         <InputLabel id="gender">Gender</InputLabel>
                                         <Select
+                                            {...field}
                                             labelId="gender"
                                             id="gender"
                                             label="Gender"
