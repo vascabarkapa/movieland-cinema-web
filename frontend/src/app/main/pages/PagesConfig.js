@@ -3,6 +3,7 @@ import Movies from "./movies/Movies";
 import Tickets from "./tickets/Tickets";
 import Users from "./users/Users";
 import Repertory from "./repertory/Repertory";
+import UsersForm from "./users/components/UsersForm";
 
 const PagesConfig = {
     settings: {
@@ -33,6 +34,10 @@ const PagesConfig = {
                 {
                     path: 'users',
                     element: <Users/>,
+                },
+                {
+                    path: 'users/create',
+                    element: <UsersForm/>,
                 },
             ],
         },

@@ -1,6 +1,5 @@
-import {Paper, Rating, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Button from "@mui/material/Button";
-import _ from "@lodash";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import ConfirmationDeleteModal from "../../../shared/components/ConfirmationDeleteModal";
 import * as React from "react";
