@@ -1,4 +1,4 @@
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Paper, Rating, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import MoviesHeader from "./MoviesHeader";
 import Button from "@mui/material/Button";
 import _ from "@lodash";
@@ -88,7 +88,9 @@ function MoviesPage() {
                                 <TableCell>{row.calories}</TableCell>
                                 <TableCell>{row.fat}</TableCell>
                                 <TableCell>{row.carbs}</TableCell>
-                                <TableCell>{row.protein}</TableCell>
+                                <TableCell>
+                                    <Rating name="read-only" value={2} readOnly />
+                                </TableCell>
                                 <TableCell style={{display: "flex", justifyContent: "right"}}>
                                     <Tooltip title="View" placement="top">
                                         <Button
