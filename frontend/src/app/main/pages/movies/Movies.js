@@ -3,6 +3,8 @@ import MoviesHeader from "./MoviesHeader";
 import Button from "@mui/material/Button";
 import _ from "@lodash";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
+import ConfirmationDeleteModal from "../../../shared/components/ConfirmationDeleteModal";
+import * as React from "react";
 
 // const Root = styled(FusePageSimple)(({theme}) => ({
 //     // '& .FusePageSimple-header': {
@@ -51,6 +53,12 @@ const rows = [
 ];
 
 function MoviesPage() {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
     return (
         <div className="p-36">
             <MoviesHeader/>
@@ -109,6 +117,7 @@ function MoviesPage() {
                                         type="button"
                                         size="small"
                                         className="hover:bg-red"
+                                        onClick={handleClickOpen}
                                     >
                                         <FuseSvgIcon>
                                             heroicons-solid:trash
@@ -120,6 +129,8 @@ function MoviesPage() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            {open && <ConfirmationDeleteModal open={open} setOpen={setOpen}
+                                              message={"Are you sure you want to delete the movie"}/>}
         </div>
     );
 }
