@@ -6,6 +6,7 @@ import * as React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import UsersHeader from "./components/UsersHeader";
 import {useNavigate} from "react-router-dom";
+import UsersDetails from "./components/UsersDetailsModal";
 
 // const Root = styled(FusePageSimple)(({theme}) => ({
 //     // '& .FusePageSimple-header': {
@@ -55,10 +56,15 @@ const rows = [
 
 function UsersPage() {
     const navigate = useNavigate();
-    const [open, setOpen] = React.useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
+    const [openUsersDetailsModal, setOpenUsersDetailsModal] = React.useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleDeleteModalOpen = () => {
+        setOpenDeleteModal(true);
+    };
+
+    const handleUsersDetailsModalOpen = () => {
+        setOpenUsersDetailsModal(true);
     };
 
     const handleOnEdit = () => {
@@ -100,6 +106,7 @@ function UsersPage() {
                                             type="button"
                                             size="small"
                                             className="mr-5 hover:bg-purple"
+                                            onClick={handleUsersDetailsModalOpen}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:eye
@@ -127,7 +134,7 @@ function UsersPage() {
                                             type="button"
                                             size="small"
                                             className="hover:bg-red"
-                                            onClick={handleClickOpen}
+                                            onClick={handleDeleteModalOpen}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:trash
@@ -140,8 +147,9 @@ function UsersPage() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            {open && <ConfirmationDeleteModal open={open} setOpen={setOpen}
-                                              message={"Are you sure you want to delete the user?"}/>}
+            {openUsersDetailsModal && <UsersDetails open={openUsersDetailsModal} setOpen={setOpenUsersDetailsModal}/>}
+            {openDeleteModal && <ConfirmationDeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal}
+                                                         message={"Are you sure you want to delete the user?"}/>}
         </div>
     );
 }
