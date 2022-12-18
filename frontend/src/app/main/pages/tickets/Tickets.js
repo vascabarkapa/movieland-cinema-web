@@ -6,6 +6,8 @@ import ConfirmationDeleteModal from "../../../shared/components/ConfirmationDele
 import * as React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import TicketsHeader from "./components/TicketsHeader";
+import UsersDetails from "../users/components/UsersDetailsModal";
+import TicketsDetailsModal from "./components/TicketsDetailsModal";
 
 // const Root = styled(FusePageSimple)(({theme}) => ({
 //     // '& .FusePageSimple-header': {
@@ -53,10 +55,14 @@ const rows = [
 ];
 
 function TicketsPage() {
-    const [open, setOpen] = React.useState(false);
+    const [openTicketsDetailsModal, setOpenTicketsDetailsModal] = React.useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    // const handleClickOpen = () => {
+    //     setOpen(true);
+    // };
+
+    const handleTicketsDetailsModalOpen = () => {
+        setOpenTicketsDetailsModal(true);
     };
 
     return (
@@ -66,7 +72,7 @@ function TicketsPage() {
                 <Table sx={{minWidth: 650}}>
                     <TableHead>
                         <TableRow>
-                            <TableCell><b>First and last name</b></TableCell>
+                            <TableCell><b>Full Name</b></TableCell>
                             <TableCell><b>Email</b></TableCell>
                             <TableCell><b>Movie</b></TableCell>
                             <TableCell><b>Number of tickets</b></TableCell>
@@ -96,6 +102,7 @@ function TicketsPage() {
                                             type="button"
                                             size="small"
                                             className="mr-5 hover:bg-purple"
+                                            onClick={handleTicketsDetailsModalOpen}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:eye
@@ -115,28 +122,29 @@ function TicketsPage() {
                                     {/*        </FuseSvgIcon>*/}
                                     {/*    </Button>*/}
                                     {/*</Tooltip>*/}
-                                    <Tooltip title="Delete" placement="top">
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            type="button"
-                                            size="small"
-                                            className="hover:bg-red"
-                                            onClick={handleClickOpen}
-                                        >
-                                            <FuseSvgIcon>
-                                                heroicons-solid:trash
-                                            </FuseSvgIcon>
-                                        </Button>
-                                    </Tooltip>
+                                    {/*<Tooltip title="Delete" placement="top">*/}
+                                    {/*    <Button*/}
+                                    {/*        variant="contained"*/}
+                                    {/*        color="primary"*/}
+                                    {/*        type="button"*/}
+                                    {/*        size="small"*/}
+                                    {/*        className="hover:bg-red"*/}
+                                    {/*        onClick={handleClickOpen}*/}
+                                    {/*    >*/}
+                                    {/*        <FuseSvgIcon>*/}
+                                    {/*            heroicons-solid:trash*/}
+                                    {/*        </FuseSvgIcon>*/}
+                                    {/*    </Button>*/}
+                                    {/*</Tooltip>*/}
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-            {open && <ConfirmationDeleteModal open={open} setOpen={setOpen}
-                                              message={"Are you sure you want to delete the reservation?"}/>}
+            {openTicketsDetailsModal && <TicketsDetailsModal open={openTicketsDetailsModal} setOpen={setOpenTicketsDetailsModal}/>}
+            {/*{open && <ConfirmationDeleteModal open={open} setOpen={setOpen}*/}
+            {/*                                  message={"Are you sure you want to delete the reservation?"}/>}*/}
         </div>
     );
 }

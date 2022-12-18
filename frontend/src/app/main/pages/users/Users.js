@@ -6,7 +6,7 @@ import * as React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import UsersHeader from "./components/UsersHeader";
 import {useNavigate} from "react-router-dom";
-import UsersDetails from "./components/UsersDetailsModal";
+import UsersDetailsModal from "./components/UsersDetailsModal";
 
 // const Root = styled(FusePageSimple)(({theme}) => ({
 //     // '& .FusePageSimple-header': {
@@ -147,7 +147,7 @@ function UsersPage() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            {openUsersDetailsModal && <UsersDetails open={openUsersDetailsModal} setOpen={setOpenUsersDetailsModal}/>}
+            {openUsersDetailsModal && <UsersDetailsModal open={openUsersDetailsModal} setOpen={setOpenUsersDetailsModal}/>}
             {openDeleteModal && <ConfirmationDeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal}
                                                          message={"Are you sure you want to delete the user?"}/>}
         </div>
