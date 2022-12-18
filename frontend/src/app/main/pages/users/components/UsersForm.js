@@ -88,7 +88,7 @@ const UsersForm = () => {
             <Card>
                 <CardContent>
                     <Typography className="text-3xl text-center sm:text-left font-semibold tracking-tight leading-8">
-                        New User
+                        New/Edit User
                     </Typography>
                 </CardContent>
 
