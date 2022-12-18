@@ -95,7 +95,7 @@ function TicketsPage() {
                                 <TableCell>{row.carbs}</TableCell>
                                 <TableCell>{row.carbs}</TableCell>
                                 <TableCell style={{display: "flex", justifyContent: "right"}}>
-                                    <Tooltip title="View" placement="top">
+                                    <Tooltip title="See transaction" placement="top">
                                         <Button
                                             variant="contained"
                                             color="primary"
@@ -105,7 +105,7 @@ function TicketsPage() {
                                             onClick={handleTicketsDetailsModalOpen}
                                         >
                                             <FuseSvgIcon>
-                                                heroicons-solid:eye
+                                                heroicons-outline:shopping-cart
                                             </FuseSvgIcon>
                                         </Button>
                                     </Tooltip>
