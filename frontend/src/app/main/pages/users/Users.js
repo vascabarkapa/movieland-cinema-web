@@ -5,6 +5,7 @@ import ConfirmationDeleteModal from "../../../shared/components/ConfirmationDele
 import * as React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import UsersHeader from "./components/UsersHeader";
+import {useNavigate} from "react-router-dom";
 
 // const Root = styled(FusePageSimple)(({theme}) => ({
 //     // '& .FusePageSimple-header': {
@@ -53,10 +54,15 @@ const rows = [
 ];
 
 function UsersPage() {
+    const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
+    };
+
+    const handleOnEdit = () => {
+        navigate("/settings/users/create");
     };
 
     return (
@@ -107,6 +113,7 @@ function UsersPage() {
                                             type="button"
                                             size="small"
                                             className="mr-5 hover:bg-blue"
+                                            onClick={handleOnEdit}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:pencil-alt
