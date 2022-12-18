@@ -67,7 +67,7 @@ function UsersPage() {
                     <TableHead>
                         <TableRow>
                             <TableCell><b>Username</b></TableCell>
-                            <TableCell><b>First and lastname</b></TableCell>
+                            <TableCell><b>Full Name</b></TableCell>
                             <TableCell><b>Email</b></TableCell>
                             <TableCell><b>Phone number</b></TableCell>
                             <TableCell></TableCell>
