@@ -21,14 +21,14 @@ const ConfirmationDeleteModal = ({open, setOpen, message}) => {
             <Dialog
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
+                aria-labelledby="alert-delete-title"
+                aria-describedby="alert-delete-description"
             >
-                <DialogTitle id="alert-dialog-title">
+                <DialogTitle id="alert-delete-title">
                     {"Delete confirmation"}
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
+                    <DialogContentText id="alert-delete-description">
                         {message}
                     </DialogContentText>
                 </DialogContent>
