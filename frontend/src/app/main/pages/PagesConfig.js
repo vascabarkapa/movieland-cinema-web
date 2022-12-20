@@ -4,6 +4,7 @@ import Tickets from "./tickets/Tickets";
 import Users from "./users/Users";
 import Repertory from "./repertory/Repertory";
 import UsersForm from "./users/components/UsersForm";
+import About from "./about/About";
 
 const PagesConfig = {
     settings: {
@@ -40,6 +41,10 @@ const PagesConfig = {
                     element: <UsersForm/>,
                 },
             ],
+        },
+        {
+            path: 'about',
+            element: <About/>,
         },
     ],
 };
