@@ -52,10 +52,10 @@ const rows = [
 ];
 
 function RepertoryPage() {
-    const [open, setOpen] = React.useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleOpenDeleteModal = () => {
+        setOpenDeleteModal(true);
     };
 
     return (
@@ -119,7 +119,7 @@ function RepertoryPage() {
                                             type="button"
                                             size="small"
                                             className="hover:bg-red"
-                                            onClick={handleClickOpen}
+                                            onClick={handleOpenDeleteModal}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:trash
@@ -132,7 +132,7 @@ function RepertoryPage() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            {open && <ConfirmationDeleteModal open={open} setOpen={setOpen}
+            {openDeleteModal && <ConfirmationDeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal}
                                               message={"Are you sure you want to delete the movie from repertory?"}/>}
         </div>
     );
