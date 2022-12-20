@@ -1,4 +1,4 @@
-import {Paper, Rating, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Button from "@mui/material/Button";
 import _ from "@lodash";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
@@ -56,6 +56,10 @@ function RepertoryPage() {
 
     const handleOpenDeleteModal = () => {
         setOpenDeleteModal(true);
+    };
+
+    const handleOpenFormModal = () => {
+        setOpenFormModal(true);
     };
 
     return (
@@ -133,7 +137,7 @@ function RepertoryPage() {
                 </Table>
             </TableContainer>
             {openDeleteModal && <ConfirmationDeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal}
-                                              message={"Are you sure you want to delete the movie from repertory?"}/>}
+                                                         message={"Are you sure you want to delete the movie from repertory?"}/>}
         </div>
     );
 }

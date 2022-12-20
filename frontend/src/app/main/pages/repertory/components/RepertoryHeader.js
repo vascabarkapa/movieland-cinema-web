@@ -1,8 +1,16 @@
 import {Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
+import RepertoryFormModal from "./RepertoryFormModal";
+import * as React from "react";
 
 function RepertoryHeader() {
+    const [openFormModal, setOpenFormModal] = React.useState(false);
+
+    const handleOpenFormModal = () => {
+        setOpenFormModal(true);
+    };
+
     return (
         <div className="flex w-full container">
             <div className="flex flex-col sm:flex-row flex-auto items-center sm:items-center min-w-0 mb-24 px-5">
@@ -20,11 +28,13 @@ function RepertoryHeader() {
                         variant="contained"
                         color="secondary"
                         startIcon={<FuseSvgIcon size={20}>material-solid:add_comment</FuseSvgIcon>}
+                        onClick={handleOpenFormModal}
                     >
                         Add movie to repertory
                     </Button>
                 </div>
             </div>
+            {openFormModal && <RepertoryFormModal open={openFormModal} setOpen={setOpenFormModal}/>}
         </div>
     );
 }
