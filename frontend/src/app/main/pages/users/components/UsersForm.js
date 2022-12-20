@@ -93,7 +93,7 @@ const UsersForm = () => {
                 </CardContent>
 
                 <form
-                    name="registerForm"
+                    name="usersForm"
                     noValidate
                     className="flex flex-col justify-center"
                     onSubmit={handleSubmit(onSubmit)}
