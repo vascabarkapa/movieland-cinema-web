@@ -6,6 +6,7 @@ import ConfirmationDeleteModal from "../../../shared/components/ConfirmationDele
 import * as React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import RepertoryHeader from "./components/RepertoryHeader";
+import RepertoryFormModal from "./components/RepertoryFormModal";
 
 // const Root = styled(FusePageSimple)(({theme}) => ({
 //     // '& .FusePageSimple-header': {
@@ -53,6 +54,7 @@ const rows = [
 
 function RepertoryPage() {
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
+    const [openFormModal, setOpenFormModal] = React.useState(false);
 
     const handleOpenDeleteModal = () => {
         setOpenDeleteModal(true);
@@ -110,6 +112,7 @@ function RepertoryPage() {
                                             type="button"
                                             size="small"
                                             className="mr-5 hover:bg-blue"
+                                            onClick={handleOpenFormModal}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:pencil-alt
@@ -138,6 +141,7 @@ function RepertoryPage() {
             </TableContainer>
             {openDeleteModal && <ConfirmationDeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal}
                                                          message={"Are you sure you want to delete the movie from repertory?"}/>}
+            {openFormModal && <RepertoryFormModal open={openFormModal} setOpen={setOpenFormModal}/>}
         </div>
     );
 }
