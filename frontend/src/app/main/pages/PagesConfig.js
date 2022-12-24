@@ -6,6 +6,7 @@ import Repertory from "./repertory/Repertory";
 import UsersForm from "./users/components/UsersForm";
 import About from "./about/About";
 import MoviesForm from "./movies/components/MoviesForm";
+import RepertorySeatReservations from "./repertory/components/RepertorySeatReservations";
 
 const PagesConfig = {
     settings: {
@@ -32,6 +33,10 @@ const PagesConfig = {
                 {
                     path: 'repertory',
                     element: <Repertory/>,
+                },
+                {
+                    path: 'repertory/reservations',
+                    element: <RepertorySeatReservations/>,
                 },
                 {
                     path: 'tickets',

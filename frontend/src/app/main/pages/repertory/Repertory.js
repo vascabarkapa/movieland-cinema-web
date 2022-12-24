@@ -7,6 +7,7 @@ import * as React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import RepertoryHeader from "./components/RepertoryHeader";
 import RepertoryFormModal from "./components/RepertoryFormModal";
+import {useNavigate} from "react-router-dom";
 
 // const Root = styled(FusePageSimple)(({theme}) => ({
 //     // '& .FusePageSimple-header': {
@@ -53,6 +54,7 @@ const rows = [
 ];
 
 function RepertoryPage() {
+    const navigate = useNavigate();
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
     const [openFormModal, setOpenFormModal] = React.useState(false);
 
@@ -62,6 +64,10 @@ function RepertoryPage() {
 
     const handleOpenFormModal = () => {
         setOpenFormModal(true);
+    };
+
+    const handleOpenSeatReservations = () => {
+        navigate('/settings/repertory/reservations');
     };
 
     return (
@@ -90,7 +96,9 @@ function RepertoryPage() {
                                 </TableCell>
                                 <TableCell>{row.calories}</TableCell>
                                 <TableCell>{row.fat}</TableCell>
-                                <TableCell>{row.carbs}</TableCell>
+                                <TableCell>
+                                    <i className="inline-block w-8 h-8 rounded mr-5 bg-green"></i>220
+                                </TableCell>
                                 <TableCell style={{display: "flex", justifyContent: "right"}}>
                                     <Tooltip title="View" placement="top">
                                         <Button
@@ -99,6 +107,7 @@ function RepertoryPage() {
                                             type="button"
                                             size="small"
                                             className="mr-5 hover:bg-purple"
+                                            onClick={handleOpenSeatReservations}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:eye
