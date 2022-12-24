@@ -97,7 +97,7 @@ function RepertoryPage() {
                                 <TableCell>{row.calories}</TableCell>
                                 <TableCell>{row.fat}</TableCell>
                                 <TableCell>
-                                    <i className="inline-block w-8 h-8 rounded mr-5 bg-green"></i>220
+                                    <i className="inline-block w-8 h-8 rounded mr-5 bg-green animate-ping"></i>220
                                 </TableCell>
                                 <TableCell style={{display: "flex", justifyContent: "right"}}>
                                     <Tooltip title="View" placement="top">

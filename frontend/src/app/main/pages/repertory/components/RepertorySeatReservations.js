@@ -5,12 +5,19 @@ import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import * as React from "react";
 import {Box} from "@mui/system";
 import Card from "@mui/material/Card";
+import {useNavigate} from "react-router-dom";
 
 const RepertorySeatReservations = () => {
+    const navigate = useNavigate();
     const rows = [];
 
     for (let i = 0; i < 20; i++) {
-        rows.push(<Paper key={i} className="inline-block w-32 h-32 mr-5 mb-5 rounded-0"/>);
+        rows.push(<Paper key={i}
+                         className="inline-block w-10 h-10 md:w-32 md:h-32 sm:w-24 sm:h-24 mr-5 mb-5 rounded-0"/>);
+    }
+
+    const handleBackToRepository = () => {
+        navigate("/settings/repertory");
     }
 
     return (
@@ -28,13 +35,23 @@ const RepertorySeatReservations = () => {
                         </Typography>
                     </div>
                     <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
-                        220/220 tickets left
+                        <i className="inline-block w-8 h-8 rounded mr-5 bg-green animate-ping"></i>220/220 tickets left
+                        <Button
+                            className="whitespace-nowrap"
+                            variant="contained"
+                            color="primary"
+                            startIcon={<FuseSvgIcon size={20}>heroicons-outline:arrow-left</FuseSvgIcon>}
+                            onClick={handleBackToRepository}
+                        >
+                            Back to Repertories
+                        </Button>
                     </div>
                 </div>
             </div>
             <div className="w-full container flex justify-center">
                 <div className="block">
-                    <Paper style={{width: '760px'}} className="h-24 rounded-0 text-center font-semibold uppercase flex justify-center items-center">Screen</Paper>
+                    <Paper
+                        className="h-10 sm:h-24 md:h-32 w-320 sm:w-2xl md:w-3xl rounded-0 text-center font-semibold uppercase flex justify-center items-center">Screen</Paper>
                     <br/>
                     <div className="flex justify-center">
                         <div className="block">
