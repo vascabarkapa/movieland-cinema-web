@@ -13,7 +13,7 @@ const RepertorySeatReservations = () => {
 
     for (let i = 0; i < 20; i++) {
         rows.push(<Paper key={i}
-                         className="inline-block w-10 h-10 md:w-32 md:h-32 sm:w-24 sm:h-24 mr-5 mb-5 rounded-0"/>);
+                         className="inline-block w-10 h-10 md:w-32 md:h-32 sm:w-24 sm:h-24 mr-5 mb-5 rounded-0 cursor-pointer"/>);
     }
 
     const handleBackToRepository = () => {
@@ -43,7 +43,7 @@ const RepertorySeatReservations = () => {
                             startIcon={<FuseSvgIcon size={20}>heroicons-outline:arrow-left</FuseSvgIcon>}
                             onClick={handleBackToRepository}
                         >
-                            Back to Repertories
+                            Back to Repertory
                         </Button>
                     </div>
                 </div>
