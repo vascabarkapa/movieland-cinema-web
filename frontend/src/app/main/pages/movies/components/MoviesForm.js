@@ -86,14 +86,14 @@ const MoviesForm = () => {
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <CardContent>
-                        <div className="grid grid-cols-1 sm:grid-cols-6 gap-x-20">
+                        <div className="grid grid-cols-1 md:grid-cols-6 gap-x-20">
                             <Controller
                                 name="name"
                                 control={control}
                                 render={({field}) => (
                                     <TextField
                                         {...field}
-                                        className="mb-24 col-span-6"
+                                        className="mb-24 col-span-1 md:col-span-6"
                                         label="Name"
                                         type="text"
                                         variant="outlined"
@@ -112,7 +112,7 @@ const MoviesForm = () => {
                                 render={({field}) => (
                                     <TextField
                                         {...field}
-                                        className="mb-24 col-span-2"
+                                        className="mb-24 col-span-1 md:col-span-2"
                                         label="Genre"
                                         type="text"
                                         variant="outlined"
@@ -131,7 +131,7 @@ const MoviesForm = () => {
                                 render={({field}) => (
                                     <TextField
                                         {...field}
-                                        className="mb-24 col-span-2"
+                                        className="mb-24 col-span-1 md:col-span-2"
                                         label="Duration"
                                         type="text"
                                         variant="outlined"
@@ -150,7 +150,7 @@ const MoviesForm = () => {
                                 render={({field}) => (
                                     <TextField
                                         {...field}
-                                        className="mb-24 col-span-2"
+                                        className="mb-24 col-span-1 md:col-span-2"
                                         label="Rating"
                                         type="text"
                                         variant="outlined"
@@ -169,7 +169,7 @@ const MoviesForm = () => {
                                 render={({field}) => (
                                     <TextField
                                         {...field}
-                                        className="mb-24 col-span-6"
+                                        className="mb-24 col-span-1 md:col-span-6"
                                         label="Description"
                                         type="text"
                                         variant="outlined"
@@ -188,7 +188,7 @@ const MoviesForm = () => {
                                 render={({field}) => (
                                     <TextField
                                         {...field}
-                                        className="mb-24 col-span-3"
+                                        className="mb-24 col-span-1 md:col-span-3"
                                         label="Direction"
                                         type="text"
                                         variant="outlined"
@@ -207,7 +207,7 @@ const MoviesForm = () => {
                                 render={({field}) => (
                                     <TextField
                                         {...field}
-                                        className="mb-24 col-span-3"
+                                        className="mb-24 col-span-1 md:col-span-3"
                                         label="Actors"
                                         type="text"
                                         variant="outlined"
