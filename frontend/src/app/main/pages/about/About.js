@@ -7,6 +7,7 @@ import InfoWindow from 'google-map-react';
 import Typography from "@mui/material/Typography";
 import {CardContent} from "@mui/material";
 import Card from "@mui/material/Card";
+import * as React from "react";
 
 
 function Marker({text}) {
@@ -29,18 +30,27 @@ function AboutPage() {
             >
                 <Marker text="Movieland Cinema" lat="43.737070" lng="18.568478"/>
             </GoogleMapReact>
-            <div className="bg-white h-288">
-                Ovdje ce ici informacije o bioskopu
-                <br/>
-                Lokacija
-                <br/>
-                Radno vijeme
-                <br/>
-                Kontakt
-                <br/>
-                Sajt
-                <br/>
-                Logo takodje
+            <div className="bg-white h-288 text-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 mt-24 md:mt-48">
+                    <div className="flex justify-center items-center">
+                        <img style={{height: '100px'}} src="/assets/images/logo/movieland_main.svg"
+                             alt="Movieland_Cinema_Logo"/>
+                        <Typography className="text-3xl text-left font-semibold tracking-tight leading-8">
+                            Movieland Cinema <br/>
+                            <Typography className="text-12 text-left">
+                                Olimpijska bb, Jahorina, Bosnia and Herzegovina <br/>
+                            </Typography>
+                            <Typography className="text-12 text-left">
+                                +38757000111, www.movielandcinema.com <br/>
+                            </Typography>
+                        </Typography>
+                    </div>
+                    <div className="flex justify-center items-center">
+                        Work time <br/>
+                        Monday - Thursday: 18.00 - 22.00 <br/>
+                        Friday - Sunday: 18.00 - 23.00
+                    </div>
+                </div>
             </div>
         </>
 
