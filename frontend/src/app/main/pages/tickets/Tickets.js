@@ -93,7 +93,10 @@ function TicketsPage() {
                                 <TableCell>{row.calories}</TableCell>
                                 <TableCell>{row.fat}</TableCell>
                                 <TableCell>{row.carbs}</TableCell>
-                                <TableCell>{row.carbs}</TableCell>
+                                <TableCell>
+                                    {row.carbs} <FuseSvgIcon className="text-48 inline-block text-green" size={16}
+                                                             color="action">heroicons-outline:check-circle</FuseSvgIcon>
+                                </TableCell>
                                 <TableCell style={{display: "flex", justifyContent: "right"}}>
                                     <Tooltip title="See transaction" placement="top">
                                         <Button
@@ -142,7 +145,8 @@ function TicketsPage() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            {openTicketsDetailsModal && <TicketsDetailsModal open={openTicketsDetailsModal} setOpen={setOpenTicketsDetailsModal}/>}
+            {openTicketsDetailsModal &&
+                <TicketsDetailsModal open={openTicketsDetailsModal} setOpen={setOpenTicketsDetailsModal}/>}
             {/*{open && <ConfirmationDeleteModal open={open} setOpen={setOpen}*/}
             {/*                                  message={"Are you sure you want to delete the reservation?"}/>}*/}
         </div>
