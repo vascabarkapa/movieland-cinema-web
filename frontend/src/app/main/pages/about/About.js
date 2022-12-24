@@ -1,14 +1,8 @@
-import {styled} from '@mui/material/styles';
-import FusePageSimple from '@fuse/core/FusePageSimple';
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import Tooltip from "@mui/material/Tooltip";
 import GoogleMapReact from 'google-map-react';
-import InfoWindow from 'google-map-react';
 import Typography from "@mui/material/Typography";
-import {CardContent} from "@mui/material";
-import Card from "@mui/material/Card";
 import * as React from "react";
-
 
 function Marker({text}) {
     return (

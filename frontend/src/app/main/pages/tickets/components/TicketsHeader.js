@@ -1,6 +1,4 @@
 import {Typography} from "@mui/material";
-import Button from "@mui/material/Button";
-import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 
 function TicketsHeader() {
     return (

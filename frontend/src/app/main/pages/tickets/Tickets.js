@@ -1,46 +1,10 @@
-import {Paper, Rating, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Button from "@mui/material/Button";
-import _ from "@lodash";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
-import ConfirmationDeleteModal from "../../../shared/components/ConfirmationDeleteModal";
 import * as React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import TicketsHeader from "./components/TicketsHeader";
-import UsersDetails from "../users/components/UsersDetailsModal";
 import TicketsDetailsModal from "./components/TicketsDetailsModal";
-
-// const Root = styled(FusePageSimple)(({theme}) => ({
-//     // '& .FusePageSimple-header': {
-//     //     backgroundColor: theme.palette.background.paper,
-//     //     borderBottomWidth: 1,
-//     //     borderStyle: 'solid',
-//     //     borderColor: theme.palette.divider,
-//     // },
-//     '& .FusePageSimple-toolbar': {},
-//     '& .FusePageSimple-content': {},
-//     '& .FusePageSimple-sidebarHeader': {},
-//     '& .FusePageSimple-sidebarContent': {},
-// }));
-//
-// function MoviesPage(props) {
-//     return (
-//         <Root
-//             // header={
-//             //     <div className="p-24">
-//             //         <h4>{t('TITLE')}</h4>
-//             //     </div>
-//             // }
-//             content={
-//                 <div className="p-24">
-//                     <h4>Movies</h4>
-//                     <br/>
-//                     <b>Coming soon.</b>
-//                 </div>
-//             }
-//             scroll="content"
-//         />
-//     );
-// }
 
 function createData(name, calories, fat, carbs, protein) {
     return {name, calories, fat, carbs, protein};

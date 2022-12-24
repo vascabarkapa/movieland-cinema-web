@@ -1,10 +1,7 @@
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from "@mui/material";
+import {Paper, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
-import _ from "@lodash";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import * as React from "react";
-import {Box} from "@mui/system";
-import Card from "@mui/material/Card";
 import {useNavigate} from "react-router-dom";
 
 const RepertorySeatReservations = () => {

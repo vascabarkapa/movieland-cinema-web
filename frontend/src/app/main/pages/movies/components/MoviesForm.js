@@ -1,13 +1,11 @@
 import Card from "@mui/material/Card";
-import {CardActions, CardContent, InputLabel, Select} from "@mui/material";
+import {CardActions, CardContent} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {Controller, useForm} from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import {useNavigate} from "react-router-dom";
 
 /**

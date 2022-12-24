@@ -8,39 +8,6 @@ import UsersHeader from "./components/UsersHeader";
 import {useNavigate} from "react-router-dom";
 import UsersDetailsModal from "./components/UsersDetailsModal";
 
-// const Root = styled(FusePageSimple)(({theme}) => ({
-//     // '& .FusePageSimple-header': {
-//     //     backgroundColor: theme.palette.background.paper,
-//     //     borderBottomWidth: 1,
-//     //     borderStyle: 'solid',
-//     //     borderColor: theme.palette.divider,
-//     // },
-//     '& .FusePageSimple-toolbar': {},
-//     '& .FusePageSimple-content': {},
-//     '& .FusePageSimple-sidebarHeader': {},
-//     '& .FusePageSimple-sidebarContent': {},
-// }));
-//
-// function MoviesPage(props) {
-//     return (
-//         <Root
-//             // header={
-//             //     <div className="p-24">
-//             //         <h4>{t('TITLE')}</h4>
-//             //     </div>
-//             // }
-//             content={
-//                 <div className="p-24">
-//                     <h4>Movies</h4>
-//                     <br/>
-//                     <b>Coming soon.</b>
-//                 </div>
-//             }
-//             scroll="content"
-//         />
-//     );
-// }
-
 function createData(name, calories, fat, carbs, protein) {
     return {name, calories, fat, carbs, protein};
 }
