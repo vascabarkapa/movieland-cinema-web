@@ -7,6 +7,7 @@ import ConfirmationDeleteModal from "../../../shared/components/ConfirmationDele
 import * as React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import {useNavigate} from "react-router-dom";
+import MoviesDetailsModal from "./components/MoviesDetailsModal";
 
 // const Root = styled(FusePageSimple)(({theme}) => ({
 //     // '& .FusePageSimple-header': {
@@ -56,10 +57,15 @@ const rows = [
 
 function MoviesPage() {
     const navigate = useNavigate();
-    const [open, setOpen] = React.useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
+    const [openDetailsModal, setOpenDetailsModal] = React.useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleOpenDeleteModal = () => {
+        setOpenDeleteModal(true);
+    };
+
+    const handleOpenDetailsModal = () => {
+        setOpenDetailsModal(true);
     };
 
     const handleEditMovies = () => {
@@ -95,7 +101,7 @@ function MoviesPage() {
                                 <TableCell>{row.fat}</TableCell>
                                 <TableCell>{row.carbs}</TableCell>
                                 <TableCell>
-                                    <Rating name="read-only" value={2} readOnly />
+                                    <Rating name="read-only" value={2} readOnly/>
                                 </TableCell>
                                 <TableCell style={{display: "flex", justifyContent: "right"}}>
                                     <Tooltip title="View" placement="top">
@@ -105,6 +111,7 @@ function MoviesPage() {
                                             type="button"
                                             size="small"
                                             className="mr-5 hover:bg-purple"
+                                            onClick={handleOpenDetailsModal}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:eye
@@ -132,7 +139,7 @@ function MoviesPage() {
                                             type="button"
                                             size="small"
                                             className="hover:bg-red"
-                                            onClick={handleClickOpen}
+                                            onClick={handleOpenDeleteModal}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:trash
@@ -145,8 +152,9 @@ function MoviesPage() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            {open && <ConfirmationDeleteModal open={open} setOpen={setOpen}
-                                              message={"Are you sure you want to delete the movie?"}/>}
+            {openDetailsModal && <MoviesDetailsModal open={openDetailsModal} setOpen={setOpenDetailsModal}/>}
+            {openDeleteModal && <ConfirmationDeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal}
+                                                         message={"Are you sure you want to delete the movie?"}/>}
         </div>
     );
 }
