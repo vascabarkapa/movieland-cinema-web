@@ -5,6 +5,7 @@ import Users from "./users/Users";
 import Repertory from "./repertory/Repertory";
 import UsersForm from "./users/components/UsersForm";
 import About from "./about/About";
+import MoviesForm from "./movies/components/MoviesForm";
 
 const PagesConfig = {
     settings: {
@@ -23,6 +24,10 @@ const PagesConfig = {
                 {
                     path: 'movies',
                     element: <Movies/>,
+                },
+                {
+                    path: 'movies/create',
+                    element: <MoviesForm/>,
                 },
                 {
                     path: 'repertory',

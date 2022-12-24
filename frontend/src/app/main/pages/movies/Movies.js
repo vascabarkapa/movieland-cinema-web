@@ -6,6 +6,7 @@ import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import ConfirmationDeleteModal from "../../../shared/components/ConfirmationDeleteModal";
 import * as React from "react";
 import Tooltip from "@mui/material/Tooltip";
+import {useNavigate} from "react-router-dom";
 
 // const Root = styled(FusePageSimple)(({theme}) => ({
 //     // '& .FusePageSimple-header': {
@@ -54,10 +55,15 @@ const rows = [
 ];
 
 function MoviesPage() {
+    const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
+    };
+
+    const handleEditMovies = () => {
+        navigate("/settings/movies/create");
     };
 
     return (
@@ -112,6 +118,7 @@ function MoviesPage() {
                                             type="button"
                                             size="small"
                                             className="mr-5 hover:bg-blue"
+                                            onClick={handleEditMovies}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:pencil-alt

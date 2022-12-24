@@ -1,8 +1,15 @@
 import {Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
+import {useNavigate} from "react-router-dom";
 
 function MoviesHeader() {
+    const navigate = useNavigate();
+
+    const handleAddMovies = () => {
+        navigate("/settings/movies/create");
+    };
+
     return (
         <div className="flex w-full container">
             <div className="flex flex-col sm:flex-row flex-auto items-center sm:items-center min-w-0 mb-24 px-5">
@@ -20,6 +27,7 @@ function MoviesHeader() {
                         variant="contained"
                         color="secondary"
                         startIcon={<FuseSvgIcon size={20}>material-solid:add_comment</FuseSvgIcon>}
+                        onClick={handleAddMovies}
                     >
                         Add new movie
                     </Button>
