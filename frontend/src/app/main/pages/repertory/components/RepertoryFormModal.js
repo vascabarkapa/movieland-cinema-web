@@ -19,10 +19,16 @@ const schema = yup.object().shape({
         .required('Required field'),
     dateTime: yup.string()
         .required('Required field'),
-    numberOfTickets: yup.string()
-        .required('Required field'),
-    price: yup.string()
-        .required('Required field'),
+    numberOfTickets: yup.number()
+        .required('Required field')
+        .nullable()
+        .typeError('Number of Tickets must be a number')
+        .min(1, 'Number of Tickets must be greater than or equal to 1'),
+    price: yup.number()
+        .required('Required field')
+        .nullable()
+        .typeError('Price must be a number')
+        .min(1, 'Price must be greater than or equal to 1'),
 });
 
 const RepertoryFormModal = ({open, setOpen}) => {
@@ -120,12 +126,13 @@ const RepertoryFormModal = ({open, setOpen}) => {
                                             {...field}
                                             className="mb-24"
                                             label="Number of Tickets"
-                                            type="text"
+                                            type="number"
                                             variant="outlined"
                                             error={!!errors.numberOfTickets}
                                             helperText={errors?.numberOfTickets?.message}
                                             required
                                             fullWidth
+                                            InputProps={{inputProps: {min: 1}}}
                                             size="small"
                                         />
                                     )}
@@ -139,7 +146,7 @@ const RepertoryFormModal = ({open, setOpen}) => {
                                             {...field}
                                             className="mb-24"
                                             label="Price"
-                                            type="text"
+                                            type="number"
                                             variant="outlined"
                                             error={!!errors.price}
                                             helperText={errors?.price?.message}
@@ -152,6 +159,7 @@ const RepertoryFormModal = ({open, setOpen}) => {
                                                         &euro;
                                                     </InputAdornment>
                                                 ),
+                                                inputProps: {min: 1, step: 0.1}
                                             }}
                                         />
                                     )}

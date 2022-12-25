@@ -160,7 +160,7 @@ const MoviesForm = () => {
                                         helperText={errors?.rating?.message}
                                         required
                                         fullWidth
-                                        InputProps={{ inputProps: { min: 1, max: 10 , step: 0.1} }}
+                                        InputProps={{inputProps: {min: 1, max: 10, step: 0.1}}}
                                         size="small"
                                     />
                                 )}
