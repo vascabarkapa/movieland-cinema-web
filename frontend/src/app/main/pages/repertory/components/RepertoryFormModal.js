@@ -10,6 +10,10 @@ import {Controller, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import TextField from "@mui/material/TextField";
 import {InputAdornment} from "@mui/material";
+import dayjs from 'dayjs';
+import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
+import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 
 /**
  * Repertory Form Validation Schema
@@ -32,6 +36,7 @@ const schema = yup.object().shape({
 });
 
 const RepertoryFormModal = ({open, setOpen}) => {
+    const [dateTimeValue, setDateTimeValue] = React.useState(null);
 
     const handleClose = () => {
         setOpen(false);
@@ -67,6 +72,8 @@ const RepertoryFormModal = ({open, setOpen}) => {
                 onClose={handleClose}
                 aria-labelledby="repertory-form-title"
                 aria-describedby="repertory-form-content"
+                fullWidth
+                maxWidth="md"
             >
                 <DialogTitle id="repertory-form-title" className="flex items-center">
                     Add/Edit Repertory
@@ -79,14 +86,14 @@ const RepertoryFormModal = ({open, setOpen}) => {
                 >
                     <DialogContent>
                         <DialogContentText id="repertory-form-content">
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-20">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-20">
                                 <Controller
                                     name="movie"
                                     control={control}
                                     render={({field}) => (
                                         <TextField
                                             {...field}
-                                            className="mb-24 col-span-1 sm:col-span-3"
+                                            className="mb-24 col-span-1 md:col-span-3"
                                             label="Movie"
                                             type="text"
                                             variant="outlined"
@@ -103,18 +110,32 @@ const RepertoryFormModal = ({open, setOpen}) => {
                                     name="dateTime"
                                     control={control}
                                     render={({field}) => (
-                                        <TextField
-                                            {...field}
-                                            className="mb-24"
-                                            label="Date and Time"
-                                            type="text"
-                                            variant="outlined"
-                                            error={!!errors.dateTime}
-                                            helperText={errors?.dateTime?.message}
-                                            required
-                                            fullWidth
-                                            size="small"
-                                        />
+                                        // <TextField
+                                        //     {...field}
+                                        //     className="mb-24"
+                                        //     label="Date and Time"
+                                        //     type="text"
+                                        //     variant="outlined"
+                                        //     error={!!errors.dateTime}
+                                        //     helperText={errors?.dateTime?.message}
+                                        //     required
+                                        //     fullWidth
+                                        //     size="small"
+                                        // />
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                            <DateTimePicker
+                                                renderInput={(props) => <TextField {...field} {...props} size="small"
+                                                                                   required
+                                                                                   error={!!errors.dateTime} fullWidth
+                                                                                   className="mb-24"
+                                                                                   helperText={errors?.dateTime?.message}/>}
+                                                label="Date and Time"
+                                                value={dateTimeValue}
+                                                onChange={(newValue) => {
+                                                    setDateTimeValue(newValue);
+                                                }}
+                                            />
+                                        </LocalizationProvider>
                                     )}
                                 />
 
@@ -165,7 +186,6 @@ const RepertoryFormModal = ({open, setOpen}) => {
                                     )}
                                 />
                             </div>
-
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
