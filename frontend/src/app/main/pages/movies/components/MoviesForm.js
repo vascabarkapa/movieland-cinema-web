@@ -1,5 +1,5 @@
 import Card from "@mui/material/Card";
-import {CardActions, CardContent} from "@mui/material";
+import {CardActions, CardContent, InputLabel, OutlinedInput, Select} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {Controller, useForm} from "react-hook-form";
 import TextField from "@mui/material/TextField";
@@ -7,6 +7,10 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
+import {useTheme} from "@mui/styles";
+import {useState} from "react";
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
 
 /**
  * Movies Form Validation Schema
@@ -32,8 +36,41 @@ const schema = yup.object().shape({
         .max(10, 'Rating must be less than or equal to 10'),
 });
 
+function getStyles(genre, movieGenres, theme) {
+    return {
+        fontWeight:
+            movieGenres.indexOf(genre) === -1
+                ? theme.typography.fontWeightRegular
+                : theme.typography.fontWeightMedium,
+    };
+}
+
+const genresList = [
+    'Action',
+    'Comedy',
+    'Drama',
+    'Fantasy',
+    'Horror',
+    'Mystery',
+    'Romance',
+    'Thriller',
+];
+
 const MoviesForm = () => {
+    const theme = useTheme();
     const navigate = useNavigate();
+    const [movieGenres, setMovieGenres] = useState([]);
+
+    const handleChange = (event) => {
+        const {
+            target: {value},
+        } = event;
+        console.log(value)
+        setMovieGenres(
+            // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+    };
 
     const {control, formState, handleSubmit, setError, setValue} = useForm({
         mode: 'onChange',
@@ -112,18 +149,43 @@ const MoviesForm = () => {
                                 name="genre"
                                 control={control}
                                 render={({field}) => (
-                                    <TextField
-                                        {...field}
-                                        className="mb-24 col-span-1 md:col-span-2"
-                                        label="Genre"
-                                        type="text"
-                                        variant="outlined"
-                                        error={!!errors.genre}
-                                        helperText={errors?.genre?.message}
-                                        required
-                                        fullWidth
-                                        size="small"
-                                    />
+                                    // <TextField
+                                    //     {...field}
+                                    //     className="mb-24 col-span-1 md:col-span-2"
+                                    //     label="Genre"
+                                    //     type="text"
+                                    //     variant="outlined"
+                                    //     error={!!errors.genre}
+                                    //     helperText={errors?.genre?.message}
+                                    //     required
+                                    //     fullWidth
+                                    //     size="small"
+                                    // />
+                                    <FormControl required className="mb-24 col-span-1 md:col-span-2" size="small">
+                                        <InputLabel id="genre">Genre</InputLabel>
+                                        <Select
+                                            {...field}
+                                            labelId="genre"
+                                            id="genre"
+                                            multiple
+                                            placeholder="Konj"
+                                            error={!!errors.genre}
+                                            helperText={errors?.genre?.message}
+                                            value={movieGenres}
+                                            onChange={handleChange}
+                                            input={<OutlinedInput label="Genre"/>}
+                                        >
+                                            {genresList.map((genre) => (
+                                                <MenuItem
+                                                    key={genre}
+                                                    value={genre}
+                                                    style={getStyles(genre, movieGenres, theme)}
+                                                >
+                                                    {genre}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
                                 )}
                             />
 
