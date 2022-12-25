@@ -24,8 +24,12 @@ const schema = yup.object().shape({
         .required('Required field'),
     actors: yup.string()
         .required('Required field'),
-    rating: yup.string()
-        .required('Required field'),
+    rating: yup.number()
+        .required('Required field')
+        .nullable()
+        .typeError('Rating must be a number')
+        .min(1, 'Rating must be greater than or equal to 1')
+        .max(10, 'Rating must be less than or equal to 10'),
 });
 
 const MoviesForm = () => {
@@ -150,12 +154,13 @@ const MoviesForm = () => {
                                         {...field}
                                         className="mb-24 col-span-1 md:col-span-2"
                                         label="Rating"
-                                        type="text"
+                                        type="number"
                                         variant="outlined"
                                         error={!!errors.rating}
                                         helperText={errors?.rating?.message}
                                         required
                                         fullWidth
+                                        InputProps={{ inputProps: { min: 1, max: 10 , step: 0.1} }}
                                         size="small"
                                     />
                                 )}
@@ -174,6 +179,8 @@ const MoviesForm = () => {
                                         error={!!errors.description}
                                         helperText={errors?.description?.message}
                                         required
+                                        multiline
+                                        rows={8}
                                         fullWidth
                                         size="small"
                                     />
