@@ -1,5 +1,5 @@
 import FusePageSimple from '@fuse/core/FusePageSimple';
-import { styled } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import DashboardHeader from "./components/DashboardHeader";
 import MovieWidget from "./components/MovieWidget";
 import TicketWidget from "./components/TicketWidget";
@@ -7,14 +7,15 @@ import UserWidget from "./components/UserWidget";
 import RepertoryWidget from "./components/RepertoryWidget";
 import {motion} from 'framer-motion';
 
-const Root = styled(FusePageSimple)(({ theme }) => ({
+const Root = styled(FusePageSimple)(({theme}) => ({
     '& .FusePageSimple-header': {
         backgroundColor: theme.palette.background.paper,
         boxShadow: `inset 0 0 0 1px  ${theme.palette.divider}`,
     },
 }));
 
-function DashboardPage(props) {
+function DashboardPage() {
+    
     const container = {
         show: {
             transition: {
@@ -24,13 +25,13 @@ function DashboardPage(props) {
     };
 
     const item = {
-        hidden: { opacity: 0, y: 20 },
-        show: { opacity: 1, y: 0 },
+        hidden: {opacity: 0, y: 20},
+        show: {opacity: 1, y: 0},
     };
 
     return (
         <Root
-            header={<DashboardHeader />}
+            header={<DashboardHeader/>}
             content={
                 <div className="w-full p-12 pt-16 sm:pt-24 lg:ltr:pr-0 lg:rtl:pl-0">
                     <motion.div
@@ -40,16 +41,16 @@ function DashboardPage(props) {
                         animate="show"
                     >
                         <motion.div variants={item}>
-                            <RepertoryWidget />
+                            <RepertoryWidget/>
                         </motion.div>
                         <motion.div variants={item}>
-                            <MovieWidget />
+                            <MovieWidget/>
                         </motion.div>
                         <motion.div variants={item}>
-                            <TicketWidget />
+                            <TicketWidget/>
                         </motion.div>
                         <motion.div variants={item}>
-                            <UserWidget />
+                            <UserWidget/>
                         </motion.div>
                     </motion.div>
                 </div>
