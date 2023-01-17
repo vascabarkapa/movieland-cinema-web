@@ -10,7 +10,7 @@ function TicketWidget() {
                     className="px-16 py-16 text-lg font-medium tracking-tight leading-6 truncate"
                     color="text.secondary"
                 >
-                    Broj karata
+                    Number of tickets
                 </Typography>
             </div>
             <div className="text-center mt-8 pb-44">
@@ -18,7 +18,7 @@ function TicketWidget() {
                     289
                 </Typography>
                 <Typography className="text-lg font-medium text-amber-600">
-                    karata
+                    tickets
                 </Typography>
             </div>
         </Paper>

@@ -10,7 +10,7 @@ function RepertoryWidget() {
                     className="px-16 py-16 text-lg font-medium tracking-tight leading-6 truncate"
                     color="text.secondary"
                 >
-                    Broj repertoara
+                    Number of repertories
                 </Typography>
             </div>
             <div className="text-center mt-8 pb-44">
@@ -18,7 +18,7 @@ function RepertoryWidget() {
                     1
                 </Typography>
                 <Typography className="text-lg font-medium text-blue-600 dark:text-blue-500">
-                    repertoar
+                    repertory
                 </Typography>
             </div>
         </Paper>

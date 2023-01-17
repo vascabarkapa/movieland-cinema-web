@@ -10,7 +10,7 @@ function MovieWidget() {
                     className="px-16 py-16 text-lg font-medium tracking-tight leading-6 truncate"
                     color="text.secondary"
                 >
-                    Broj filmova
+                    Number of movies
                 </Typography>
             </div>
             <div className="text-center mt-8 pb-44">
@@ -18,7 +18,7 @@ function MovieWidget() {
                     25
                 </Typography>
                 <Typography className="text-lg font-medium text-red-600">
-                    filmova
+                    movies
                 </Typography>
             </div>
         </Paper>

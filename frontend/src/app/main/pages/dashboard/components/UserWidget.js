@@ -10,7 +10,7 @@ function UserWidget() {
                     className="px-16 py-16 text-lg font-medium tracking-tight leading-6 truncate"
                     color="text.secondary"
                 >
-                    Broj korisnika
+                    Number of users
                 </Typography>
             </div>
             <div className="text-center mt-8 pb-44">
@@ -18,7 +18,7 @@ function UserWidget() {
                     5
                 </Typography>
                 <Typography className="text-lg font-medium text-green-600">
-                    korisnika
+                    users
                 </Typography>
             </div>
         </Paper>
