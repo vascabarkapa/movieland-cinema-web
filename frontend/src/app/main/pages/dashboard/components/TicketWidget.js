@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography';
 import {memo} from 'react';
 
 function TicketWidget() {
-
     return (
         <Paper className="flex flex-col flex-auto shadow rounded-2xl overflow-hidden">
             <div className="flex items-center justify-between px-8 pt-12">
