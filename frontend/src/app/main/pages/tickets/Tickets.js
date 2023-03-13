@@ -11,11 +11,7 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
-    createData('The Big Short', 'asdsadsdsadsad', 'asdsadsdsadsad', 'asdsadsdsadsad', 'asdsadsdsadsad'),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
+    createData('Marko Marković', 'marko.markovic@mail.com', 'Everything Everywhere All at Once', '2', '13.03.2023. 20:03h'),
 ];
 
 function TicketsPage() {
@@ -58,7 +54,7 @@ function TicketsPage() {
                                 <TableCell>{row.fat}</TableCell>
                                 <TableCell>{row.carbs}</TableCell>
                                 <TableCell>
-                                    {row.carbs} <FuseSvgIcon className="text-48 inline-block text-green" size={16}
+                                    {row.protein} <FuseSvgIcon className="text-48 inline-block text-green" size={16}
                                                              color="action">heroicons-outline:check-circle</FuseSvgIcon>
                                 </TableCell>
                                 <TableCell style={{display: "flex", justifyContent: "right"}}>
