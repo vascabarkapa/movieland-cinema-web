@@ -16,7 +16,11 @@ const getMovieById = (req, res) => {
 //@route POST /api/movies
 //@access public
 const createMovie = (req, res) => {
-    console.log(req.body)
+    const {name, rating} = req.body;
+    if (!name || !rating) {
+        res.status(400);
+        throw new Error("All fields are mandatory!");
+    }
     res.status(201).json({message: "Create movie"});
 };
 

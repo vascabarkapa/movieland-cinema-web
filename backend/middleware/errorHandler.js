@@ -1,6 +1,19 @@
-const errorHandler = (err, res, req, next) => {
+const errorHandler = (err, req, res, next) => {
     const statusCode = res.statusCode ? res.statusCode : 500;
-    res.json({message: err.message, stackTrace: err.stack});
+
+    switch (statusCode) {
+        case 400:
+            res.json({title: "Validation failed", message: err.message, stackTrace: err.stack});
+            break;
+
+        case 404:
+            res.json({title: "Not found", message: err.message, stackTrace: err.stack});
+            break;
+
+        default:
+            break;
+    }
+
 };
 
 module.exports = errorHandler;
