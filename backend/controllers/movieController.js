@@ -16,6 +16,7 @@ const getMovieById = (req, res) => {
 //@route POST /api/movies
 //@access public
 const createMovie = (req, res) => {
+    console.log(req.body)
     res.status(201).json({message: "Create movie"});
 };
 
