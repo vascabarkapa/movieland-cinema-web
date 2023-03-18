@@ -55,7 +55,14 @@ const updateMovie = asyncHandler(async (req, res) => {
 //@route DELETE /api/movies/:id
 //@access public
 const deleteMovie = asyncHandler(async (req, res) => {
-    res.status(200).json({message: `Delete movie id: ${req.params.id}`});
+    const movie = await Movie.findById(req.params.id);
+    if (!movie) {
+        res.status(404);
+        throw new Error("Movie not found");
+    }
+
+    const deletedMovie = await Movie.findByIdAndDelete(req.params.id);
+    res.status(200).json(deletedMovie);
 });
 
 module.exports = {getMovies, getMovieById, createMovie, updateMovie, deleteMovie};
