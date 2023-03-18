@@ -21,16 +21,13 @@ const getMovieById = asyncHandler(async (req, res) => {
 //@access public
 const createMovie = asyncHandler(async (req, res) => {
     for (let prop in req.body) {
-        console.log(prop);
         if (!req.body[prop]) {
-            throw new Error("All fields are mandatory!");
-            // return res.status(400).send('Please fill out all fields');
+            res.status(400);
+            throw new Error(prop + " is mandatory field");
         }
     }
 
-    const newMovie = new Movie(req.body);
-    await newMovie.save();
-
+    const newMovie = await Movie.create(req.body);
     res.status(201).json(newMovie);
 });
 
