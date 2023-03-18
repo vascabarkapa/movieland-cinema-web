@@ -3,7 +3,7 @@ const Movie = require("../models/movieModel");
 
 //@desc Get all movies
 //@route GET /api/movies
-//@access public
+//@access private
 const getMovies = asyncHandler(async (req, res) => {
     const movies = await Movie.find();
     res.status(200).json(movies);
@@ -11,7 +11,7 @@ const getMovies = asyncHandler(async (req, res) => {
 
 //@desc Get movie by id
 //@route GET /api/movies/:id
-//@access public
+//@access private
 const getMovieById = asyncHandler(async (req, res) => {
     const movie = await Movie.findById(req.params.id);
     if (!movie) {
@@ -24,7 +24,7 @@ const getMovieById = asyncHandler(async (req, res) => {
 
 //@desc Create movie
 //@route POST /api/movies
-//@access public
+//@access private
 const createMovie = asyncHandler(async (req, res) => {
     for (let prop in req.body) {
         if (!req.body[prop]) {
@@ -39,7 +39,7 @@ const createMovie = asyncHandler(async (req, res) => {
 
 //@desc Update movie by id
 //@route PUT /api/movies/:id
-//@access public
+//@access private
 const updateMovie = asyncHandler(async (req, res) => {
     const movie = await Movie.findById(req.params.id);
     if (!movie) {
@@ -53,7 +53,7 @@ const updateMovie = asyncHandler(async (req, res) => {
 
 //@desc Delete movie by id
 //@route DELETE /api/movies/:id
-//@access public
+//@access private
 const deleteMovie = asyncHandler(async (req, res) => {
     const movie = await Movie.findById(req.params.id);
     if (!movie) {
