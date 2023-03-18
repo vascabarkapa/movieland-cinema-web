@@ -1,10 +1,12 @@
 const asyncHandler = require("express-async-handler");
+const Movie = require("../models/movieModel");
 
 //@desc Get all movies
 //@route GET /api/movies
 //@access public
 const getMovies = asyncHandler(async (req, res) => {
-    res.status(200).json({message: "Get all movies"});
+    const movies = await Movie.find();
+    res.status(200).json(movies);
 });
 
 //@desc Get movie by id
@@ -18,12 +20,18 @@ const getMovieById = asyncHandler(async (req, res) => {
 //@route POST /api/movies
 //@access public
 const createMovie = asyncHandler(async (req, res) => {
-    const {name, rating} = req.body;
-    if (!name || !rating) {
-        res.status(400);
-        throw new Error("All fields are mandatory!");
+    for (let prop in req.body) {
+        console.log(prop);
+        if (!req.body[prop]) {
+            throw new Error("All fields are mandatory!");
+            // return res.status(400).send('Please fill out all fields');
+        }
     }
-    res.status(201).json({message: "Create movie"});
+
+    const newMovie = new Movie(req.body);
+    await newMovie.save();
+
+    res.status(201).json(newMovie);
 });
 
 //@desc Update movie by id
