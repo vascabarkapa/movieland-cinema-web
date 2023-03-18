@@ -1,6 +1,5 @@
 const asyncHandler = require("express-async-handler");
 const Movie = require("../models/movieModel");
-const mongoose = require("mongoose");
 
 //@desc Get all movies
 //@route GET /api/movies
@@ -42,7 +41,14 @@ const createMovie = asyncHandler(async (req, res) => {
 //@route PUT /api/movies/:id
 //@access public
 const updateMovie = asyncHandler(async (req, res) => {
-    res.status(200).json({message: `Update movie id: ${req.params.id}`});
+    const movie = await Movie.findById(req.params.id);
+    if (!movie) {
+        res.status(404);
+        throw new Error("Movie not found");
+    }
+
+    const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    res.status(200).json(updatedMovie);
 });
 
 //@desc Delete movie by id
