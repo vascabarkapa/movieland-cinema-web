@@ -10,21 +10,21 @@ const loginUser = asyncHandler(async (req, res) => {
     // provjeriti unos
 
     const email = req.body['email'];
-    const user = await User.findOne({email: email});
+    const user = await User.findOne({ email: email });
 
     if (user && (await bcrypt.compare(req.body['password'], user.password))) {
         const accessToken = jwt.sign({
-                user: {
-                    username: user.username,
-                    email: user.email,
-                    id: user.id,
-                    first_name: user.first_name,
-                    last_name: user.last_name
-                }
-            }, process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn: "30m"});
+            user: {
+                username: user.username,
+                email: user.email,
+                id: user.id,
+                first_name: user.first_name,
+                last_name: user.last_name
+            }
+        }, process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: "30m" });
 
-        res.status(200).json({accessToken});
+        res.status(200).json({ accessToken });
     } else {
         res.status(401);
         throw new Error("Credentials are not valid");
@@ -38,4 +38,4 @@ const currentUser = asyncHandler(async (req, res) => {
     res.json(req.user);
 });
 
-module.exports = {loginUser, currentUser}
+module.exports = { loginUser, currentUser }

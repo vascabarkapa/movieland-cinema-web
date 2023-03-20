@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {getMovies, getMovieById, createMovie, updateMovie, deleteMovie} = require("../controllers/movieController");
+const { getMovies, getMovieById, createMovie, updateMovie, deleteMovie } = require("../controllers/movieController");
 const validateToken = require("../middleware/validateTokenHandler");
 
 router.use(validateToken);

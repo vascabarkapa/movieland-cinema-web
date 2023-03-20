@@ -47,7 +47,7 @@ const updateMovie = asyncHandler(async (req, res) => {
         throw new Error("Movie not found");
     }
 
-    const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.status(200).json(updatedMovie);
 });
 
@@ -65,4 +65,4 @@ const deleteMovie = asyncHandler(async (req, res) => {
     res.status(200).json(deletedMovie);
 });
 
-module.exports = {getMovies, getMovieById, createMovie, updateMovie, deleteMovie};
+module.exports = { getMovies, getMovieById, createMovie, updateMovie, deleteMovie };

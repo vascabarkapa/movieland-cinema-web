@@ -8,11 +8,11 @@ function login(username, password) {
         password,
     }
 
-    return post(ENDPOINT, body);
+    return post(ENDPOINT + "/login", body);
 }
 
 function currentUser() {
-    return get(ENDPOINT+"/current");
+    return get(ENDPOINT + "/current");
 }
 
 export { login }
