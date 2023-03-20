@@ -1,5 +1,5 @@
-import {yupResolver} from '@hookform/resolvers/yup';
-import {Controller, useForm} from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Controller, useForm } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -7,12 +7,12 @@ import * as yup from 'yup';
 import _ from '@lodash';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import {useEffect} from 'react';
-import jwtService from '../../auth/services/jwtService';
+import { useEffect } from 'react';
+import AuthService from 'src/app/shared/services/auth-service';
+import { useNavigate } from 'react-router-dom';
+import { showMessage } from "app/store/fuse/messageSlice";
+import { useDispatch } from 'react-redux';
 
-/**
- * Form Validation Schema
- */
 const schema = yup.object().shape({
     email: yup.string().email('You must enter a valid email').required('You must enter a email'),
     password: yup
@@ -28,33 +28,39 @@ const defaultValues = {
 };
 
 function SignInPage() {
-    const {control, formState, handleSubmit, setError, setValue} = useForm({
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { control, formState, handleSubmit, setError, setValue } = useForm({
         mode: 'onChange',
         defaultValues,
         resolver: yupResolver(schema),
     });
 
-    const {isValid, dirtyFields, errors} = formState;
+    const { isValid, dirtyFields, errors } = formState;
 
     useEffect(() => {
-        setValue('email', 'admin@fusetheme.com', {shouldDirty: true, shouldValidate: true});
-        setValue('password', 'admin', {shouldDirty: true, shouldValidate: true});
+        setValue('email', 'admin@movielandcinema.com', { shouldDirty: true, shouldValidate: true });
+        setValue('password', 'admin', { shouldDirty: true, shouldValidate: true });
     }, [setValue]);
 
-    function onSubmit({email, password}) {
-        jwtService
-            .signInWithEmailAndPassword(email, password)
-            .then((user) => {
-                // No need to do anything, user data will be set at app/auth/AuthContext
-            })
-            .catch((_errors) => {
-                _errors.forEach((error) => {
-                    setError(error.type, {
-                        type: 'manual',
-                        message: error.message,
-                    });
-                });
-            });
+    function onSubmit({ email, password }) {
+        AuthService.login(email, password).then((response) => {
+            if (response) {
+                localStorage.setItem("access_token", response?.data?.accessToken);
+
+                AuthService.currentUser().then((currentUser) => {
+                    if (currentUser) {
+                        localStorage.setItem("current_user", JSON.stringify(currentUser?.data));
+                        // poslati na dashboard
+                    }
+                })
+            }
+        }, (err) => {
+            if (err) {
+                dispatch(showMessage({ message: err?.response?.data?.message }));
+            }
+        })
     }
 
     return (
@@ -63,7 +69,7 @@ function SignInPage() {
             <Paper
                 className="flex justify-center items-center h-full sm:h-auto md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
                 <div className="w-full max-w-320 sm:w-320 mx-auto sm:mx-0">
-                    <img className="w-1/5" src="assets/images/logo/movieland_main.svg" alt="logo"/>
+                    <img className="w-1/5" src="assets/images/logo/movieland_main.svg" alt="logo" />
 
                     <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
                         Sign in
@@ -81,7 +87,7 @@ function SignInPage() {
                         <Controller
                             name="email"
                             control={control}
-                            render={({field}) => (
+                            render={({ field }) => (
                                 <TextField
                                     {...field}
                                     className="mb-24"
@@ -100,7 +106,7 @@ function SignInPage() {
                         <Controller
                             name="password"
                             control={control}
-                            render={({field}) => (
+                            render={({ field }) => (
                                 <TextField
                                     {...field}
                                     className="mb-24"
@@ -144,9 +150,9 @@ function SignInPage() {
                         <div>our cinema</div>
                     </div>
                     <div className="mt-24 text-lg text-left tracking-tight leading-6 text-white">
-                        Following the modern times and adapting the film<br/>industry to today's digital devices,
+                        Following the modern times and adapting the film<br />industry to today's digital devices,
                         Movieland
-                        Cinema<br/>offers you unforgettable film experiences.
+                        Cinema<br />offers you unforgettable film experiences.
                     </div>
                 </div>
             </Box>

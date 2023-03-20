@@ -2,9 +2,9 @@ import { get, post } from "./api-client";
 
 const ENDPOINT = "/auth";
 
-function login(username, password) {
+function login(email, password) {
     const body = {
-        username,
+        email,
         password,
     }
 
@@ -15,4 +15,9 @@ function currentUser() {
     return get(ENDPOINT + "/current");
 }
 
-export { login }
+const AuthService = {
+    login,
+    currentUser
+}
+
+export default AuthService;
