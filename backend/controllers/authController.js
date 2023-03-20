@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
 //@desc Login user
-//@route POST /api/users/login
+//@route POST /api/auth/login
 //@access public
 const loginUser = asyncHandler(async (req, res) => {
     // provjeriti unos
@@ -32,7 +32,7 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 //@desc Get current user
-//@route GET /api/users/current
+//@route GET /api/auth/current
 //@access private
 const currentUser = asyncHandler(async (req, res) => {
     res.json(req.user);
