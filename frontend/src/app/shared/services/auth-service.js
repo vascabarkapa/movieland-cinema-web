@@ -1,6 +1,6 @@
-import { post } from './api-client'
+import { get, post } from "./api-client";
 
-const ENDPOINT = `/auth`;
+const ENDPOINT = "/auth";
 
 function login(username, password) {
     const body = {
@@ -9,6 +9,10 @@ function login(username, password) {
     }
 
     return post(ENDPOINT, body);
+}
+
+function currentUser() {
+    return get(ENDPOINT+"/current");
 }
 
 export { login }
