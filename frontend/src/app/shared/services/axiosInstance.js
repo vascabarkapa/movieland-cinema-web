@@ -1,9 +1,7 @@
 import axios from "axios";
 
-const API_URL = process.env.API_URL;
-
 const axiosInstance = axios.create({
-    baseURL: `${API_URL}`,
+    baseURL: `http://localhost:5001/api/`,
 });
 
 axiosInstance.interceptors.request.use((confiq) => {
@@ -28,11 +26,7 @@ axiosInstance.interceptors.request.use((confiq) => {
 axiosInstance.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
-
-    //ako ne valja
-
     return Promise.reject(error);
 });
-
 
 export default axiosInstance;
