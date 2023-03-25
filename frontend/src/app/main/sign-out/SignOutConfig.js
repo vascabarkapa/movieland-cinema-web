@@ -1,8 +1,6 @@
 import SignOutPage from './SignOutPage';
 import { Navigate } from 'react-router-dom';
 
-const ACCESS_TOKEN = localStorage.getItem("access_token");
-
 const SignOutConfig = {
   settings: {
     layout: {
@@ -28,7 +26,7 @@ const SignOutConfig = {
   routes: [
     {
       path: 'sign-out',
-      element: !ACCESS_TOKEN ? <SignOutPage /> : <Navigate to="/" />,
+      element: <SignOutPage />,
     },
   ],
 };
