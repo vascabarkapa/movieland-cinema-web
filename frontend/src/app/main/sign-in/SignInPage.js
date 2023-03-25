@@ -128,7 +128,7 @@ function SignInPage() {
                         <Button
                             variant="contained"
                             color="secondary"
-                            className={isLoading ? "w-full mt-16 animate-bounce" : "w-full mt-16"}
+                            className={isLoading ? "w-full mt-16 animate-bounce h-25" : "w-full mt-16"}
                             aria-label="Sign in"
                             disabled={_.isEmpty(dirtyFields) || !isValid || isLoading}
                             type="submit"
