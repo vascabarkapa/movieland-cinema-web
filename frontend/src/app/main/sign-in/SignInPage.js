@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import _ from '@lodash';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AuthService from 'src/app/shared/services/auth-service';
 import { useNavigate } from 'react-router-dom';
 import { showMessage } from "app/store/fuse/messageSlice";
@@ -30,6 +30,7 @@ const defaultValues = {
 function SignInPage() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(false);
 
     const { control, formState, handleSubmit, setError, setValue } = useForm({
         mode: 'onChange',
@@ -45,6 +46,7 @@ function SignInPage() {
     }, [setValue]);
 
     function onSubmit({ email, password }) {
+        setIsLoading(true);
         AuthService.login(email, password).then((response) => {
             if (response) {
                 localStorage.setItem("access_token", response?.data?.accessToken);
@@ -52,13 +54,15 @@ function SignInPage() {
                 AuthService.currentUser().then((currentUser) => {
                     if (currentUser) {
                         localStorage.setItem("current_user", JSON.stringify(currentUser?.data));
+                        setIsLoading(false);
                         // poslati na dashboard
                     }
                 })
             }
         }, (err) => {
             if (err) {
-                dispatch(showMessage({ message: err?.response?.data?.message }));
+                setIsLoading(false);
+                dispatch(showMessage({ message: err?.response?.data?.message || "An error occurred! Try again." }));
             }
         })
     }
@@ -126,11 +130,11 @@ function SignInPage() {
                             color="secondary"
                             className="w-full mt-16"
                             aria-label="Sign in"
-                            disabled={_.isEmpty(dirtyFields) || !isValid}
+                            disabled={_.isEmpty(dirtyFields) || !isValid || isLoading}
                             type="submit"
                             size="large"
                         >
-                            Sign in
+                            {!isLoading ? "Sign In" : <img height={25} width={25} src="/assets/images/logo/movieland_main.svg" alt="movieland_cinema_loading_logo"></img>}
                         </Button>
 
                     </form>
