@@ -54,8 +54,7 @@ function SignInPage() {
                 AuthService.currentUser().then((currentUser) => {
                     if (currentUser) {
                         localStorage.setItem("current_user", JSON.stringify(currentUser?.data));
-                        setIsLoading(false);
-                        // poslati na dashboard
+                        window.location.href = "/dashboard";
                     }
                 })
             }
