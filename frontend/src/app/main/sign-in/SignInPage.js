@@ -17,14 +17,12 @@ const schema = yup.object().shape({
     email: yup.string().email('You must enter a valid email').required('You must enter a email'),
     password: yup
         .string()
-        .required('Please enter your password.')
-        .min(4, 'Password is too short - must be at least 4 chars.'),
+        .required('Please enter your password.'),
 });
 
 const defaultValues = {
     email: '',
     password: '',
-    remember: true,
 };
 
 function SignInPage() {
@@ -61,6 +59,7 @@ function SignInPage() {
         }, (err) => {
             if (err) {
                 setIsLoading(false);
+                setValue('password', '', { shouldDirty: true, shouldValidate: true });
                 dispatch(showMessage({ message: err?.response?.data?.message || "An error occurred! Try again." }));
             }
         })
