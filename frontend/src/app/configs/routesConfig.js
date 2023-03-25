@@ -9,13 +9,13 @@ import Error404Page from '../main/404/Error404Page';
 import PagesConfig from "../main/pages/PagesConfig";
 
 const routeConfigs = [PagesConfig, SignOutConfig, SignInConfig, SignUpConfig];
+const access_token = localStorage.getItem("access_token");
 
 const routes = [
-  ...FuseUtils.generateRoutesFromConfigs(routeConfigs, settingsConfig.defaultAuth),
+  ...FuseUtils.generateRoutesFromConfigs(routeConfigs, null),
   {
     path: '/',
-    element: <Navigate to="/dashboard" />,
-    auth: settingsConfig.defaultAuth,
+    element: access_token ? <Navigate to="/dashboard" /> : <Navigate to="/sign-in" />,
   },
   {
     path: 'loading',
