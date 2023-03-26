@@ -16,6 +16,7 @@ function MoviesPage() {
     const [openDetailsModal, setOpenDetailsModal] = useState(false);
     const [isLoading, setIsloading] = useState(false);
     const [movies, setMovies] = useState([]);
+    const [movieDetails, setMovieDetails] = useState({});
 
     useEffect(() => {
         setIsloading(true);
@@ -31,7 +32,8 @@ function MoviesPage() {
         setOpenDeleteModal(true);
     };
 
-    const handleOpenDetailsModal = () => {
+    function handleOpenDetailsModal(movie) {
+        setMovieDetails(movie);
         setOpenDetailsModal(true);
     };
 
@@ -78,7 +80,7 @@ function MoviesPage() {
                                             type="button"
                                             size="small"
                                             className="mr-5 hover:bg-purple"
-                                            onClick={handleOpenDetailsModal}
+                                            onClick={() => handleOpenDetailsModal(movie)}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:eye
@@ -119,7 +121,7 @@ function MoviesPage() {
                     </TableBody>
                 </Table>
             </TableContainer> : <FuseLoading />}
-            {openDetailsModal && <MoviesDetailsModal open={openDetailsModal} setOpen={setOpenDetailsModal} />}
+            {openDetailsModal && <MoviesDetailsModal open={openDetailsModal} setOpen={setOpenDetailsModal} movie={movieDetails} />}
             {openDeleteModal && <ConfirmationDeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal}
                 message={"Are you sure you want to delete the movie?"} />}
         </div>
