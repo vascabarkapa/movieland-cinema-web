@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 const axiosInstance = axios.create({
     baseURL: `http://localhost:5001/api/`,
@@ -26,6 +27,15 @@ axiosInstance.interceptors.request.use((confiq) => {
 axiosInstance.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
+
+    if (error?.response?.status === 401) {
+        window.location.href = "sign-out";
+    }
+
+    if (error?.response?.status === 404) {
+        window.location.href = "404";
+    }
+
     return Promise.reject(error);
 });
 

@@ -21,7 +21,6 @@ function MoviesPage() {
         setIsloading(true);
         MovieService.getMovies().then((response) => {
             if (response) {
-                console.log(response?.data);
                 setMovies(response?.data);
                 setIsloading(false);
             }
