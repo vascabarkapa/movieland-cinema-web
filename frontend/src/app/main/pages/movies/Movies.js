@@ -1,30 +1,32 @@
-import {Paper, Rating, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import { Paper, Rating, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import MoviesHeader from "./components/MoviesHeader";
 import Button from "@mui/material/Button";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
+import FuseLoading from '@fuse/core/FuseLoading';
 import ConfirmationDeleteModal from "../../../shared/components/ConfirmationDeleteModal";
-import * as React from "react";
 import Tooltip from "@mui/material/Tooltip";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MoviesDetailsModal from "./components/MoviesDetailsModal";
-
-function createData(name, calories, fat, carbs, protein) {
-    return {name, calories, fat, carbs, protein};
-}
-
-const rows = [
-    createData('The Big Short', 'asdsadsdsadsad', 'asdsadsdsadsad', 'asdsadsdsadsad', 'asdsadsdsadsad'),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-    createData('Frozsen yoghurt', 159, 6.0, 24, 4.0),
-];
+import { useEffect, useState } from "react";
+import MovieService from "src/app/shared/services/movie-service";
 
 function MoviesPage() {
     const navigate = useNavigate();
-    const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
-    const [openDetailsModal, setOpenDetailsModal] = React.useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
+    const [openDetailsModal, setOpenDetailsModal] = useState(false);
+    const [isLoading, setIsloading] = useState(false);
+    const [movies, setMovies] = useState([]);
+
+    useEffect(() => {
+        setIsloading(true);
+        MovieService.getMovies().then((response) => {
+            if (response) {
+                console.log(response?.data);
+                setMovies(response?.data);
+                setIsloading(false);
+            }
+        })
+    }, []);
 
     const handleOpenDeleteModal = () => {
         setOpenDeleteModal(true);
@@ -40,9 +42,9 @@ function MoviesPage() {
 
     return (
         <div className="p-36">
-            <MoviesHeader/>
-            <TableContainer component={Paper}>
-                <Table sx={{minWidth: 650}}>
+            <MoviesHeader />
+            {!isLoading ? <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }}>
                     <TableHead>
                         <TableRow>
                             <TableCell><b>Name</b></TableCell>
@@ -54,22 +56,22 @@ function MoviesPage() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {movies.map((movie) => (
                             <TableRow
-                                key={row.name}
-                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                key={movie?._id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 className="hover:bg-gray-100"
                             >
                                 <TableCell component="th" scope="row">
-                                    {row.name}
+                                    {movie?.name}
                                 </TableCell>
-                                <TableCell>{row.calories}</TableCell>
-                                <TableCell>{row.fat}</TableCell>
-                                <TableCell>{row.carbs}</TableCell>
+                                <TableCell>{movie?.genre}</TableCell>
+                                <TableCell>{movie?.direction}</TableCell>
+                                <TableCell>{movie?.duration}</TableCell>
                                 <TableCell>
-                                    <Rating name="read-only" value={2} readOnly/>
+                                    <Rating name="read-only" value={movie?.rating / 2} readOnly />
                                 </TableCell>
-                                <TableCell style={{display: "flex", justifyContent: "right"}}>
+                                <TableCell style={{ display: "flex", justifyContent: "right" }}>
                                     <Tooltip title="View" placement="top">
                                         <Button
                                             variant="contained"
@@ -117,10 +119,10 @@ function MoviesPage() {
                         ))}
                     </TableBody>
                 </Table>
-            </TableContainer>
-            {openDetailsModal && <MoviesDetailsModal open={openDetailsModal} setOpen={setOpenDetailsModal}/>}
+            </TableContainer> : <FuseLoading />}
+            {openDetailsModal && <MoviesDetailsModal open={openDetailsModal} setOpen={setOpenDetailsModal} />}
             {openDeleteModal && <ConfirmationDeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal}
-                                                         message={"Are you sure you want to delete the movie?"}/>}
+                message={"Are you sure you want to delete the movie?"} />}
         </div>
     );
 }
