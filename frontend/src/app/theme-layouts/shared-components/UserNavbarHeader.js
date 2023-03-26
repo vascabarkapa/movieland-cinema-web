@@ -1,8 +1,6 @@
 import { styled } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import { useSelector } from 'react-redux';
-import { selectUser } from 'app/store/userSlice';
 
 const Root = styled('div')(({ theme }) => ({
   '& .username, & .email': {
@@ -26,7 +24,7 @@ const Root = styled('div')(({ theme }) => ({
 }));
 
 function UserNavbarHeader(props) {
-  const user = useSelector(selectUser);
+  const CURRENT_USER = JSON.parse(localStorage.getItem("current_user"));
 
   return (
     <Root className="user relative flex flex-col items-center justify-center p-16 pb-14 shadow-0">
@@ -37,20 +35,17 @@ function UserNavbarHeader(props) {
             color: 'text.secondary',
           }}
           className="avatar text-32 font-bold w-96 h-96"
-            // src={user.data.photoURL}
           src="assets/images/test_user.jpg"
-          alt={user.data.displayName}
+          alt="test_user_pic"
         >
-          {user.data.displayName.charAt(0)}
+          {CURRENT_USER?.first_name.charAt(0) + CURRENT_USER?.last_name.charAt(0)}
         </Avatar>
       </div>
       <Typography className="username text-14 whitespace-nowrap font-medium">
-        {/*{user.data.displayName}*/}
-        Test User
+        {CURRENT_USER?.first_name + " " + CURRENT_USER?.last_name}
       </Typography>
       <Typography className="email text-13 whitespace-nowrap font-medium" color="text.secondary">
-        {/*{user.data.email}*/}
-        test.user@mail.com
+        {CURRENT_USER?.email}
       </Typography>
     </Root>
   );

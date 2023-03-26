@@ -5,15 +5,12 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
-import {useState} from 'react';
-import {useSelector} from 'react-redux';
-import {Link, NavLink} from 'react-router-dom';
+import { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import {selectUser} from 'app/store/userSlice';
 
 function UserMenu() {
-    const user = useSelector(selectUser);
-
+    const CURRENT_USER = JSON.parse(localStorage.getItem("current_user"));
     const [userMenu, setUserMenu] = useState(null);
 
     const userMenuClick = (event) => {
@@ -33,13 +30,13 @@ function UserMenu() {
             >
                 <div className="hidden md:flex flex-col mx-4 items-end">
                     <Typography component="span" className="font-semibold flex">
-                        Test User
+                        {CURRENT_USER?.first_name + " " + CURRENT_USER?.last_name}
                     </Typography>
-                    <Typography className="text-11 font-medium capitalize" color="text.secondary">
-                        Admin
+                    <Typography className="text-11 font-medium" color="text.secondary">
+                        {CURRENT_USER?.email}
                     </Typography>
                 </div>
-                <Avatar className="md:mx-4 text-black">TU</Avatar>
+                <Avatar className="md:mx-4 text-black">{CURRENT_USER?.first_name.charAt(0) + CURRENT_USER?.last_name.charAt(0)}</Avatar>
             </Button>
 
             <Popover
@@ -63,7 +60,7 @@ function UserMenu() {
                         <ListItemIcon className="min-w-40">
                             <FuseSvgIcon>heroicons-outline:user-circle</FuseSvgIcon>
                         </ListItemIcon>
-                        <ListItemText primary="My Profile"/>
+                        <ListItemText primary="My Profile" />
                     </MenuItem>
 
                     <MenuItem
@@ -76,7 +73,7 @@ function UserMenu() {
                         <ListItemIcon className="min-w-40">
                             <FuseSvgIcon>heroicons-outline:logout</FuseSvgIcon>
                         </ListItemIcon>
-                        <ListItemText primary="Sign out"/>
+                        <ListItemText primary="Sign out" />
                     </MenuItem>
                 </>
             </Popover>
