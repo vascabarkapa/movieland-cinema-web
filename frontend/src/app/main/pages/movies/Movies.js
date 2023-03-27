@@ -19,7 +19,8 @@ function MoviesPage() {
     const [openDetailsModal, setOpenDetailsModal] = useState(false);
     const [isLoading, setIsloading] = useState(false);
     const [movies, setMovies] = useState([]);
-    const [movieForDelete, setMovieForDelete] = useState({});
+    const [movieToDelete, setMovieToDelete] = useState({});
+    const [movieToShow, setMovieToShow] = useState({});
     const [trigger, setTrigger] = useState(false);
 
     useEffect(() => {
@@ -33,11 +34,12 @@ function MoviesPage() {
     }, [trigger]);
 
     function handleOpenDeleteModal(movie) {
-        setMovieForDelete(movie);
+        setMovieToDelete(movie);
         setOpenDeleteModal(true);
     };
 
-    const handleOpenDetailsModal = () => {
+    function handleOpenDetailsModal(movie) {
+        setMovieToShow(movie);
         setOpenDetailsModal(true);
     };
 
@@ -46,7 +48,7 @@ function MoviesPage() {
     };
 
     const handleDelete = () => {
-        MovieService.deleteMovie(movieForDelete?._id).then((response) => {
+        MovieService.deleteMovie(movieToDelete?._id).then((response) => {
             if (response) {
                 setOpenDeleteModal(false);
                 dispatch(showMessage({ message: "Successfully deleted!" }));
@@ -94,7 +96,7 @@ function MoviesPage() {
                                             type="button"
                                             size="small"
                                             className="mr-5 hover:bg-purple"
-                                            onClick={handleOpenDetailsModal}
+                                            onClick={() => handleOpenDetailsModal(movie)}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:eye
@@ -130,9 +132,6 @@ function MoviesPage() {
                                         </Button>
                                     </Tooltip>
                                 </TableCell>
-                                {openDetailsModal && <MoviesDetailsModal open={openDetailsModal} setOpen={setOpenDetailsModal} movie={movie} />}
-                                {openDeleteModal && <ConfirmationDeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal}
-                                    message={"Are you sure you want to delete the movie?"} onConfirm={handleDelete} />}
                             </TableRow>
                         )) : <TableRow
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -144,6 +143,10 @@ function MoviesPage() {
                     </TableBody>
                 </Table>
             </TableContainer> : <FuseLoading />}
+
+            {openDetailsModal && <MoviesDetailsModal open={openDetailsModal} setOpen={setOpenDetailsModal} movie={movieToShow} />}
+            {openDeleteModal && <ConfirmationDeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal}
+                message={"Are you sure you want to delete the movie?"} onConfirm={handleDelete} />}
         </div>
     );
 }
