@@ -8,16 +8,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {showMessage} from "app/store/fuse/messageSlice";
 import { useDispatch } from 'react-redux';
 
-const ConfirmationDeleteModal = ({open, setOpen, message, id}) => {
+const ConfirmationDeleteModal = ({open, setOpen, message, onConfirm}) => {
     const dispatch = useDispatch();
 
     const handleClose = () => {
         setOpen(false);
-    };
-
-    const handleDelete = () => {
-        setOpen(false);
-        dispatch(showMessage({message: "Successfully deleted!"}));
     };
 
     return (
@@ -40,7 +35,7 @@ const ConfirmationDeleteModal = ({open, setOpen, message, id}) => {
                     <Button onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button color="error" onClick={handleClose}>
+                    <Button color="error" onClick={onConfirm}>
                         Delete
                     </Button>
                 </DialogActions>
