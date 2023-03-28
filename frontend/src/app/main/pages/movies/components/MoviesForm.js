@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import MovieService from "src/app/shared/services/movie-service";
+import {showMessage} from "app/store/fuse/messageSlice";
+import { useDispatch } from 'react-redux';
 
 const schema = yup.object().shape({
     name: yup.string()
@@ -58,8 +60,10 @@ const MoviesForm = () => {
     const movieId = useParams().id;
     const theme = useTheme();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [movieGenres, setMovieGenres] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    
 
     const handleChange = (event) => {
         const {
@@ -114,6 +118,7 @@ const MoviesForm = () => {
             if (response) {
                 navigate("/settings/movies");
                 setIsLoading(false);
+                dispatch(showMessage({ message: "Added new movie successfully!" }));
             }
         })
     }
