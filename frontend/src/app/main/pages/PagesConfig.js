@@ -31,6 +31,10 @@ const PagesConfig = {
                     element: <MoviesForm/>,
                 },
                 {
+                    path: 'movies/edit/:id',
+                    element: <MoviesForm/>,
+                },
+                {
                     path: 'repertory',
                     element: <Repertory/>,
                 },

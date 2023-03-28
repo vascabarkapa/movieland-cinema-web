@@ -60,8 +60,8 @@ function MoviesPage() {
         setOpenDetailsModal(true);
     };
 
-    const handleEditMovies = () => {
-        navigate("/settings/movies/create");
+    function handleEditMovies(id) {
+        navigate("/settings/movies/edit/" + id);
     };
 
     const handleDelete = () => {
@@ -128,7 +128,7 @@ function MoviesPage() {
                                             type="button"
                                             size="small"
                                             className="mr-5 hover:bg-blue"
-                                            onClick={handleEditMovies}
+                                            onClick={() => handleEditMovies(movie?._id)}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:pencil-alt
