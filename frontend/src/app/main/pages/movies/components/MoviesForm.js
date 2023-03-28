@@ -6,9 +6,9 @@ import TextField from "@mui/material/TextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTheme } from "@mui/styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import MovieService from "src/app/shared/services/movie-service";
@@ -55,6 +55,7 @@ const genresList = [
 ];
 
 const MoviesForm = () => {
+    const movieId = useParams().id;
     const theme = useTheme();
     const navigate = useNavigate();
     const [movieGenres, setMovieGenres] = useState([]);
@@ -80,6 +81,14 @@ const MoviesForm = () => {
     const handleBack = () => {
         navigate("/settings/movies");
     }
+    
+    useEffect(() => {
+        MovieService.getMovieById(movieId).then((response) => {
+            if(response) {
+                console.log(response);
+            }
+        })
+    }, [])
 
     function onSubmit({
         name,
@@ -119,7 +128,7 @@ const MoviesForm = () => {
             <Card>
                 <CardContent>
                     <Typography className="text-3xl text-center sm:text-left font-semibold tracking-tight leading-8">
-                        New/Edit Movie
+                        {movieId ? "Edit Movie" : "New Movie"}
                     </Typography>
                 </CardContent>
 
@@ -312,7 +321,7 @@ const MoviesForm = () => {
                             className={isLoading ? "w-120 animate-bounce" : "w-120"}
                             disabled={isLoading}
                         >
-                            {!isLoading ? "Add" : <img height={25} width={25} src="/assets/images/logo/movieland_main.svg" alt="movieland_cinema_loading_logo"></img>}
+                            {!isLoading ? (movieId ? "Edit" : "Add") : <img height={25} width={25} src="/assets/images/logo/movieland_main.svg" alt="movieland_cinema_loading_logo"></img>}
                         </Button>
                     </CardActions>
                 </form>
