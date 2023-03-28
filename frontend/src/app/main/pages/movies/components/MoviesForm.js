@@ -1,25 +1,23 @@
 import Card from "@mui/material/Card";
-import {CardActions, CardContent, InputLabel, OutlinedInput, Select} from "@mui/material";
+import { CardActions, CardContent, InputLabel, OutlinedInput, Select } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {Controller, useForm} from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
-import {yupResolver} from "@hookform/resolvers/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
-import {useNavigate} from "react-router-dom";
-import {useTheme} from "@mui/styles";
-import {useState} from "react";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/styles";
+import { useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
+import MovieService from "src/app/shared/services/movie-service";
 
-/**
- * Movies Form Validation Schema
- */
 const schema = yup.object().shape({
     name: yup.string()
         .required('Required field'),
-    genre: yup.string()
-        .required('Required field'),
+    /*     genre: yup.string()
+            .required('Required field'), */
     duration: yup.string()
         .required('Required field'),
     description: yup.string()
@@ -60,48 +58,55 @@ const MoviesForm = () => {
     const theme = useTheme();
     const navigate = useNavigate();
     const [movieGenres, setMovieGenres] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (event) => {
         const {
-            target: {value},
+            target: { value },
         } = event;
         console.log(value)
         setMovieGenres(
-            // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
     };
 
-    const {control, formState, handleSubmit, setError, setValue} = useForm({
+    const { control, formState, handleSubmit, setError, setValue } = useForm({
         mode: 'onChange',
         resolver: yupResolver(schema),
     });
 
-    const {isValid, dirtyFields, errors} = formState;
+    const { isValid, dirtyFields, errors } = formState;
 
     const handleBack = () => {
         navigate("/settings/movies");
     }
 
     function onSubmit({
-                          name,
-                          genre,
-                          duration,
-                          description,
-                          direction,
-                          actors,
-                          rating
-                      }) {
-        console.log(
-            name,
-            genre,
-            duration,
-            description,
-            direction,
-            actors,
-            rating
-        )
-        console.log('COMING SOON')
+        name,
+        genre,
+        duration,
+        description,
+        direction,
+        actors,
+        rating
+    }) {
+        setIsLoading(true);
+        const body = JSON.stringify({
+            name: name,
+            genre: movieGenres.join(', '),
+            duration: duration,
+            description: description,
+            direction: direction,
+            actors: actors,
+            rating: rating
+        })
+
+        MovieService.createMovie(body).then((response) => {
+            if (response) {
+                navigate("/settings/movies");
+                setIsLoading(false);
+            }
+        })
     }
 
     // loadovati podatke
@@ -129,7 +134,7 @@ const MoviesForm = () => {
                             <Controller
                                 name="name"
                                 control={control}
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <TextField
                                         {...field}
                                         className="mb-24 col-span-1 md:col-span-6"
@@ -148,7 +153,7 @@ const MoviesForm = () => {
                             <Controller
                                 name="genre"
                                 control={control}
-                                render={({field}) => (
+                                render={({ field }) => (
                                     // <TextField
                                     //     {...field}
                                     //     className="mb-24 col-span-1 md:col-span-2"
@@ -169,11 +174,11 @@ const MoviesForm = () => {
                                             id="genre"
                                             multiple
                                             placeholder="Konj"
-                                            error={!!errors.genre}
-                                            helperText={errors?.genre?.message}
+                                            /*                                             error={!!errors.genre}
+                                                                                        helperText={errors?.genre?.message} */
                                             value={movieGenres}
                                             onChange={handleChange}
-                                            input={<OutlinedInput label="Genre"/>}
+                                            input={<OutlinedInput label="Genre" />}
                                         >
                                             {genresList.map((genre) => (
                                                 <MenuItem
@@ -192,7 +197,7 @@ const MoviesForm = () => {
                             <Controller
                                 name="duration"
                                 control={control}
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <TextField
                                         {...field}
                                         className="mb-24 col-span-1 md:col-span-2"
@@ -211,7 +216,7 @@ const MoviesForm = () => {
                             <Controller
                                 name="rating"
                                 control={control}
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <TextField
                                         {...field}
                                         className="mb-24 col-span-1 md:col-span-2"
@@ -222,7 +227,7 @@ const MoviesForm = () => {
                                         helperText={errors?.rating?.message}
                                         required
                                         fullWidth
-                                        InputProps={{inputProps: {min: 1, max: 10, step: 0.1}}}
+                                        InputProps={{ inputProps: { min: 1, max: 10, step: 0.1 } }}
                                         size="small"
                                     />
                                 )}
@@ -231,7 +236,7 @@ const MoviesForm = () => {
                             <Controller
                                 name="description"
                                 control={control}
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <TextField
                                         {...field}
                                         className="mb-24 col-span-1 md:col-span-6"
@@ -252,7 +257,7 @@ const MoviesForm = () => {
                             <Controller
                                 name="direction"
                                 control={control}
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <TextField
                                         {...field}
                                         className="mb-24 col-span-1 md:col-span-3"
@@ -271,7 +276,7 @@ const MoviesForm = () => {
                             <Controller
                                 name="actors"
                                 control={control}
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <TextField
                                         {...field}
                                         className="mb-24 col-span-1 md:col-span-3"
@@ -294,7 +299,8 @@ const MoviesForm = () => {
                             variant="contained"
                             color="primary"
                             type="button"
-                            className="w-120"
+                            className={isLoading ? "hidden" : "w-120"}
+                            disabled={isLoading}
                             onClick={handleBack}
                         >
                             Back
@@ -303,9 +309,10 @@ const MoviesForm = () => {
                             variant="contained"
                             color="secondary"
                             type="submit"
-                            className="w-120"
+                            className={isLoading ? "w-120 animate-bounce" : "w-120"}
+                            disabled={isLoading}
                         >
-                            Add
+                            {!isLoading ? "Add" : <img height={25} width={25} src="/assets/images/logo/movieland_main.svg" alt="movieland_cinema_loading_logo"></img>}
                         </Button>
                     </CardActions>
                 </form>
