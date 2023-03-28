@@ -152,9 +152,8 @@ function SignInPage() {
                         <div>our cinema</div>
                     </div>
                     <div className="mt-24 text-lg text-left tracking-tight leading-6 text-white">
-                        Following the modern times and adapting the film<br />industry to today's digital devices,
-                        Movieland
-                        Cinema<br />offers you unforgettable film experiences.
+                        Following the modern times and adapting<br />the film industry to today's digital devices,<br />
+                        Movieland Cinema offers you unforgettable<br />film experiences.
                     </div>
                 </div>
             </Box>
