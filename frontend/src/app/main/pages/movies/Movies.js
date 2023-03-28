@@ -1,4 +1,4 @@
-import { Paper, Rating, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Pagination, Paper, Rating, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from "@mui/material";
 import MoviesHeader from "./components/MoviesHeader";
 import Button from "@mui/material/Button";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
@@ -22,6 +22,7 @@ function MoviesPage() {
     const [movieToDelete, setMovieToDelete] = useState({});
     const [movieToShow, setMovieToShow] = useState({});
     const [trigger, setTrigger] = useState(false);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         setIsloading(true);
@@ -56,6 +57,11 @@ function MoviesPage() {
             }
         })
     }
+
+    const handleChangePage = (event, value) => {
+        setPage(value);
+        console.log(page)
+      };
 
     return (
         <div className="p-36">
@@ -141,6 +147,13 @@ function MoviesPage() {
                                 No movies available
                             </TableCell></TableRow>}
                     </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TableCell colSpan={6} className="text-center" component="th" scope="row">
+                                <Pagination count={10} page={page} onChange={handleChangePage} color="secondary" />
+                            </TableCell>
+                        </TableRow>
+                    </TableFooter>
                 </Table>
             </TableContainer> : <FuseLoading />}
 
