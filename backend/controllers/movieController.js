@@ -6,7 +6,9 @@ const Movie = require("../models/movieModel");
 //@access private
 const getMovies = asyncHandler(async (req, res) => {
     const movies = await Movie.find();
-    res.status(200).json(movies);
+    const sortedMovies = movies.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    
+    res.status(200).json(sortedMovies);
 });
 
 //@desc Get movie by id
