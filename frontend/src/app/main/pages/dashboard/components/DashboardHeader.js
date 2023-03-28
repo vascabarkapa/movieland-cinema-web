@@ -29,16 +29,6 @@ function DashboardHeader() {
                         </div>
                     </div>
                 </div>
-                <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
-                    <Button
-                        className="whitespace-nowrap"
-                        variant="contained"
-                        color="secondary"
-                        startIcon={<FuseSvgIcon size={20}>heroicons-solid:cog</FuseSvgIcon>}
-                    >
-                        See profile
-                    </Button>
-                </div>
             </div>
             <div className="flex items-center">
                 <span
