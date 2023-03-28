@@ -19,20 +19,36 @@ function MoviesPage() {
     const [openDetailsModal, setOpenDetailsModal] = useState(false);
     const [isLoading, setIsloading] = useState(false);
     const [movies, setMovies] = useState([]);
+    const [tempMovies, setTempMovies] = useState([]);
     const [movieToDelete, setMovieToDelete] = useState({});
     const [movieToShow, setMovieToShow] = useState({});
     const [trigger, setTrigger] = useState(false);
     const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+
+    let pageSize = 10;
+    let startIndex = (page - 1) * pageSize;
+    let endIndex = startIndex + pageSize;
 
     useEffect(() => {
         setIsloading(true);
         MovieService.getMovies().then((response) => {
             if (response) {
                 setMovies(response?.data);
+                setTempMovies(response?.data)?.slice(startIndex, endIndex);
                 setIsloading(false);
+                setTotalPages(Math.ceil(response?.data?.length / pageSize));
             }
         })
     }, [trigger]);
+
+    useEffect(() => {
+        setTempMovies(movies?.slice(startIndex, endIndex));
+    }, [page]);
+
+    const handleChangePage = (event, value) => {
+        setPage(value);
+    };
 
     function handleOpenDeleteModal(movie) {
         setMovieToDelete(movie);
@@ -54,14 +70,10 @@ function MoviesPage() {
                 setOpenDeleteModal(false);
                 dispatch(showMessage({ message: "Successfully deleted!" }));
                 setTrigger(!trigger);
+                setPage(1);
             }
         })
     }
-
-    const handleChangePage = (event, value) => {
-        setPage(value);
-        console.log(page)
-      };
 
     return (
         <div className="p-36">
@@ -79,7 +91,7 @@ function MoviesPage() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {movies?.length > 0 ? movies.map((movie) => (
+                        {tempMovies?.length > 0 ? tempMovies.map((movie) => (
                             <TableRow
                                 key={movie?._id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -147,13 +159,13 @@ function MoviesPage() {
                                 No movies available
                             </TableCell></TableRow>}
                     </TableBody>
-                    <TableFooter>
+                    {movies?.length > 10 && <TableFooter>
                         <TableRow>
                             <TableCell colSpan={6} className="text-center" component="th" scope="row">
-                                <Pagination count={10} page={page} onChange={handleChangePage} color="secondary" />
+                                <Pagination count={totalPages} page={page} onChange={handleChangePage} color="secondary" />
                             </TableCell>
                         </TableRow>
-                    </TableFooter>
+                    </TableFooter>}
                 </Table>
             </TableContainer> : <FuseLoading />}
 
