@@ -1,8 +1,8 @@
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import {memo} from 'react';
+import { memo } from 'react';
 
-function UserWidget() {
+const UserWidget = ({ count }) => {
     return (
         <Paper className="flex flex-col flex-auto shadow rounded-2xl overflow-hidden">
             <div className="flex items-center justify-between px-8 pt-12">
@@ -15,7 +15,7 @@ function UserWidget() {
             </div>
             <div className="text-center mt-8 pb-44">
                 <Typography className="text-7xl sm:text-9xl font-bold tracking-tight leading-none text-green-500">
-                    5
+                    {count}
                 </Typography>
                 <Typography className="text-lg font-medium text-green-600">
                     users

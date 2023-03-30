@@ -9,7 +9,7 @@ const getCount = asyncHandler(async (req, res) => {
     const movies = await Movie.find();
     const users = await User.find();
 
-    res.status(200).json({ repertories: 1, movies: movies?.length, users: users?.length });
+    res.status(200).json({ repertories: 1, movies: movies?.length, tickets: 5, users: users?.length });
 });
 
 module.exports = { getCount };
