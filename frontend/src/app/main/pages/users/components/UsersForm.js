@@ -1,18 +1,13 @@
 import Card from "@mui/material/Card";
-import {CardActions, CardContent, InputLabel, Select} from "@mui/material";
+import { CardActions, CardContent } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {Controller, useForm} from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
-import {yupResolver} from "@hookform/resolvers/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-/**
- * Users Form Validation Schema
- */
 const schema = yup.object().shape({
     username: yup.string()
         .required('Required field'),
@@ -29,51 +24,35 @@ const schema = yup.object().shape({
         .required('Required field'),
     lastName: yup.string()
         .required('Required field'),
-    citizenNumber: yup.string()
-        .required('Required field'),
-    phoneNumber: yup.string()
-        .required('Required field'),
 });
 
 const UsersForm = () => {
     const navigate = useNavigate();
 
-    const {control, formState, handleSubmit, setError, setValue} = useForm({
+    const { control, formState, handleSubmit, setError, setValue } = useForm({
         mode: 'onChange',
         resolver: yupResolver(schema),
     });
 
-    const {isValid, dirtyFields, errors} = formState;
+    const { isValid, dirtyFields, errors } = formState;
 
     const handleBack = () => {
         navigate("/settings/users");
     }
 
     function onSubmit({
-                          username,
-                          email,
-                          password,
-                          firstName,
-                          lastName,
-                          citizenNumber,
-                          phoneNumber,
-                          gender,
-                          street,
-                          city,
-                          country
-                      }) {
+        username,
+        email,
+        password,
+        firstName,
+        lastName
+    }) {
         console.log(
             username,
             email,
             password,
             firstName,
-            lastName,
-            citizenNumber,
-            phoneNumber,
-            gender,
-            street,
-            city,
-            country
+            lastName
         )
         console.log('COMING SOON')
     }
@@ -99,97 +78,11 @@ const UsersForm = () => {
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <CardContent>
-                        <Typography className="font-500 mb-10">
-                            User data
-                        </Typography>
-
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-20">
-                            <Controller
-                                name="username"
-                                control={control}
-                                render={({field}) => (
-                                    <TextField
-                                        {...field}
-                                        className="mb-24"
-                                        label="Username"
-                                        type="text"
-                                        variant="outlined"
-                                        error={!!errors.username}
-                                        helperText={errors?.username?.message}
-                                        required
-                                        fullWidth
-                                        size="small"
-                                    />
-                                )}
-                            />
-
-                            <Controller
-                                name="email"
-                                control={control}
-                                render={({field}) => (
-                                    <TextField
-                                        {...field}
-                                        className="mb-24"
-                                        label="Email"
-                                        type="email"
-                                        variant="outlined"
-                                        error={!!errors.email}
-                                        helperText={errors?.email?.message}
-                                        required
-                                        fullWidth
-                                        size="small"
-                                    />
-                                )}
-                            />
-
-                            <Controller
-                                name="password"
-                                control={control}
-                                render={({field}) => (
-                                    <TextField
-                                        {...field}
-                                        className="mb-24"
-                                        label="Password"
-                                        type="password"
-                                        variant="outlined"
-                                        error={!!errors.password}
-                                        helperText={errors?.password?.message}
-                                        required
-                                        fullWidth
-                                        size="small"
-                                    />
-                                )}
-                            />
-
-                            <Controller
-                                name="confirmPassword"
-                                control={control}
-                                render={({field}) => (
-                                    <TextField
-                                        {...field}
-                                        className="mb-24"
-                                        label="Confirm Password"
-                                        type="password"
-                                        variant="outlined"
-                                        error={!!errors.confirmPassword}
-                                        helperText={errors?.confirmPassword?.message}
-                                        required
-                                        fullWidth
-                                        size="small"
-                                    />
-                                )}
-                            />
-                        </div>
-
-                        <Typography className="font-500 mb-10">
-                            Personal data
-                        </Typography>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-20">
                             <Controller
                                 name="firstName"
                                 control={control}
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <TextField
                                         {...field}
                                         className="mb-24"
@@ -208,7 +101,7 @@ const UsersForm = () => {
                             <Controller
                                 name="lastName"
                                 control={control}
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <TextField
                                         {...field}
                                         className="mb-24"
@@ -225,17 +118,17 @@ const UsersForm = () => {
                             />
 
                             <Controller
-                                name="citizenNumber"
+                                name="username"
                                 control={control}
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <TextField
                                         {...field}
                                         className="mb-24"
-                                        label="Citizen Number"
+                                        label="Username"
                                         type="text"
                                         variant="outlined"
-                                        error={!!errors.citizenNumber}
-                                        helperText={errors?.citizenNumber?.message}
+                                        error={!!errors.username}
+                                        helperText={errors?.username?.message}
                                         required
                                         fullWidth
                                         size="small"
@@ -244,17 +137,42 @@ const UsersForm = () => {
                             />
 
                             <Controller
-                                name="phoneNumber"
+                                name="email"
                                 control={control}
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <TextField
                                         {...field}
                                         className="mb-24"
-                                        label="Phone Number"
-                                        type="text"
+                                        label="Email"
+                                        type="email"
                                         variant="outlined"
-                                        error={!!errors.phoneNumber}
-                                        helperText={errors?.phoneNumber?.message}
+                                        error={!!errors.email}
+                                        helperText={errors?.email?.message}
+                                        required
+                                        fullWidth
+                                        size="small"
+                                    />
+                                )}
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-20">
+                            <div className="col-span-1 sm:col-span-2 mb-20">
+                                <hr />
+                            </div>
+
+                            <Controller
+                                name="password"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField
+                                        {...field}
+                                        className="mb-24"
+                                        label="Password"
+                                        type="password"
+                                        variant="outlined"
+                                        error={!!errors.password}
+                                        helperText={errors?.password?.message}
                                         required
                                         fullWidth
                                         size="small"
@@ -263,66 +181,18 @@ const UsersForm = () => {
                             />
 
                             <Controller
-                                name="gender"
+                                name="confirmPassword"
                                 control={control}
-                                render={({field}) => (
-                                    <FormControl size="small" className="mb-24">
-                                        <InputLabel id="gender">Gender</InputLabel>
-                                        <Select
-                                            {...field}
-                                            labelId="gender"
-                                            id="gender"
-                                            label="Gender"
-                                        >
-                                            <MenuItem value="male">Male</MenuItem>
-                                            <MenuItem value="female">Female</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                )}
-                            />
-
-                            <Controller
-                                name="street"
-                                control={control}
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <TextField
                                         {...field}
                                         className="mb-24"
-                                        label="Street"
-                                        type="text"
+                                        label="Confirm Password"
+                                        type="password"
                                         variant="outlined"
-                                        fullWidth
-                                        size="small"
-                                    />
-                                )}
-                            />
-
-                            <Controller
-                                name="city"
-                                control={control}
-                                render={({field}) => (
-                                    <TextField
-                                        {...field}
-                                        className="mb-24"
-                                        label="City"
-                                        type="text"
-                                        variant="outlined"
-                                        fullWidth
-                                        size="small"
-                                    />
-                                )}
-                            />
-
-                            <Controller
-                                name="country"
-                                control={control}
-                                render={({field}) => (
-                                    <TextField
-                                        {...field}
-                                        className="mb-24"
-                                        label="Country"
-                                        type="text"
-                                        variant="outlined"
+                                        error={!!errors.confirmPassword}
+                                        helperText={errors?.confirmPassword?.message}
+                                        required
                                         fullWidth
                                         size="small"
                                     />
