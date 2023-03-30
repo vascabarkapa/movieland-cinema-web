@@ -35,6 +35,8 @@ const UsersForm = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [editUser, setEditUser] = useState();
 
     const { control, formState, handleSubmit, setError, setValue } = useForm({
         mode: 'onChange',
@@ -72,21 +74,33 @@ const UsersForm = () => {
         })
     }
 
-    // loadovati podatke
-    // useEffect(() => {
-    //     setValue('username', '',{shouldDirty: true, shouldValidate: true});
-    // }, [setValue]);
+    useEffect(() => {
+        if (userId) {
+            UserService.getUserById(userId).then((response) => {
+                if (response) {
+                    setEditUser(response?.data);
+                    setValue('firstName', response?.data?.first_name);
+                    setValue('lastName', response?.data?.last_name);
+                    setValue('username', response?.data?.username);
+                    setValue('email', response?.data?.email);
+                    setIsLoaded(true);
+                }
+            })
+        } else {
+            setIsLoaded(true);
+        }
+    }, [])
 
     return (
         <div className="p-36">
-            <Card>
+            <Card className={!isLoaded && "animate-pulse"}>
                 <CardContent>
                     <Typography className="text-3xl text-center sm:text-left font-semibold tracking-tight leading-8">
-                        New/Edit User
+                        {userId ? "Edit User" : "New User"}
                     </Typography>
                 </CardContent>
 
-                <form
+                {isLoaded ? <form
                     name="usersForm"
                     noValidate
                     className="flex flex-col justify-center"
@@ -237,7 +251,7 @@ const UsersForm = () => {
                             {!isLoading ? (userId ? "Edit" : "Add") : <img height={25} width={25} src="/assets/images/logo/movieland_main.svg" alt="movieland_cinema_loading_logo"></img>}
                         </Button>
                     </CardActions>
-                </form>
+                </form> : <></>}
             </Card>
         </div>
     )
