@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import MovieService from "src/app/shared/services/movie-service";
-import {showMessage} from "app/store/fuse/messageSlice";
+import { showMessage } from "app/store/fuse/messageSlice";
 import { useDispatch } from 'react-redux';
 
 const schema = yup.object().shape({
@@ -63,7 +63,7 @@ const MoviesForm = () => {
     const dispatch = useDispatch();
     const [movieGenres, setMovieGenres] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const handleChange = (event) => {
         const {
@@ -85,13 +85,24 @@ const MoviesForm = () => {
     const handleBack = () => {
         navigate("/settings/movies");
     }
-    
+
     useEffect(() => {
-        MovieService.getMovieById(movieId).then((response) => {
-            if(response) {
-                console.log(response);
-            }
-        })
+        if (movieId) {
+            MovieService.getMovieById(movieId).then((response) => {
+                if (response) {
+                    setValue('name', response?.data?.name);
+                    setMovieGenres(response?.data?.genre?.split(", "));
+                    setValue('duration', response?.data?.duration);
+                    setValue('description', response?.data?.description);
+                    setValue('direction', response?.data?.direction);
+                    setValue('actors', response?.data?.actors);
+                    setValue('rating', response?.data?.rating);
+                    setIsLoaded(true);
+                }
+            })
+        } else {
+            setIsLoaded(true);
+        }
     }, [])
 
     function onSubmit({
@@ -114,30 +125,35 @@ const MoviesForm = () => {
             rating: rating
         })
 
-        MovieService.createMovie(body).then((response) => {
-            if (response) {
-                navigate("/settings/movies");
-                setIsLoading(false);
-                dispatch(showMessage({ message: "Added new movie successfully!" }));
-            }
-        })
+        if (movieId) {
+            MovieService.updateMovie(movieId, body).then((response) => {
+                if (response) {
+                    navigate("/settings/movies");
+                    setIsLoading(false);
+                    dispatch(showMessage({ message: "Updated movie successfully!" }));
+                }
+            })
+        } else {
+            MovieService.createMovie(body).then((response) => {
+                if (response) {
+                    navigate("/settings/movies");
+                    setIsLoading(false);
+                    dispatch(showMessage({ message: "Added new movie successfully!" }));
+                }
+            })
+        }
     }
-
-    // loadovati podatke
-    // useEffect(() => {
-    //     setValue('username', '',{shouldDirty: true, shouldValidate: true});
-    // }, [setValue]);
 
     return (
         <div className="p-36">
-            <Card>
+            <Card className={!isLoaded && "animate-pulse"}>
                 <CardContent>
                     <Typography className="text-3xl text-center sm:text-left font-semibold tracking-tight leading-8">
                         {movieId ? "Edit Movie" : "New Movie"}
                     </Typography>
                 </CardContent>
 
-                <form
+                {isLoaded ? <form
                     name="moviesForm"
                     noValidate
                     className="flex flex-col justify-center"
@@ -329,7 +345,7 @@ const MoviesForm = () => {
                             {!isLoading ? (movieId ? "Edit" : "Add") : <img height={25} width={25} src="/assets/images/logo/movieland_main.svg" alt="movieland_cinema_loading_logo"></img>}
                         </Button>
                     </CardActions>
-                </form>
+                </form> : <></>}
             </Card>
         </div>
     )
