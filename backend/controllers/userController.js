@@ -60,6 +60,15 @@ const updateUser = asyncHandler(async (req, res) => {
         throw new Error("User not found");
     }
 
+    const userAvailable = await User.find({email: req.body['email']});
+    if (userAvailable > 1) {
+        res.status(400);
+        throw new Error("User is already registered with that email address");
+    }
+
+    const password = await bcrypt.hash(req.body['password'], 10);
+    req.body['password'] = password;
+
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.status(200).json(updatedUser);
 });

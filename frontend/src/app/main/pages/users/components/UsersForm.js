@@ -36,7 +36,6 @@ const UsersForm = () => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [editUser, setEditUser] = useState();
 
     const { control, formState, handleSubmit, setError, setValue } = useForm({
         mode: 'onChange',
@@ -48,6 +47,22 @@ const UsersForm = () => {
     const handleBack = () => {
         navigate("/settings/users");
     }
+
+    useEffect(() => {
+        if (userId) {
+            UserService.getUserById(userId).then((response) => {
+                if (response) {
+                    setValue('firstName', response?.data?.first_name);
+                    setValue('lastName', response?.data?.last_name);
+                    setValue('username', response?.data?.username);
+                    setValue('email', response?.data?.email);
+                    setIsLoaded(true);
+                }
+            })
+        } else {
+            setIsLoaded(true);
+        }
+    }, [])
 
     function onSubmit({
         username,
@@ -65,31 +80,24 @@ const UsersForm = () => {
             last_name: lastName
         })
 
-        UserService.createUser(body).then((response) => {
-            if (response) {
-                navigate("/settings/users");
-                setIsLoading(false);
-                dispatch(showMessage({ message: "Added new user successfully!" }));
-            }
-        })
-    }
-
-    useEffect(() => {
         if (userId) {
-            UserService.getUserById(userId).then((response) => {
+            UserService.updateUser(userId, body).then((response) => {
                 if (response) {
-                    setEditUser(response?.data);
-                    setValue('firstName', response?.data?.first_name);
-                    setValue('lastName', response?.data?.last_name);
-                    setValue('username', response?.data?.username);
-                    setValue('email', response?.data?.email);
-                    setIsLoaded(true);
+                    navigate("/settings/users");
+                    setIsLoading(false);
+                    dispatch(showMessage({ message: "Updated user successfully!" }));
                 }
             })
         } else {
-            setIsLoaded(true);
+            UserService.createUser(body).then((response) => {
+                if (response) {
+                    navigate("/settings/users");
+                    setIsLoading(false);
+                    dispatch(showMessage({ message: "Added new user successfully!" }));
+                }
+            });
         }
-    }, [])
+    }
 
     return (
         <div className="p-36">
