@@ -6,7 +6,11 @@ import TextField from "@mui/material/TextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import UserService from "src/app/shared/services/user-service";
+import { showMessage } from "app/store/fuse/messageSlice";
+import { useDispatch } from 'react-redux';
+import { useEffect, useState } from "react";
 
 const schema = yup.object().shape({
     username: yup.string()
@@ -27,7 +31,10 @@ const schema = yup.object().shape({
 });
 
 const UsersForm = () => {
+    const userId = useParams().id;
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(false);
 
     const { control, formState, handleSubmit, setError, setValue } = useForm({
         mode: 'onChange',
@@ -47,14 +54,22 @@ const UsersForm = () => {
         firstName,
         lastName
     }) {
-        console.log(
-            username,
-            email,
-            password,
-            firstName,
-            lastName
-        )
-        console.log('COMING SOON')
+        setIsLoading(true);
+        const body = JSON.stringify({
+            username: username,
+            email: email,
+            password: password,
+            first_name: firstName,
+            last_name: lastName
+        })
+
+        UserService.createUser(body).then((response) => {
+            if (response) {
+                navigate("/settings/users");
+                setIsLoading(false);
+                dispatch(showMessage({ message: "Added new user successfully!" }));
+            }
+        })
     }
 
     // loadovati podatke
@@ -206,7 +221,8 @@ const UsersForm = () => {
                             variant="contained"
                             color="primary"
                             type="button"
-                            className="w-120"
+                            className={isLoading ? "hidden" : "w-120"}
+                            disabled={isLoading}
                             onClick={handleBack}
                         >
                             Back
@@ -215,9 +231,10 @@ const UsersForm = () => {
                             variant="contained"
                             color="secondary"
                             type="submit"
-                            className="w-120"
+                            className={isLoading ? "w-120 animate-bounce" : "w-120"}
+                            disabled={isLoading}
                         >
-                            Add
+                            {!isLoading ? (userId ? "Edit" : "Add") : <img height={25} width={25} src="/assets/images/logo/movieland_main.svg" alt="movieland_cinema_loading_logo"></img>}
                         </Button>
                     </CardActions>
                 </form>
