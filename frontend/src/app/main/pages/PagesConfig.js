@@ -54,6 +54,10 @@ const PagesConfig = {
                     path: 'users/create',
                     element: <UsersForm/>,
                 },
+                {
+                    path: 'users/edit/:id',
+                    element: <UsersForm/>,
+                },
             ],
         },
         {
