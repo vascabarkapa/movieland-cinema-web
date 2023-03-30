@@ -6,11 +6,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
+import ProfileDetailsModal from 'src/app/shared/components/ProfileDetailsModal';
 
 function UserMenu() {
     const CURRENT_USER = JSON.parse(localStorage.getItem("current_user"));
+    const [openMyProfileModal, setOpenMyProfileModal] = useState(false);
     const [userMenu, setUserMenu] = useState(null);
 
     const userMenuClick = (event) => {
@@ -18,6 +20,7 @@ function UserMenu() {
     };
 
     const userMenuClose = () => {
+        setOpenMyProfileModal(true);
         setUserMenu(null);
     };
 
@@ -56,11 +59,11 @@ function UserMenu() {
                 }}
             >
                 <>
-                    <MenuItem component={Link} to="/apps/profile" onClick={userMenuClose} role="button">
+                    <MenuItem onClick={userMenuClose} role="button">
                         <ListItemIcon className="min-w-40">
                             <FuseSvgIcon>heroicons-outline:user-circle</FuseSvgIcon>
                         </ListItemIcon>
-                        <ListItemText primary="My Profile" />
+                        <ListItemText primary="Profile" />
                     </MenuItem>
 
                     <MenuItem
@@ -77,6 +80,7 @@ function UserMenu() {
                     </MenuItem>
                 </>
             </Popover>
+            {openMyProfileModal && <ProfileDetailsModal open={openMyProfileModal} setOpen={setOpenMyProfileModal} />}
         </>
     );
 }
