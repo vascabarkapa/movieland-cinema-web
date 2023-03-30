@@ -35,7 +35,7 @@ function MoviesPage() {
         MovieService.getMovies().then((response) => {
             if (response) {
                 setMovies(response?.data);
-                setTempMovies(response?.data)?.slice(startIndex, endIndex);
+                setTempMovies(response?.data?.slice(startIndex, endIndex));
                 setIsloading(false);
                 setTotalPages(Math.ceil(response?.data?.length / pageSize));
             }

@@ -1,4 +1,4 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableFooter, Pagination } from "@mui/material";
 import Button from "@mui/material/Button";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import ConfirmationDeleteModal from "../../../shared/components/ConfirmationDeleteModal";
@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import UsersHeader from "./components/UsersHeader";
 import { useNavigate } from "react-router-dom";
-import UsersDetailsModal from "./components/UsersDetailsModal";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { useDispatch } from 'react-redux';
 import UserService from "src/app/shared/services/user-service";
@@ -16,12 +15,10 @@ function UsersPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
-    const [openDetailsModal, setOpenDetailsModal] = useState(false);
     const [isLoading, setIsloading] = useState(false);
     const [users, setUsers] = useState([]);
     const [tempUsers, setTempUsers] = useState([]);
     const [userToDelete, setUserToDelete] = useState({});
-    const [userToShow, setUserToShow] = useState({});
     const [trigger, setTrigger] = useState(false);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
@@ -30,13 +27,12 @@ function UsersPage() {
     let startIndex = (page - 1) * pageSize;
     let endIndex = startIndex + pageSize;
 
-
     useEffect(() => {
         setIsloading(true);
         UserService.getUsers().then((response) => {
             if (response) {
                 setUsers(response?.data);
-                setTempUsers(response?.data)?.slice(startIndex, endIndex);
+                setTempUsers(response?.data?.slice(startIndex, endIndex));
                 setIsloading(false);
                 setTotalPages(Math.ceil(response?.data?.length / pageSize));
             }
@@ -54,11 +50,6 @@ function UsersPage() {
     function handleOpenDeleteModal(user) {
         setUserToDelete(user);
         setOpenDeleteModal(true);
-    };
-
-    function handleOpenDetailsModal(user) {
-        setUserToShow(user);
-        setOpenDetailsModal(true);
     };
 
     function handleEditUser(id) {
@@ -102,20 +93,6 @@ function UsersPage() {
                                 <TableCell>{user?.first_name + " " + user?.last_name}</TableCell>
                                 <TableCell>{user?.email}</TableCell>
                                 <TableCell style={{ display: "flex", justifyContent: "right" }}>
-                                    <Tooltip title="View" placement="top">
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            type="button"
-                                            size="small"
-                                            className="mr-5 hover:bg-purple"
-                                            onClick={() => handleOpenDetailsModal(user)}
-                                        >
-                                            <FuseSvgIcon>
-                                                heroicons-solid:eye
-                                            </FuseSvgIcon>
-                                        </Button>
-                                    </Tooltip>
                                     <Tooltip title="Edit" placement="top">
                                         <Button
                                             variant="contained"
@@ -163,7 +140,6 @@ function UsersPage() {
                     </TableFooter>}
                 </Table>
             </TableContainer> : <FuseLoading />}
-            {openDetailsModal && <UsersDetailsModal open={openDetailsModal} setOpen={setOpenDetailsModal} user={userToShow} />}
             {openDeleteModal && <ConfirmationDeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal}
                 message={"Are you sure you want to delete the user?"} onConfirm={handleDelete} />}
         </div>
