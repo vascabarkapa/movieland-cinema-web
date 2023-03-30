@@ -27,8 +27,10 @@ axiosInstance.interceptors.request.use((confiq) => {
 axiosInstance.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
+    
+    const ACCESS_TOKEN = localStorage.getItem("access_token");
 
-    if (error?.response?.status === 401) {
+    if (error?.response?.status === 401 && ACCESS_TOKEN) {
         window.location.href = "sign-out";
     }
 
