@@ -60,8 +60,8 @@ function RepertoryPage() {
         setPage(value);
     };
 
-    function handleOpenDeleteModal(movie) {
-        setMovieFromRepertoryToDelete(movie);
+    function handleOpenDeleteModal(repertory) {
+        setMovieFromRepertoryToDelete(repertory);
         setOpenDeleteModal(true);
     }
 
@@ -153,7 +153,7 @@ function RepertoryPage() {
                                             type="button"
                                             size="small"
                                             className="hover:bg-red"
-                                            onClick={handleOpenDeleteModal}
+                                            onClick={() => handleOpenDeleteModal(repertory)}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:trash
@@ -180,9 +180,11 @@ function RepertoryPage() {
                     </TableFooter>}
                 </Table>
             </TableContainer> : <FuseLoading/>}
+
+            {/*{openDetailsModal && <MoviesDetailsModal open={openDetailsModal} setOpen={setOpenDetailsModal} movie={movieToShow} />}*/}
             {openDeleteModal && <ConfirmationDeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal}
-                                                         message={"Are you sure you want to delete the movie from repertory?"}/>}
-            {openFormModal && <RepertoryFormModal open={openFormModal} setOpen={setOpenFormModal}/>}
+                                                         message={"Are you sure you want to delete the movie from repertory?"}
+                                                         onConfirm={handleDelete}/>}
         </div>
     );
 }
