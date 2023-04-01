@@ -69,9 +69,9 @@ function RepertoryPage() {
         setOpenFormModal(true);
     };
 
-    const handleOpenSeatReservations = () => {
-        navigate('/settings/repertory/reservations');
-    };
+    function handleOpenSeatReservations(repertory) {
+        navigate("/settings/repertory/reservations/"+repertory?._id);
+    }
 
     function convertToDateTime(dateTime) {
         return new Date(dateTime).toLocaleString();
@@ -125,7 +125,7 @@ function RepertoryPage() {
                                             type="button"
                                             size="small"
                                             className="mr-5 hover:bg-purple"
-                                            onClick={handleOpenSeatReservations}
+                                            onClick={() => handleOpenSeatReservations(repertory)}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:eye

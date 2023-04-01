@@ -39,7 +39,7 @@ const PagesConfig = {
                     element: <Repertory/>,
                 },
                 {
-                    path: 'repertory/reservations',
+                    path: 'repertory/reservations/:id',
                     element: <RepertorySeatReservations/>,
                 },
                 {
