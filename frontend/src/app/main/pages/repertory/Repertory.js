@@ -1,4 +1,14 @@
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {
+    Pagination,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableFooter,
+    TableHead,
+    TableRow
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import ConfirmationDeleteModal from "../../../shared/components/ConfirmationDeleteModal";
@@ -7,26 +17,53 @@ import Tooltip from "@mui/material/Tooltip";
 import RepertoryHeader from "./components/RepertoryHeader";
 import RepertoryFormModal from "./components/RepertoryFormModal";
 import {useNavigate} from "react-router-dom";
-
-function createData(name, calories, fat, carbs, protein) {
-    return {name, calories, fat, carbs, protein};
-}
-
-const rows = [
-    createData('The Big Short', 'asdsadsdsadsad', 'asdsadsdsadsad', 'asdsadsdsadsad', 'asdsadsdsadsad'),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-];
+import {useEffect, useState} from "react";
+import RepertoryService from "src/app/shared/services/repertory-service";
+import {showMessage} from "app/store/fuse/messageSlice";
+import {useDispatch} from 'react-redux';
+import FuseLoading from "@fuse/core/FuseLoading";
 
 function RepertoryPage() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
-    const [openFormModal, setOpenFormModal] = React.useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
+    const [openFormModal, setOpenFormModal] = useState(false);
+    const [isLoading, setIsloading] = useState(false);
+    const [moviesFromRepertory, setMoviesFromRepertory] = useState([]);
+    const [tempMoviesFromRepertory, setTempMoviesFromRepertory] = useState([]);
+    const [movieFromRepertoryToDelete, setMovieFromRepertoryToDelete] = useState({});
+    const [trigger, setTrigger] = useState(false);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
 
-    const handleOpenDeleteModal = () => {
-        setOpenDeleteModal(true);
+    let pageSize = 10;
+    let startIndex = (page - 1) * pageSize;
+    let endIndex = startIndex + pageSize;
+
+    useEffect(() => {
+        setIsloading(true);
+        RepertoryService.getMoviesFromRepertory().then((response) => {
+            if (response) {
+                setMoviesFromRepertory(response?.data);
+                setTempMoviesFromRepertory(response?.data?.slice(startIndex, endIndex));
+                setIsloading(false);
+                setTotalPages(Math.ceil(response?.data?.length / pageSize));
+            }
+        })
+    }, [trigger]);
+
+    useEffect(() => {
+        setTempMoviesFromRepertory(moviesFromRepertory?.slice(startIndex, endIndex));
+    }, [page]);
+
+    const handleChangePage = (event, value) => {
+        setPage(value);
     };
+
+    function handleOpenDeleteModal(movie) {
+        setMovieFromRepertoryToDelete(movie);
+        setOpenDeleteModal(true);
+    }
 
     const handleOpenFormModal = () => {
         setOpenFormModal(true);
@@ -36,10 +73,25 @@ function RepertoryPage() {
         navigate('/settings/repertory/reservations');
     };
 
+    function convertToDateTime(dateTime) {
+        return new Date(dateTime).toLocaleString();
+    }
+
+    const handleDelete = () => {
+        RepertoryService.deleteMovieFromRepertory(movieFromRepertoryToDelete?._id).then((response) => {
+            if (response) {
+                setOpenDeleteModal(false);
+                dispatch(showMessage({message: "Successfully deleted!"}));
+                setTrigger(!trigger);
+                setPage(1);
+            }
+        })
+    }
+
     return (
         <div className="p-36">
             <RepertoryHeader/>
-            <TableContainer component={Paper}>
+            {!isLoading ? <TableContainer component={Paper}>
                 <Table sx={{minWidth: 650}}>
                     <TableHead>
                         <TableRow>
@@ -51,19 +103,19 @@ function RepertoryPage() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {tempMoviesFromRepertory.length > 0 ? tempMoviesFromRepertory.map((repertory) => (
                             <TableRow
-                                key={row.name}
+                                key={repertory?._id}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                 className="hover:bg-gray-100"
                             >
                                 <TableCell component="th" scope="row">
-                                    {row.name}
+                                    {repertory?.movie?.name}
                                 </TableCell>
-                                <TableCell>{row.calories}</TableCell>
-                                <TableCell>{row.fat}</TableCell>
+                                <TableCell>{repertory?.price}&nbsp;&euro;</TableCell>
+                                <TableCell>{convertToDateTime(repertory?.dateTime)}</TableCell>
                                 <TableCell>
-                                    <i className="inline-block w-8 h-8 rounded mr-5 bg-green animate-ping"></i>220
+                                    <i className="inline-block w-8 h-8 rounded mr-5 bg-green animate-ping"></i>{repertory?.number_of_tickets}
                                 </TableCell>
                                 <TableCell style={{display: "flex", justifyContent: "right"}}>
                                     <Tooltip title="View" placement="top">
@@ -110,10 +162,24 @@ function RepertoryPage() {
                                     </Tooltip>
                                 </TableCell>
                             </TableRow>
-                        ))}
+                        )) : <TableRow
+                            sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                            className="hover:bg-gray-100"
+                        >
+                            <TableCell colSpan={6} className="text-center" component="th" scope="row">
+                                No movies in repertory available
+                            </TableCell></TableRow>}
                     </TableBody>
+                    {moviesFromRepertory?.length > 10 && <TableFooter>
+                        <TableRow>
+                            <TableCell colSpan={6} className="text-center" component="th" scope="row">
+                                <Pagination count={totalPages} page={page} onChange={handleChangePage}
+                                            color="secondary"/>
+                            </TableCell>
+                        </TableRow>
+                    </TableFooter>}
                 </Table>
-            </TableContainer>
+            </TableContainer> : <FuseLoading/>}
             {openDeleteModal && <ConfirmationDeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal}
                                                          message={"Are you sure you want to delete the movie from repertory?"}/>}
             {openFormModal && <RepertoryFormModal open={openFormModal} setOpen={setOpenFormModal}/>}
