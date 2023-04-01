@@ -14,6 +14,8 @@ import dayjs from 'dayjs';
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import {useEffect, useState} from "react";
+import RepertoryService from "../../../../shared/services/repertory-service";
 
 /**
  * Repertory Form Validation Schema
@@ -35,8 +37,24 @@ const schema = yup.object().shape({
         .min(1, 'Price must be greater than or equal to 1'),
 });
 
-const RepertoryFormModal = ({open, setOpen}) => {
+const RepertoryFormModal = ({open, setOpen, id}) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [editMovieRepertory, setEditMovieRepertory] = useState({});
     const [dateTimeValue, setDateTimeValue] = React.useState(null);
+
+    useEffect(() => {
+        if (id) {
+            RepertoryService.getMovieByIdFromRepertory(id).then((response) => {
+                if (response) {
+                    setEditMovieRepertory(response?.data);
+                    setIsLoaded(true);
+                }
+            })
+        } else {
+            setIsLoaded(true);
+        }
+    }, [])
 
     const handleClose = () => {
         setOpen(false);
@@ -74,11 +92,12 @@ const RepertoryFormModal = ({open, setOpen}) => {
                 aria-describedby="repertory-form-content"
                 fullWidth
                 maxWidth="sm"
+                className={!isLoaded && "animate-pulse"}
             >
                 <DialogTitle id="repertory-form-title" className="flex items-center">
-                    Add/Edit Repertory
+                    {id ? "Edit Repertory" : "Add Movie to Repertory"}
                 </DialogTitle>
-                <form
+                {isLoaded ? <form
                     name="repertoryForm"
                     noValidate
                     className="flex flex-col justify-center"
@@ -173,10 +192,12 @@ const RepertoryFormModal = ({open, setOpen}) => {
                             Close
                         </Button>
                         <Button type="submit" color="secondary">
-                            Add/Edit
+                            {!isLoading ? (id ? "Edit" : "Add") :
+                                <img height={25} width={25} src="/assets/images/logo/movieland_main.svg"
+                                     alt="movieland_cinema_loading_logo"></img>}
                         </Button>
                     </DialogActions>
-                </form>
+                </form> : <></>}
             </Dialog>
         </div>
     );

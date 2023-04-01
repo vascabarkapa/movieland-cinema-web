@@ -30,6 +30,7 @@ function RepertoryPage() {
     const [openFormModal, setOpenFormModal] = useState(false);
     const [isLoading, setIsloading] = useState(false);
     const [moviesFromRepertory, setMoviesFromRepertory] = useState([]);
+    const [repertoryId, setRepertoryId] = useState();
     const [tempMoviesFromRepertory, setTempMoviesFromRepertory] = useState([]);
     const [movieFromRepertoryToDelete, setMovieFromRepertoryToDelete] = useState({});
     const [trigger, setTrigger] = useState(false);
@@ -65,9 +66,10 @@ function RepertoryPage() {
         setOpenDeleteModal(true);
     }
 
-    const handleOpenFormModal = () => {
+    function handleOpenFormModal(id) {
+        setRepertoryId(id);
         setOpenFormModal(true);
-    };
+    }
 
     function handleOpenSeatReservations(repertory) {
         navigate("/settings/repertory/reservations/"+repertory?._id);
@@ -139,7 +141,7 @@ function RepertoryPage() {
                                             type="button"
                                             size="small"
                                             className="mr-5 hover:bg-blue"
-                                            onClick={handleOpenFormModal}
+                                            onClick={() => handleOpenFormModal(repertory?._id)}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-solid:pencil-alt
@@ -181,7 +183,7 @@ function RepertoryPage() {
                 </Table>
             </TableContainer> : <FuseLoading/>}
 
-            {/*{openDetailsModal && <MoviesDetailsModal open={openDetailsModal} setOpen={setOpenDetailsModal} movie={movieToShow} />}*/}
+            {openFormModal && <RepertoryFormModal open={openFormModal} setOpen={setOpenFormModal} id={repertoryId}/>}
             {openDeleteModal && <ConfirmationDeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal}
                                                          message={"Are you sure you want to delete the movie from repertory?"}
                                                          onConfirm={handleDelete}/>}
