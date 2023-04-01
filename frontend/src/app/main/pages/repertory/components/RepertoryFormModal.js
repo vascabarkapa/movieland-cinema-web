@@ -73,7 +73,7 @@ const RepertoryFormModal = ({open, setOpen}) => {
                 aria-labelledby="repertory-form-title"
                 aria-describedby="repertory-form-content"
                 fullWidth
-                maxWidth="md"
+                maxWidth="sm"
             >
                 <DialogTitle id="repertory-form-title" className="flex items-center">
                     Add/Edit Repertory
@@ -86,14 +86,14 @@ const RepertoryFormModal = ({open, setOpen}) => {
                 >
                     <DialogContent>
                         <DialogContentText id="repertory-form-content">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-20">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20">
                                 <Controller
                                     name="movie"
                                     control={control}
                                     render={({field}) => (
                                         <TextField
                                             {...field}
-                                            className="mb-24 col-span-1 md:col-span-3"
+                                            className="mb-24 col-span-1 md:col-span-2"
                                             label="Movie"
                                             type="text"
                                             variant="outlined"
@@ -136,26 +136,6 @@ const RepertoryFormModal = ({open, setOpen}) => {
                                                 }}
                                             />
                                         </LocalizationProvider>
-                                    )}
-                                />
-
-                                <Controller
-                                    name="numberOfTickets"
-                                    control={control}
-                                    render={({field}) => (
-                                        <TextField
-                                            {...field}
-                                            className="mb-24"
-                                            label="Number of Tickets"
-                                            type="number"
-                                            variant="outlined"
-                                            error={!!errors.numberOfTickets}
-                                            helperText={errors?.numberOfTickets?.message}
-                                            required
-                                            fullWidth
-                                            InputProps={{inputProps: {min: 1}}}
-                                            size="small"
-                                        />
                                     )}
                                 />
 
