@@ -105,7 +105,7 @@ function RepertoryPage() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {tempMoviesFromRepertory.length > 0 ? tempMoviesFromRepertory.map((repertory) => (
+                        {tempMoviesFromRepertory?.length > 0 ? tempMoviesFromRepertory?.map((repertory) => (
                             <TableRow
                                 key={repertory?._id}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
