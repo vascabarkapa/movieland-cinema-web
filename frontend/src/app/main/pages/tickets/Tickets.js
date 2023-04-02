@@ -5,30 +5,57 @@ import * as React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import TicketsHeader from "./components/TicketsHeader";
 import TicketsDetailsModal from "./components/TicketsDetailsModal";
-
-function createData(name, calories, fat, carbs, protein) {
-    return {name, calories, fat, carbs, protein};
-}
-
-const rows = [
-    createData('Marko Marković', 'marko.markovic@mail.com', 'Everything Everywhere All at Once', '2', '13.03.2023. 20:03h'),
-];
+import FuseLoading from "@fuse/core/FuseLoading";
+import {useEffect, useState} from "react";
+import TicketService from "src/app/shared/services/ticket-service";
 
 function TicketsPage() {
-    const [openTicketsDetailsModal, setOpenTicketsDetailsModal] = React.useState(false);
+    const [openTicketsDetailsModal, setOpenTicketsDetailsModal] = useState(false);
+    const [isLoading, setIsloading] = useState(false);
+    const [tickets, setTickets] = useState([]);
+    const [ticketId, setTicketId] = useState();
+    const [tempTickets, setTempTickets] = useState([]);
+    const [trigger, setTrigger] = useState(false);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
 
-    // const handleClickOpen = () => {
-    //     setOpen(true);
-    // };
+    let pageSize = 10;
+    let startIndex = (page - 1) * pageSize;
+    let endIndex = startIndex + pageSize;
 
-    const handleTicketsDetailsModalOpen = () => {
-        setOpenTicketsDetailsModal(true);
+    useEffect(() => {
+        setIsloading(true);
+        TicketService.getTickets().then((response) => {
+            if (response) {
+                setTickets(response?.data);
+                setTempTickets(response?.data?.slice(startIndex, endIndex));
+                setIsloading(false);
+                setTotalPages(Math.ceil(response?.data?.length / pageSize));
+            }
+        })
+    }, []);
+
+    useEffect(() => {
+        setTempTickets(tickets?.slice(startIndex, endIndex));
+    }, [page]);
+
+    const handleChangePage = (event, value) => {
+        setPage(value);
     };
+
+    function handleShowDetailsModal(id) {
+        setTicketId(id);
+        setOpenFormModal(true);
+    }
+
+    function convertToDateTime(dateTime) {
+        return new Date(dateTime).toLocaleString();
+    }
 
     return (
         <div className="p-36">
             <TicketsHeader/>
-            <TableContainer component={Paper}>
+            {!isLoading ? <TableContainer component={Paper}>
                 <Table sx={{minWidth: 650}}>
                     <TableHead>
                         <TableRow>
@@ -41,20 +68,20 @@ function TicketsPage() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {tempTickets?.length > 0 ? tempTickets?.map((ticket) => (
                             <TableRow
-                                key={row.name}
+                                key={ticket?._id}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                 className="hover:bg-gray-100"
                             >
                                 <TableCell component="th" scope="row">
-                                    {row.name}
+                                    {ticket?.first_name + " " +ticket?.last_name}
                                 </TableCell>
-                                <TableCell>{row.calories}</TableCell>
-                                <TableCell>{row.fat}</TableCell>
-                                <TableCell>{row.carbs}</TableCell>
+                                <TableCell>{ticket?.email}</TableCell>
+                                <TableCell>{ticket?.movie?.name}</TableCell>
+                                <TableCell>{ticket?.number_of_tickets}</TableCell>
                                 <TableCell>
-                                    {row.protein} <FuseSvgIcon className="text-48 inline-block text-green" size={16}
+                                    {convertToDateTime(ticket?.createdAt)} <FuseSvgIcon className="text-48 inline-block text-green" size={16}
                                                              color="action">heroicons-outline:check-circle</FuseSvgIcon>
                                 </TableCell>
                                 <TableCell style={{display: "flex", justifyContent: "right"}}>
@@ -65,50 +92,36 @@ function TicketsPage() {
                                             type="button"
                                             size="small"
                                             className="mr-5 hover:bg-purple"
-                                            onClick={handleTicketsDetailsModalOpen}
+                                            onClick={() => handleShowDetailsModal(ticket?._id)}
                                         >
                                             <FuseSvgIcon>
                                                 heroicons-outline:shopping-cart
                                             </FuseSvgIcon>
                                         </Button>
                                     </Tooltip>
-                                    {/*<Tooltip title="Edit" placement="top">*/}
-                                    {/*    <Button*/}
-                                    {/*        variant="contained"*/}
-                                    {/*        color="primary"*/}
-                                    {/*        type="button"*/}
-                                    {/*        size="small"*/}
-                                    {/*        className="mr-5 hover:bg-blue"*/}
-                                    {/*    >*/}
-                                    {/*        <FuseSvgIcon>*/}
-                                    {/*            heroicons-solid:pencil-alt*/}
-                                    {/*        </FuseSvgIcon>*/}
-                                    {/*    </Button>*/}
-                                    {/*</Tooltip>*/}
-                                    {/*<Tooltip title="Delete" placement="top">*/}
-                                    {/*    <Button*/}
-                                    {/*        variant="contained"*/}
-                                    {/*        color="primary"*/}
-                                    {/*        type="button"*/}
-                                    {/*        size="small"*/}
-                                    {/*        className="hover:bg-red"*/}
-                                    {/*        onClick={handleClickOpen}*/}
-                                    {/*    >*/}
-                                    {/*        <FuseSvgIcon>*/}
-                                    {/*            heroicons-solid:trash*/}
-                                    {/*        </FuseSvgIcon>*/}
-                                    {/*    </Button>*/}
-                                    {/*</Tooltip>*/}
                                 </TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        )) : <TableRow
+                        sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                        className="hover:bg-gray-100"
+                    >
+                        <TableCell colSpan={6} className="text-center" component="th" scope="row">
+                            No tickets available
+                        </TableCell></TableRow>}
+                </TableBody>
+                {tickets?.length > 10 && <TableFooter>
+                    <TableRow>
+                        <TableCell colSpan={6} className="text-center" component="th" scope="row">
+                            <Pagination count={totalPages} page={page} onChange={handleChangePage}
+                                        color="secondary"/>
+                        </TableCell>
+                    </TableRow>
+                </TableFooter>}
+            </Table>
+        </TableContainer> : <FuseLoading/>}
+        
             {openTicketsDetailsModal &&
-                <TicketsDetailsModal open={openTicketsDetailsModal} setOpen={setOpenTicketsDetailsModal}/>}
-            {/*{open && <ConfirmationDeleteModal open={open} setOpen={setOpen}*/}
-            {/*                                  message={"Are you sure you want to delete the reservation?"}/>}*/}
+                <TicketsDetailsModal open={openTicketsDetailsModal} setOpen={setOpenTicketsDetailsModal} id={ticketId}/>}
         </div>
     );
 }
