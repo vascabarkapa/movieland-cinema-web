@@ -1,4 +1,4 @@
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import Button from "@mui/material/Button";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import * as React from "react";
@@ -6,7 +6,7 @@ import Tooltip from "@mui/material/Tooltip";
 import TicketsHeader from "./components/TicketsHeader";
 import TicketsDetailsModal from "./components/TicketsDetailsModal";
 import FuseLoading from "@fuse/core/FuseLoading";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import TicketService from "src/app/shared/services/ticket-service";
 
 function TicketsPage() {
@@ -45,7 +45,7 @@ function TicketsPage() {
 
     function handleShowDetailsModal(id) {
         setTicketId(id);
-        setOpenFormModal(true);
+        setOpenTicketsDetailsModal(true);
     }
 
     function convertToDateTime(dateTime) {
@@ -54,9 +54,9 @@ function TicketsPage() {
 
     return (
         <div className="p-36">
-            <TicketsHeader/>
+            <TicketsHeader />
             {!isLoading ? <TableContainer component={Paper}>
-                <Table sx={{minWidth: 650}}>
+                <Table sx={{ minWidth: 650 }}>
                     <TableHead>
                         <TableRow>
                             <TableCell><b>Full Name</b></TableCell>
@@ -71,20 +71,20 @@ function TicketsPage() {
                         {tempTickets?.length > 0 ? tempTickets?.map((ticket) => (
                             <TableRow
                                 key={ticket?._id}
-                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 className="hover:bg-gray-100"
                             >
                                 <TableCell component="th" scope="row">
-                                    {ticket?.first_name + " " +ticket?.last_name}
+                                    {ticket?.first_name + " " + ticket?.last_name}
                                 </TableCell>
                                 <TableCell>{ticket?.email}</TableCell>
                                 <TableCell>{ticket?.movie?.name}</TableCell>
                                 <TableCell>{ticket?.number_of_tickets}</TableCell>
                                 <TableCell>
                                     {convertToDateTime(ticket?.createdAt)} <FuseSvgIcon className="text-48 inline-block text-green" size={16}
-                                                             color="action">heroicons-outline:check-circle</FuseSvgIcon>
+                                        color="action">heroicons-outline:check-circle</FuseSvgIcon>
                                 </TableCell>
-                                <TableCell style={{display: "flex", justifyContent: "right"}}>
+                                <TableCell style={{ display: "flex", justifyContent: "right" }}>
                                     <Tooltip title="See transaction" placement="top">
                                         <Button
                                             variant="contained"
@@ -102,26 +102,26 @@ function TicketsPage() {
                                 </TableCell>
                             </TableRow>
                         )) : <TableRow
-                        sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                        className="hover:bg-gray-100"
-                    >
-                        <TableCell colSpan={6} className="text-center" component="th" scope="row">
-                            No tickets available
-                        </TableCell></TableRow>}
-                </TableBody>
-                {tickets?.length > 10 && <TableFooter>
-                    <TableRow>
-                        <TableCell colSpan={6} className="text-center" component="th" scope="row">
-                            <Pagination count={totalPages} page={page} onChange={handleChangePage}
-                                        color="secondary"/>
-                        </TableCell>
-                    </TableRow>
-                </TableFooter>}
-            </Table>
-        </TableContainer> : <FuseLoading/>}
-        
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            className="hover:bg-gray-100"
+                        >
+                            <TableCell colSpan={6} className="text-center" component="th" scope="row">
+                                No tickets available
+                            </TableCell></TableRow>}
+                    </TableBody>
+                    {tickets?.length > 10 && <TableFooter>
+                        <TableRow>
+                            <TableCell colSpan={6} className="text-center" component="th" scope="row">
+                                <Pagination count={totalPages} page={page} onChange={handleChangePage}
+                                    color="secondary" />
+                            </TableCell>
+                        </TableRow>
+                    </TableFooter>}
+                </Table>
+            </TableContainer> : <FuseLoading />}
+
             {openTicketsDetailsModal &&
-                <TicketsDetailsModal open={openTicketsDetailsModal} setOpen={setOpenTicketsDetailsModal} id={ticketId}/>}
+                <TicketsDetailsModal open={openTicketsDetailsModal} setOpen={setOpenTicketsDetailsModal} id={ticketId} />}
         </div>
     );
 }
