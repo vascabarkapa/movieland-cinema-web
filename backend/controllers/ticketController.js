@@ -5,9 +5,15 @@ const Ticket = require("../models/ticketModel");
 //@route GET /api/tickets
 //@access private
 const getTickets = asyncHandler(async (req, res) => {
-    const tickets = await Ticket.find().populate("repertory");
-    const sortedTickets = tickets.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const tickets = await Ticket.find().populate({
+        path: 'repertory',
+        populate: {
+            path: 'movie',
+        },
+    });
     
+    const sortedTickets = tickets.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
     res.status(200).json(sortedTickets);
 });
 
@@ -15,7 +21,13 @@ const getTickets = asyncHandler(async (req, res) => {
 //@route GET /api/tickets/:id
 //@access private
 const getTicketById = asyncHandler(async (req, res) => {
-    const ticket = await Ticket.findById(req.params.id).populate("repertory");
+    const ticket = await Ticket.findById(req.params.id).populate({
+        path: 'repertory',
+        populate: {
+            path: 'movie',
+        },
+    });
+
     if (!ticket) {
         res.status(404);
         throw new Error("Ticket not found");

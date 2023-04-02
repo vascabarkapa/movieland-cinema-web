@@ -78,7 +78,7 @@ function TicketsPage() {
                                     {ticket?.first_name + " " + ticket?.last_name}
                                 </TableCell>
                                 <TableCell>{ticket?.email}</TableCell>
-                                <TableCell>{ticket?.movie?.name}</TableCell>
+                                <TableCell>{ticket?.repertory?.movie?.name}</TableCell>
                                 <TableCell>{ticket?.number_of_tickets}</TableCell>
                                 <TableCell>
                                     {convertToDateTime(ticket?.createdAt)} <FuseSvgIcon className="text-48 inline-block text-green" size={16}
