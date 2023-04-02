@@ -8,6 +8,7 @@ import TicketsDetailsModal from "./components/TicketsDetailsModal";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { useEffect, useState } from "react";
 import TicketService from "src/app/shared/services/ticket-service";
+import DateTimeHelper from "src/app/shared/helpers/DateTimeHelper";
 
 function TicketsPage() {
     const [openTicketsDetailsModal, setOpenTicketsDetailsModal] = useState(false);
@@ -48,10 +49,6 @@ function TicketsPage() {
         setOpenTicketsDetailsModal(true);
     }
 
-    function convertToDateTime(dateTime) {
-        return new Date(dateTime).toLocaleString();
-    }
-
     return (
         <div className="p-36">
             <TicketsHeader />
@@ -81,7 +78,7 @@ function TicketsPage() {
                                 <TableCell>{ticket?.repertory?.movie?.name}</TableCell>
                                 <TableCell>{ticket?.number_of_tickets}</TableCell>
                                 <TableCell>
-                                    {convertToDateTime(ticket?.createdAt)} <FuseSvgIcon className="text-48 inline-block text-green" size={16}
+                                    {DateTimeHelper.convertToLocalFormatWithSeconds(ticket?.createdAt)} <FuseSvgIcon className="text-48 inline-block text-green" size={16}
                                         color="action">heroicons-outline:check-circle</FuseSvgIcon>
                                 </TableCell>
                                 <TableCell style={{ display: "flex", justifyContent: "right" }}>

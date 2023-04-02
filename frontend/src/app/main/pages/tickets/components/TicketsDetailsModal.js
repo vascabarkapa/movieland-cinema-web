@@ -9,6 +9,7 @@ import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import TicketService from 'src/app/shared/services/ticket-service';
+import DateTimeHelper from 'src/app/shared/helpers/DateTimeHelper';
 
 const TicketsDetailsModal = ({ open, setOpen, id }) => {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -30,10 +31,6 @@ const TicketsDetailsModal = ({ open, setOpen, id }) => {
     const handleClose = () => {
         setOpen(false);
     };
-
-    function convertToDateTime(dateTime) {
-        return new Date(dateTime).toLocaleString();
-    }
 
     return (
         <div>
@@ -83,7 +80,7 @@ const TicketsDetailsModal = ({ open, setOpen, id }) => {
                             </div>
                             <div className="col-span-4 md:col-span-2">
                                 <span className="text-black font-500">Movie date: </span>
-                                <span>{convertToDateTime(ticket?.repertory?.dateTime)}</span>
+                                <span>{DateTimeHelper.convertToLocalFormat(ticket?.repertory?.dateTime)}</span>
                             </div>
                             <div className="col-span-4 md:col-span-2">
                                 <span className="text-black font-500">Method of payment: </span>
@@ -108,7 +105,7 @@ const TicketsDetailsModal = ({ open, setOpen, id }) => {
                             <hr className="col-span-4" />
                             <div className="col-span-4 md:col-span-2">
                                 <span className="text-black font-500">Date and time of transaction: </span>
-                                <span>{convertToDateTime(ticket?.createdAt)}</span>
+                                <span>{DateTimeHelper.convertToLocalFormatWithSeconds(ticket?.createdAt)}</span>
                             </div>
                             <div className="col-span-4 sm:col-span-2 md:col-span-1">
                                 <span className="text-black font-500">Number of tickets: </span>

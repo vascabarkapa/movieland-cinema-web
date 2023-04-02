@@ -6,6 +6,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import RepertoryService from "../../../../shared/services/repertory-service";
 import FuseLoading from "@fuse/core/FuseLoading";
+import DateTimeHelper from "src/app/shared/helpers/DateTimeHelper";
 
 const RepertorySeatReservations = () => {
     const rows = [];
@@ -38,10 +39,6 @@ const RepertorySeatReservations = () => {
         navigate("/settings/repertory");
     }
 
-    function convertToDateTime(dateTime) {
-        return new Date(dateTime).toLocaleString();
-    }
-
     return (
         <>
             {isLoading ? <FuseLoading/> : <div className="p-36">
@@ -55,7 +52,7 @@ const RepertorySeatReservations = () => {
                             </Typography>
                             <Typography className="font-medium tracking-tight text-center sm:text-left"
                                         color="text.secondary">
-                                {convertToDateTime(movieRepertory?.dateTime)}, {movieRepertory?.price}&nbsp;&euro;
+                                {DateTimeHelper.convertToLocalFormat(movieRepertory?.dateTime)}, {movieRepertory?.price}&nbsp;&euro;
                             </Typography>
                         </div>
                         <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">

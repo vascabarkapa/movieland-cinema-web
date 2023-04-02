@@ -22,6 +22,7 @@ import RepertoryService from "src/app/shared/services/repertory-service";
 import {showMessage} from "app/store/fuse/messageSlice";
 import {useDispatch} from 'react-redux';
 import FuseLoading from "@fuse/core/FuseLoading";
+import DateTimeHelper from "src/app/shared/helpers/DateTimeHelper";
 
 function RepertoryPage() {
     const dispatch = useDispatch();
@@ -75,10 +76,6 @@ function RepertoryPage() {
         navigate("/settings/repertory/reservations/"+repertory?._id);
     }
 
-    function convertToDateTime(dateTime) {
-        return new Date(dateTime).toLocaleString();
-    }
-
     const handleDelete = () => {
         RepertoryService.deleteMovieFromRepertory(movieFromRepertoryToDelete?._id).then((response) => {
             if (response) {
@@ -115,7 +112,7 @@ function RepertoryPage() {
                                     {repertory?.movie?.name}
                                 </TableCell>
                                 <TableCell>{repertory?.price}&nbsp;&euro;</TableCell>
-                                <TableCell>{convertToDateTime(repertory?.dateTime)}</TableCell>
+                                <TableCell>{DateTimeHelper.convertToLocalFormat(repertory?.dateTime)}</TableCell>
                                 <TableCell>
                                     <i className="inline-block w-8 h-8 rounded mr-5 bg-green animate-ping"></i>{repertory?.number_of_tickets}
                                 </TableCell>
