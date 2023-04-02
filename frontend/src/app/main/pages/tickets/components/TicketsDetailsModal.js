@@ -7,11 +7,33 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import Typography from "@mui/material/Typography";
+import { useEffect, useState } from "react";
+import TicketService from 'src/app/shared/services/ticket-service';
 
-const TicketsDetailsModal = ({open, setOpen}) => {
+const TicketsDetailsModal = ({ open, setOpen, id }) => {
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [ticket, setTicket] = useState({});
+
+    useEffect(() => {
+        if (id) {
+            TicketService.getTicketById(id).then((response) => {
+                if (response) {
+                    setTicket(response?.data);
+                    setIsLoaded(true);
+                }
+            })
+        } else {
+            setIsLoaded(true);
+        }
+    }, [])
+
     const handleClose = () => {
         setOpen(false);
     };
+
+    function convertToDateTime(dateTime) {
+        return new Date(dateTime).toLocaleString();
+    }
 
     return (
         <div>
@@ -21,11 +43,12 @@ const TicketsDetailsModal = ({open, setOpen}) => {
                 aria-labelledby="tickets-details-title"
                 aria-describedby="tickets-details-content"
                 maxWidth="md"
+                className={!isLoaded && "animate-pulse"}
             >
                 <DialogTitle id="tickets-details-title" className="flex items-center">
                     Information about purchased tickets
                 </DialogTitle>
-                <DialogContent>
+                {isLoaded ? <><DialogContent>
                     <DialogContentText id="tickets-details-content">
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
                             <Typography className="col-span-4 text-black text-lg font-500 mb-5">
@@ -33,34 +56,34 @@ const TicketsDetailsModal = ({open, setOpen}) => {
                             </Typography>
                             <div className="col-span-4 md:col-span-1">
                                 <FuseSvgIcon className="inline" size={24}
-                                             color="action">heroicons-solid:user</FuseSvgIcon>
-                                <span>Marko Marković</span>
+                                    color="action">heroicons-solid:user</FuseSvgIcon>
+                                <span>{ticket?.first_name + " " + ticket?.last_name}</span>
                             </div>
                             <div className="col-span-4 md:col-span-1">
                                 <FuseSvgIcon className="inline" size={24}
-                                             color="action">heroicons-solid:mail</FuseSvgIcon>
-                                <span>marko.markovic@mail.com</span>
+                                    color="action">heroicons-solid:mail</FuseSvgIcon>
+                                <span>{ticket?.email}</span>
                             </div>
                             <div className="col-span-4 md:col-span-1">
                                 <FuseSvgIcon className="inline" size={24}
-                                             color="action">heroicons-solid:phone</FuseSvgIcon>
-                                <span>+38766123000</span>
+                                    color="action">heroicons-solid:phone</FuseSvgIcon>
+                                <span>{ticket?.phone_number}</span>
                             </div>
                             <div className="col-span-4 md:col-span-1">
                                 <FuseSvgIcon className="inline" size={24}
-                                             color="action">heroicons-solid:location-marker</FuseSvgIcon>
-                                <span>Nikole Tesle 25, Istočno Sarajevo, Bosnia and Herzegovina</span>
+                                    color="action">heroicons-solid:location-marker</FuseSvgIcon>
+                                <span>{ticket?.address + ", " + ticket?.city + ", " + ticket?.country}</span>
                             </div>
                             <Typography className="col-span-4 text-black text-lg font-500 mt-10 mb-5">
                                 Transaction details
                             </Typography>
                             <div className="col-span-4 md:col-span-2">
                                 <span className="text-black font-500">Movie name: </span>
-                                <span>Everything Everywhere All at Once</span>
+                                <span>{ticket?.movie?.name}</span>
                             </div>
                             <div className="col-span-4 md:col-span-2">
                                 <span className="text-black font-500">Movie date: </span>
-                                <span>17.03.2023. 19:30h</span>
+                                <span>{convertToDateTime(ticket?.movie?.dateTime)}</span>
                             </div>
                             <div className="col-span-4 md:col-span-2">
                                 <span className="text-black font-500">Method of payment: </span>
@@ -68,45 +91,45 @@ const TicketsDetailsModal = ({open, setOpen}) => {
                             </div>
                             <div className="col-span-4 md:col-span-2">
                                 <span className="text-black font-500">Card type: </span>
-                                <span>Mastercard</span>
+                                <span>{ticket?.card_type}</span>
                             </div>
                             <div className="col-span-4 md:col-span-2">
                                 <span className="text-black font-500">Card number: </span>
-                                <span>1234 5678 9999 0000</span>
+                                <span>{ticket?.card_number}</span>
                             </div>
                             <div className="col-span-4 md:col-span-1">
                                 <span className="text-black font-500">Expired date: </span>
-                                <span>10/24</span>
+                                <span>{ticket?.card_date_expiry}</span>
                             </div>
                             <div className="col-span-4 md:col-span-1">
                                 <span className="text-black font-500">CCV number: </span>
-                                <span>789</span>
+                                <span>{ticket?.card_ccv}</span>
                             </div>
-                            <hr className="col-span-4"/>
+                            <hr className="col-span-4" />
                             <div className="col-span-4 md:col-span-2">
                                 <span className="text-black font-500">Date and time of transaction: </span>
-                                <span>13.03.2023. 20:03h</span>
+                                <span>{convertToDateTime(ticket?.createdAt)}</span>
                             </div>
                             <div className="col-span-4 sm:col-span-2 md:col-span-1">
                                 <span className="text-black font-500">Number of tickets: </span>
-                                <span>2</span>
+                                <span>{ticket?.number_of_tickets}</span>
                             </div>
                             <div className="col-span-4 sm:col-span-2 md:col-span-1">
                                 <span className="text-black font-500">Price per ticket: </span>
-                                <span>&euro;3.50</span>
+                                <span>{ticket?.movie?.price}&euro;</span>
                             </div>
                             <div className="col-span-4 sm:col-start-3 sm:col-end-3 md:col-start-4 md:col-end-4">
                                 <span className="text-black font-500">Total price: </span>
-                                <span>&euro;7.00</span>
+                                <span>{ticket?.sum_price}&nbsp;&euro;</span>
                             </div>
                         </div>
                     </DialogContentText>
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>
-                        Close
-                    </Button>
-                </DialogActions>
+                    <DialogActions>
+                        <Button onClick={handleClose}>
+                            Close
+                        </Button>
+                    </DialogActions></> : <></>}
             </Dialog>
         </div>
     );
