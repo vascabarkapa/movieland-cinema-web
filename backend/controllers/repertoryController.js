@@ -49,7 +49,7 @@ const updateMovieFromRepertory = asyncHandler(async (req, res) => {
         throw new Error("Movie from Repertory not found");
     }
 
-    const updatedMovieFromRepertory = await Repertory.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    const updatedMovieFromRepertory = await Repertory.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.status(200).json(updatedMovieFromRepertory);
 });
 
@@ -67,10 +67,33 @@ const deleteMovieFromRepertory = asyncHandler(async (req, res) => {
     res.status(200).json(deletedMovieFromRepertory);
 });
 
+//@desc Get all movies from repertory for mobile
+//@route GET /api/repertories/mobile/get
+//@access private
+const getMoviesFromRepertoryMobile = asyncHandler(async (req, res) => {
+    const today = new Date();
+    const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1)));
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    const endOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 7));
+    endOfWeek.setHours(23, 59, 59, 999);
+
+    const moviesFromRepertory = await Repertory.find({
+        dateTime: {
+            $gte: startOfWeek,
+            $lte: endOfWeek,
+        }
+    }).populate("movie");
+    const sortedMoviesFromRepertory = moviesFromRepertory.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    res.status(200).json(sortedMoviesFromRepertory);
+});
+
 module.exports = {
     getMoviesFromRepertory,
     getMovieByIdFromRepertory,
     addMovieToRepertory,
     updateMovieFromRepertory,
-    deleteMovieFromRepertory
+    deleteMovieFromRepertory,
+    getMoviesFromRepertoryMobile
 };
