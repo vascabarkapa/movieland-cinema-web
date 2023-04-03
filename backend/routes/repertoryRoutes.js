@@ -5,9 +5,12 @@ const {
     getMovieByIdFromRepertory,
     addMovieToRepertory,
     updateMovieFromRepertory,
-    deleteMovieFromRepertory
+    deleteMovieFromRepertory,
+    getMoviesFromRepertoryMobile
 } = require("../controllers/repertoryController");
 const validateToken = require("../middleware/validateTokenHandler");
+
+router.route("/mobile/get").get(getMoviesFromRepertoryMobile);
 
 router.use(validateToken);
 router.route("/").get(getMoviesFromRepertory).post(addMovieToRepertory);
