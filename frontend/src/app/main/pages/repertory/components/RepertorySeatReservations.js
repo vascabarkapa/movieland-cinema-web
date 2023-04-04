@@ -8,6 +8,7 @@ import RepertoryService from "../../../../shared/services/repertory-service";
 import FuseLoading from "@fuse/core/FuseLoading";
 import DateTimeHelper from "src/app/shared/helpers/DateTimeHelper";
 import Seat from "./Seat";
+import AvailableTicketsHelper from "src/app/shared/helpers/AvailableTicketsHelper";
 
 const RepertorySeatReservations = () => {
     const navigate = useNavigate();
@@ -48,9 +49,7 @@ const RepertorySeatReservations = () => {
                             </Typography>
                         </div>
                         <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
-                            <i className="inline-block w-8 h-8 rounded mr-5 bg-green animate-ping"></i>{movieRepertory?.number_of_tickets}/220
-                            tickets
-                            left
+                            {AvailableTicketsHelper.setAvailableWithText(movieRepertory?.number_of_tickets)}
                             <Button
                                 className="whitespace-nowrap"
                                 variant="contained"
