@@ -1,3 +1,5 @@
+var aes256 = require('aes256');
+
 const asyncHandler = require("express-async-handler");
 const Ticket = require("../models/ticketModel");
 
@@ -11,7 +13,7 @@ const getTickets = asyncHandler(async (req, res) => {
             path: 'movie',
         },
     });
-    
+
     const sortedTickets = tickets.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     res.status(200).json(sortedTickets);
@@ -33,7 +35,23 @@ const getTicketById = asyncHandler(async (req, res) => {
         throw new Error("Ticket not found");
     }
 
-    res.status(200).json(ticket);
+    const { email, card_type, card_number, card_date_expiry, card_ccv } = ticket;
+    const key = email;
+
+    const decryptedCardType = aes256.decrypt(key, card_type);
+    const decryptedCardNumber = aes256.decrypt(key, card_number);
+    const decryptedCardDateExpiry = aes256.decrypt(key, card_date_expiry);
+    const decryptedCardCcv = aes256.decrypt(key, card_ccv);
+
+    const decryptedTicket = {
+        ...ticket.toJSON(),
+        card_type: decryptedCardType,
+        card_number: decryptedCardNumber,
+        card_date_expiry: decryptedCardDateExpiry,
+        card_ccv: decryptedCardCcv
+    };
+
+    res.status(200).json(decryptedTicket);
 });
 
 //@desc Create ticket
@@ -46,6 +64,13 @@ const createTicket = asyncHandler(async (req, res) => {
             throw new Error(prop + " is mandatory field");
         }
     }
+
+    const key = req.body.email;
+    const encryptedFields = ['card_type', 'card_number', 'card_date_expiry', 'card_ccv'];
+
+    encryptedFields.forEach((field) => {
+        req.body[field] = aes256.encrypt(key, req.body[field]);
+    });
 
     const newTicket = await Ticket.create(req.body);
     res.status(201).json(newTicket);
