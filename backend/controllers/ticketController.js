@@ -2,6 +2,7 @@ var aes256 = require('aes256');
 
 const asyncHandler = require("express-async-handler");
 const Ticket = require("../models/ticketModel");
+const Repertory = require('../models/repertoryModel');
 
 //@desc Get all tickets
 //@route GET /api/tickets
@@ -73,6 +74,21 @@ const createTicket = asyncHandler(async (req, res) => {
     });
 
     const newTicket = await Ticket.create(req.body);
+
+    const repertoryToBuy = await Repertory.findById({ _id: req.body.repertory });
+    if (!repertoryToBuy) {
+        res.status(404);
+        throw new Error("Repertory Movie not found");
+    }
+
+    if (repertoryToBuy.number_of_tickets - req.body["number_of_tickets"] >= 0) {
+        repertoryToBuy.number_of_tickets = repertoryToBuy.number_of_tickets - req.body["number_of_tickets"];
+        repertoryToBuy.save();
+    } else {
+        res.status(404);
+        throw new Error("Purchase is not possible! " + repertoryToBuy.number_of_tickets + " cards left.");
+    }
+
     res.status(201).json(newTicket);
 });
 
