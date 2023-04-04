@@ -113,7 +113,7 @@ const TicketsDetailsModal = ({ open, setOpen, id }) => {
                             </div>
                             <div className="col-span-4 sm:col-span-2 md:col-span-1">
                                 <span className="text-black font-500">Price per ticket: </span>
-                                <span>{ticket?.repertory?.movie?.price}&euro;</span>
+                                <span>{ticket?.repertory?.price}&euro;</span>
                             </div>
                             <div className="col-span-4 sm:col-start-3 sm:col-end-3 md:col-start-4 md:col-end-4">
                                 <span className="text-black font-500">Total price: </span>
