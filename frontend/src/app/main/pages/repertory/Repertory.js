@@ -90,7 +90,7 @@ function RepertoryPage() {
 
     return (
         <div className="p-36">
-            <RepertoryHeader />
+            <RepertoryHeader setTrigger={setTrigger} trigger={trigger} />
             {!isLoading ? <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }}>
                     <TableHead>

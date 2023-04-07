@@ -1,11 +1,12 @@
-import {Typography} from "@mui/material";
+import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import RepertoryFormModal from "./RepertoryFormModal";
 import * as React from "react";
+import { useState } from "react";
 
-function RepertoryHeader() {
-    const [openFormModal, setOpenFormModal] = React.useState(false);
+const RepertoryHeader = ({ setTrigger, trigger }) => {
+    const [openFormModal, setOpenFormModal] = useState(false);
 
     const handleOpenFormModal = () => {
         setOpenFormModal(true);
@@ -34,7 +35,7 @@ function RepertoryHeader() {
                     </Button>
                 </div>
             </div>
-            {openFormModal && <RepertoryFormModal open={openFormModal} setOpen={setOpenFormModal}/>}
+            {openFormModal && <RepertoryFormModal open={openFormModal} setOpen={setOpenFormModal} id={undefined} setTrigger={setTrigger} trigger={trigger} />}
         </div>
     );
 }

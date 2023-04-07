@@ -10,7 +10,6 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TextField from "@mui/material/TextField";
 import { Autocomplete, InputAdornment } from "@mui/material";
-import dayjs from 'dayjs';
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -28,7 +27,7 @@ const schema = yup.object().shape({
         .min(1, 'Price must be greater than or equal to 1'),
 });
 
-const RepertoryFormModal = ({ open, setOpen, id }) => {
+const RepertoryFormModal = ({ open, setOpen, id, setTrigger, trigger }) => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -45,7 +44,7 @@ const RepertoryFormModal = ({ open, setOpen, id }) => {
                 if (id) {
                     RepertoryService.getMovieByIdFromRepertory(id).then((repertoryResponse) => {
                         if (repertoryResponse) {
-                            setEditMovieRepertory(response?.data);
+                            setEditMovieRepertory(repertoryResponse?.data);
                             setIsLoaded(true);
                         }
                     })
@@ -89,6 +88,7 @@ const RepertoryFormModal = ({ open, setOpen, id }) => {
             RepertoryService.updateMovieFromRepertory(id, body).then((response) => {
                 if (response) {
                     setOpen(false);
+                    setTrigger(!trigger);
                     setIsLoading(false);
                     dispatch(showMessage({ message: "Updated movie to reperotry successfully!" }));
                 }
@@ -97,6 +97,7 @@ const RepertoryFormModal = ({ open, setOpen, id }) => {
             RepertoryService.addMovieToRepertory(body).then((response) => {
                 if (response) {
                     setOpen(false);
+                    setTrigger(!trigger);
                     setIsLoading(false);
                     dispatch(showMessage({ message: "Added movie to reperotry successfully!" }));
                 }
