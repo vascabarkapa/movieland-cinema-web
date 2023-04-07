@@ -18,19 +18,9 @@ import { useEffect, useState } from "react";
 import RepertoryService from "../../../../shared/services/repertory-service";
 import MovieService from 'src/app/shared/services/movie-service';
 
-/**
- * Repertory Form Validation Schema
- */
 const schema = yup.object().shape({
     movie: yup.string()
         .required('Required field'),
-    dateTime: yup.string()
-        .required('Required field'),
-    numberOfTickets: yup.number()
-        .required('Required field')
-        .nullable()
-        .typeError('Number of Tickets must be a number')
-        .min(1, 'Number of Tickets must be greater than or equal to 1'),
     price: yup.number()
         .required('Required field')
         .nullable()
@@ -43,7 +33,7 @@ const RepertoryFormModal = ({ open, setOpen, id }) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [movies, setMovies] = useState([]);
     const [editMovieRepertory, setEditMovieRepertory] = useState({});
-    const [dateTimeValue, setDateTimeValue] = React.useState(null);
+    const [selectedDate, setSelectedDate] = useState(null);
 
     useEffect(() => {
         MovieService.getMovies().then((movieResponse) => {
@@ -64,6 +54,11 @@ const RepertoryFormModal = ({ open, setOpen, id }) => {
         })
     }, [])
 
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
+
     const handleClose = () => {
         setOpen(false);
     };
@@ -78,13 +73,11 @@ const RepertoryFormModal = ({ open, setOpen, id }) => {
     function onSubmit({
         movie,
         dateTime,
-        numberOfTickets,
         price
     }) {
         console.log(
             movie,
-            dateTime,
-            numberOfTickets,
+            selectedDate.toISOString(),
             price
         )
         console.log('COMING SOON');
@@ -121,6 +114,7 @@ const RepertoryFormModal = ({ open, setOpen, id }) => {
                                         <Autocomplete
                                             {...field}
                                             className="mb-24 col-span-1 md:col-span-2"
+                                            disablePortal
                                             id="movie"
                                             options={movies}
                                             getOptionLabel={(option) => option.name + " [" + option.genre + "]"}
@@ -146,30 +140,20 @@ const RepertoryFormModal = ({ open, setOpen, id }) => {
                                     name="dateTime"
                                     control={control}
                                     render={({ field }) => (
-                                        // <TextField
-                                        //     {...field}
-                                        //     className="mb-24"
-                                        //     label="Date and Time"
-                                        //     type="text"
-                                        //     variant="outlined"
-                                        //     error={!!errors.dateTime}
-                                        //     helperText={errors?.dateTime?.message}
-                                        //     required
-                                        //     fullWidth
-                                        //     size="small"
-                                        // />
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                                             <DateTimePicker
-                                                renderInput={(props) => <TextField {...field} {...props} size="small"
-                                                    required
-                                                    error={!!errors.dateTime} fullWidth
+                                                renderInput={(props) => <TextField
+                                                    {...field}
+                                                    {...props}
+                                                    size="small"
+                                                    fullWidth
                                                     className="mb-24"
-                                                    helperText={errors?.dateTime?.message} />}
+                                                />}
+                                                inputFormat="DD.MM.YYYY HH:mm"
+                                                ampm={false}
                                                 label="Date and Time"
-                                                value={dateTimeValue}
-                                                onChange={(newValue) => {
-                                                    setDateTimeValue(newValue);
-                                                }}
+                                                value={selectedDate}
+                                                onChange={handleDateChange}
                                             />
                                         </LocalizationProvider>
                                     )}
