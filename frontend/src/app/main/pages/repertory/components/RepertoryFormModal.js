@@ -17,10 +17,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useEffect, useState } from "react";
 import RepertoryService from "../../../../shared/services/repertory-service";
 import MovieService from 'src/app/shared/services/movie-service';
+import { showMessage } from "app/store/fuse/messageSlice";
+import { useDispatch } from 'react-redux';
 
 const schema = yup.object().shape({
-    movie: yup.string()
-        .required('Required field'),
     price: yup.number()
         .required('Required field')
         .nullable()
@@ -29,11 +29,13 @@ const schema = yup.object().shape({
 });
 
 const RepertoryFormModal = ({ open, setOpen, id }) => {
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [movies, setMovies] = useState([]);
     const [editMovieRepertory, setEditMovieRepertory] = useState({});
     const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedMovie, setSelectedMovie] = useState();
 
     useEffect(() => {
         MovieService.getMovies().then((movieResponse) => {
@@ -54,6 +56,9 @@ const RepertoryFormModal = ({ open, setOpen, id }) => {
         })
     }, [])
 
+    const handleMovieChange = (event, value) => {
+        setSelectedMovie(movies.find(movie => movie._id === value._id));
+    }
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -71,17 +76,32 @@ const RepertoryFormModal = ({ open, setOpen, id }) => {
     const { isValid, dirtyFields, errors } = formState;
 
     function onSubmit({
-        movie,
-        dateTime,
         price
     }) {
-        console.log(
-            movie,
-            selectedDate.toISOString(),
-            price
-        )
-        console.log('COMING SOON');
-        setOpen(false);
+        setIsLoading(true);
+        const body = JSON.stringify({
+            movie: selectedMovie?._id,
+            dateTime: selectedDate.toISOString(),
+            price: price
+        })
+
+        if (id) {
+            RepertoryService.updateMovieFromRepertory(id, body).then((response) => {
+                if (response) {
+                    setOpen(false);
+                    setIsLoading(false);
+                    dispatch(showMessage({ message: "Updated movie to reperotry successfully!" }));
+                }
+            })
+        } else {
+            RepertoryService.addMovieToRepertory(body).then((response) => {
+                if (response) {
+                    setOpen(false);
+                    setIsLoading(false);
+                    dispatch(showMessage({ message: "Added movie to reperotry successfully!" }));
+                }
+            })
+        }
     }
 
     return (
@@ -117,15 +137,14 @@ const RepertoryFormModal = ({ open, setOpen, id }) => {
                                             disablePortal
                                             id="movie"
                                             options={movies}
-                                            getOptionLabel={(option) => option.name + " [" + option.genre + "]"}
+                                            getOptionLabel={(movie) => movie.name}
+                                            onChange={handleMovieChange}
                                             renderInput={(params) => (
                                                 <TextField
                                                     {...params}
                                                     label="Movie"
                                                     type="text"
                                                     variant="outlined"
-                                                    error={!!errors.movie}
-                                                    helperText={errors?.movie?.message}
                                                     required
                                                     fullWidth
                                                     size="small"

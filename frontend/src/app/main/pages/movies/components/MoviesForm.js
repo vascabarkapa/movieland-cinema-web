@@ -18,8 +18,6 @@ import { useDispatch } from 'react-redux';
 const schema = yup.object().shape({
     name: yup.string()
         .required('Required field'),
-    /*     genre: yup.string()
-            .required('Required field'), */
     duration: yup.string()
         .required('Required field'),
     description: yup.string()
@@ -184,18 +182,6 @@ const MoviesForm = () => {
                                 name="genre"
                                 control={control}
                                 render={({ field }) => (
-                                    // <TextField
-                                    //     {...field}
-                                    //     className="mb-24 col-span-1 md:col-span-2"
-                                    //     label="Genre"
-                                    //     type="text"
-                                    //     variant="outlined"
-                                    //     error={!!errors.genre}
-                                    //     helperText={errors?.genre?.message}
-                                    //     required
-                                    //     fullWidth
-                                    //     size="small"
-                                    // />
                                     <FormControl required className="mb-24 col-span-1 md:col-span-2" size="small">
                                         <InputLabel id="genre">Genre</InputLabel>
                                         <Select
@@ -204,8 +190,6 @@ const MoviesForm = () => {
                                             id="genre"
                                             multiple
                                             placeholder="Konj"
-                                            /*                                             error={!!errors.genre}
-                                                                                        helperText={errors?.genre?.message} */
                                             value={movieGenres}
                                             onChange={handleChange}
                                             input={<OutlinedInput label="Genre" />}
