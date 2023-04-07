@@ -45,6 +45,11 @@ const RepertoryFormModal = ({ open, setOpen, id, setTrigger, trigger }) => {
                     RepertoryService.getMovieByIdFromRepertory(id).then((repertoryResponse) => {
                         if (repertoryResponse) {
                             setEditMovieRepertory(repertoryResponse?.data);
+                            setValue('movie', repertoryResponse?.data?.movie);
+                            setSelectedMovie(repertoryResponse?.data?.movie);
+                            setValue('dateTime', new Date(repertoryResponse?.data?.dateTime));
+                            setSelectedDate(repertoryResponse?.data?.dateTime);
+                            setValue('price', repertoryResponse?.data?.price);
                             setIsLoaded(true);
                         }
                     })
@@ -80,7 +85,7 @@ const RepertoryFormModal = ({ open, setOpen, id, setTrigger, trigger }) => {
         setIsLoading(true);
         const body = JSON.stringify({
             movie: selectedMovie?._id,
-            dateTime: selectedDate.toISOString(),
+            dateTime: id ? selectedDate : selectedDate.toISOString(),
             price: price
         })
 
@@ -172,7 +177,6 @@ const RepertoryFormModal = ({ open, setOpen, id, setTrigger, trigger }) => {
                                                 inputFormat="DD.MM.YYYY HH:mm"
                                                 ampm={false}
                                                 label="Date and Time"
-                                                value={selectedDate}
                                                 onChange={handleDateChange}
                                             />
                                         </LocalizationProvider>

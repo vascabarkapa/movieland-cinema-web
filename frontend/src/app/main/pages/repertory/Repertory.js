@@ -181,7 +181,7 @@ function RepertoryPage() {
                 </Table>
             </TableContainer> : <FuseLoading />}
 
-            {openFormModal && <RepertoryFormModal open={openFormModal} setOpen={setOpenFormModal} id={repertoryId} />}
+            {openFormModal && <RepertoryFormModal open={openFormModal} setOpen={setOpenFormModal} id={repertoryId} setTrigger={setTrigger} trigger={trigger} />}
             {openDeleteModal && <ConfirmationDeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal}
                 message={"Are you sure you want to delete the movie from repertory?"}
                 onConfirm={handleDelete} />}
