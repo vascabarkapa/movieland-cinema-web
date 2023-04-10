@@ -97,7 +97,13 @@ const createTicket = asyncHandler(async (req, res) => {
         .replace('[Name]', newTicket?.first_name + " " + newTicket?.last_name)
         .replace('[number of tickets]', newTicket?.number_of_tickets)
         .replace('[movie title]', repertoryToBuy?.movie?.name)
-        .replace('[date]', repertoryToBuy?.dateTime.toLocaleString('sr-RS', { timeZone: 'UTC', hour12: false, hour: 'numeric', minute: 'numeric' }))
+        .replace('[date]', repertoryToBuy?.dateTime.toLocaleString('sr-RS', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        }))
         .replace('[time]', repertoryToBuy?.dateTime)
         .replace('[order number]', repertoryToBuy?._id)
         .replace('[total]', newTicket?.sum_price)

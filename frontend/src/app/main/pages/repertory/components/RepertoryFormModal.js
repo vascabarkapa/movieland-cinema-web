@@ -177,6 +177,7 @@ const RepertoryFormModal = ({ open, setOpen, id, setTrigger, trigger }) => {
                                                 inputFormat="DD.MM.YYYY HH:mm"
                                                 ampm={false}
                                                 label="Date and Time"
+                                                value={selectedDate}
                                                 onChange={handleDateChange}
                                             />
                                         </LocalizationProvider>
