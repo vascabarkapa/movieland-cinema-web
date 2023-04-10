@@ -63,6 +63,15 @@ const MoviesForm = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
+    const [image, setImage] = useState()
+
+    const handleFileUpload = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertToBase64(file);
+        console.log(base64)
+        setImage(base64)
+    }
+
     const handleChange = (event) => {
         const {
             target: { value },
@@ -95,6 +104,7 @@ const MoviesForm = () => {
                     setValue('direction', response?.data?.direction);
                     setValue('actors', response?.data?.actors);
                     setValue('rating', response?.data?.rating);
+                    setImage(response?.data?.image)
                     setIsLoaded(true);
                 }
             })
@@ -120,7 +130,8 @@ const MoviesForm = () => {
             description: description,
             direction: direction,
             actors: actors,
-            rating: rating
+            rating: rating,
+            image: image
         })
 
         if (movieId) {
@@ -140,6 +151,19 @@ const MoviesForm = () => {
                 }
             })
         }
+    }
+
+    function convertToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => {
+                resolve(fileReader.result)
+            };
+            fileReader.onerror = (error) => {
+                reject(error)
+            }
+        })
     }
 
     return (
@@ -305,6 +329,21 @@ const MoviesForm = () => {
                                     />
                                 )}
                             />
+
+                            <div className="mb-24 col-span-1 md:col-span-3">
+                                <input
+                                    type="file"
+                                    lable="Image"
+                                    name="image"
+                                    id='file-upload'
+                                    accept='.jpeg, .png, .jpg'
+                                    onChange={(e) => handleFileUpload(e)}
+                                />
+                            </div>
+
+                            <div className="image-div">
+                                <img className="image-img" src={image || ''} alt="No image available" />
+                            </div>
                         </div>
                     </CardContent>
 

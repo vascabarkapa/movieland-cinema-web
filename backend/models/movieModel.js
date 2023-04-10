@@ -29,6 +29,9 @@ const movieSchema = mongoose.Schema({
         type: String,
         required: [true, "Actors are required"]
     },
+    image: {
+        type: String,
+    },
 }, {
     timestamps: true
 }
