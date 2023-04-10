@@ -341,9 +341,9 @@ const MoviesForm = () => {
                                 />
                             </div>
 
-                            <div className="image-div">
-                                <img className="image-img" src={image || ''} alt="No image available" />
-                            </div>
+                            {image ? <div className="image-div">
+                                <img className="image-img" src={image || ''} alt="movie_image" />
+                            </div> : <></>}
                         </div>
                     </CardContent>
 

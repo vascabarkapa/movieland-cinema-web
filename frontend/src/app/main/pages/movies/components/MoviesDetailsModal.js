@@ -24,6 +24,9 @@ const MoviesDetailsModal = ({ open, setOpen, movie }) => {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="movies-details-content">
+                        {movie?.image ? <div className="image-div">
+                            <img className="image-img" src={movie.image || ''} alt="movie_image" />
+                        </div> : <></>}
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
                             <div>
                                 <span className="text-black font-500">Genre: </span>
