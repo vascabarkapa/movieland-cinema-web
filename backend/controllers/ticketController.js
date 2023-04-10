@@ -1,6 +1,8 @@
 var aes256 = require('aes256');
 
 const asyncHandler = require("express-async-handler");
+const nodemailer = require("nodemailer");
+const fs = require('fs');
 const Ticket = require("../models/ticketModel");
 const Repertory = require('../models/repertoryModel');
 
@@ -73,9 +75,7 @@ const createTicket = asyncHandler(async (req, res) => {
         req.body[field] = aes256.encrypt(key, req.body[field]);
     });
 
-    const newTicket = await Ticket.create(req.body);
-
-    const repertoryToBuy = await Repertory.findById({ _id: req.body.repertory });
+    const repertoryToBuy = await Repertory.findById({ _id: req.body.repertory }).populate("movie");
     if (!repertoryToBuy) {
         res.status(404);
         throw new Error("Repertory Movie not found");
@@ -88,6 +88,43 @@ const createTicket = asyncHandler(async (req, res) => {
         res.status(404);
         throw new Error("Purchase is not possible! " + repertoryToBuy.number_of_tickets + " cards left.");
     }
+
+    const newTicket = await Ticket.create(req.body);
+
+    // sending email
+    const htmlTemplate = fs.readFileSync('./config/purchaseConfirmation.html', 'utf8');
+    const emailContent = htmlTemplate
+        .replace('[Name]', newTicket?.first_name + " " + newTicket?.last_name)
+        .replace('[number of tickets]', newTicket?.number_of_tickets)
+        .replace('[movie title]', repertoryToBuy?.movie?.name)
+        .replace('[date]', repertoryToBuy?.dateTime.toLocaleString('sr-RS', { timeZone: 'UTC', hour12: false, hour: 'numeric', minute: 'numeric' }))
+        .replace('[time]', repertoryToBuy?.dateTime)
+        .replace('[order number]', repertoryToBuy?._id)
+        .replace('[total]', newTicket?.sum_price)
+        .replace('[date purchase]', newTicket?.createdAt.toLocaleString('sr-RS', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        }));
+
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        host: 'smtp.gmail.com',
+        auth: {
+            user: 'vascabarkapa@gmail.com',
+            pass: 'dyzehgtjozwodlqn',
+        },
+    });
+
+    let info = await transporter.sendMail({
+        from: 'Movieland Cinema',
+        to: newTicket?.email,
+        subject: "Purchase confirmation No: " + repertoryToBuy?._id,
+        html: emailContent
+    });
 
     res.status(201).json(newTicket);
 });
