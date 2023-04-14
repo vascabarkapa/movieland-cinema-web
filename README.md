@@ -1,6 +1,6 @@
 # Movieland Cinema Web
+#### NOTE: This is a test version. Project under development. 
 The application is an integral part of the subject "Electronic Business" at the Master's studies of the Faculty of Electrical Engineering, University of East Sarajevo.
-
 
 ## Environment Variables
 To run this project, you will need to add the following environment variables to your .env file:
