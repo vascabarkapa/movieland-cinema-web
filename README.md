@@ -1,7 +1,7 @@
 # Movieland Cinema Web
 #### NOTE: This is a test version. Project under development. 
 The application is an integral part of the subject "Electronic Business" at the Master's studies of the Faculty of Electrical Engineering, University of East Sarajevo.
-The project also includes a mobile application: [Movieland Cinema Mobile App](https://github.com/vascabarkapa/movieland-cinema-mobile)
+The project also includes a mobile application: [Movieland Cinema Mobile App](https://github.com/vascabarkapa/movieland-cinema-mobile).
 
 ## Environment Variables
 To run this project, you will need to add the following environment variables to your .env file:
