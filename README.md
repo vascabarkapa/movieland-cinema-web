@@ -55,5 +55,5 @@ With its intuitive user interface, users can easily navigate through the applica
 The Movieland Cinema application is built to scale, ensuring that it can handle a large volume of users and data. It is designed to work seamlessly on both desktop and mobile devices, making it accessible to a wide range of users.
 
 ## Feedback
-If you have any feedback, please reach out to us at vascabarkapa@gmail.com. Made in 2023.
+If you have any feedback, please reach out to us at vascabarkapa@gmail.com.
 
